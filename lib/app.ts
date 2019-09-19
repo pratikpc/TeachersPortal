@@ -32,8 +32,6 @@ app.use(bodyParser.json({ limit: "20mb" }));
 
 // Route via this as Path to Users
 app.use("/user", Routes.Users);
-// Route via this as path for File Uploading and Downloading
-app.use("/files", Routes.Files);
 
 // Route via this as Path to Updation
 app.use("/", Routes.Updation);

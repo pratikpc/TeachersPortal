@@ -7,32 +7,31 @@ import * as multer from "multer";
 import * as Path from "path";
 import * as process from "process";
 
-const storage = multer.diskStorage({
-  destination: async (request: any, file: any, callback: any) => {
-    const dir = Path.resolve(String(process.env.INIT_CWD), 'uploads');
-    await RoutesCommon.CreateDirectoryIfNotExistsAsync(dir);
-    callback(null, dir);
-  },
-  filename: (request: any, file: any, callback: any) => {
-    let fileName = "";
-    while (true) {
-      const name = randomBytes(12).toString("hex");
-      const ext = extname(file.originalname);
-      fileName = name + ext;
-      if (!fs.existsSync(fileName)) break;
-    }
-
-    callback(null, fileName);
-  }
-});
-export const upload = multer.default({
-  storage: storage,
-  // Set File Size Limit of 25 MB
-  limits: { fileSize: 1024 * 1024 * 25 }
-});
-
 export namespace RoutesCommon {
 
+  const storage = multer.diskStorage({
+    destination: async (request: any, file: any, callback: any) => {
+      const dir = Path.resolve(String(process.env.INIT_CWD), 'uploads');
+      await RoutesCommon.CreateDirectoryIfNotExistsAsync(dir);
+      callback(null, dir);
+    },
+    filename: (request: any, file: any, callback: any) => {
+      let fileName = "";
+      while (true) {
+        const name = randomBytes(12).toString("hex");
+        const ext = extname(file.originalname);
+        fileName = name + ext;
+        if (!fs.existsSync(fileName)) break;
+      }
+
+      callback(null, fileName);
+    }
+  });
+  export const upload = multer.default({
+    storage: storage,
+    // Set File Size Limit of 25 MB
+    limits: { fileSize: 1024 * 1024 * 25 }
+  });
   export async function CreateDirectoryIfNotExistsAsync(location: string) {
     return new Promise<void>((resolve, reject) => {
       FsPromises.access(location, fs.constants.R_OK).then(() => {

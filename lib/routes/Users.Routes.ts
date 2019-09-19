@@ -63,48 +63,6 @@ Users.post("/add/", RoutesCommon.IsAdmin, async (req, res) => {
   }
 });
 
-// This is the Uri for Updation of a User's details
-// Get Old Password
-// And Set Change to New Password
-// Logically under REST rules it would be under PUT
-// But it's probably not a good idea.
-Users.post("/update/", RoutesCommon.IsAuthenticated, async (req, res) => {
-  try {
-    const id = Number(req.user!.id);
-
-    const params = RoutesCommon.GetParameters(req);
-    const old_pass = String(params.old);
-    const new_pass = String(params.new);
-
-    const user = await Model.Users.findOne({ where: { id: id } });
-
-    // Check if User Exists
-    if (!user) return res.json({ success: false });
-    // Check if Password Entered is Correct
-    const match = await user!.ComparePassword(old_pass);
-    if (!match) return res.json({ success: false });
-
-    const [count] = await Model.Users.update(
-      { Password: new_pass },
-      { where: { id: id } }
-    );
-
-    if (count !== 1) return res.json({ success: false });
-    return res.json({ success: true });
-  } catch (error) {
-    return res.json({ success: false });
-  }
-});
-
-// Use this to find Details of Current User
-Users.get("/current/", async (req, res) => {
-  const authority = String(req.user!.Authority);
-  const name = String(req.user!.Name);
-  const id = Number(req.user!.id);
-
-  return res.json({ id: id, Name: name, Authority: authority });
-});
-
 // This is Uri to access List of Non Admin Users
 Users.get("/", RoutesCommon.IsAdmin, async (req, res) => {
   try {

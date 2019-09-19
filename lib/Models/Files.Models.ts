@@ -16,6 +16,18 @@ export class Files extends Model<Files> {
   Location!: string;
 
   @AllowNull(false)
+  @Column(DataType.TEXT)
+  Category!: string;
+
+  @AllowNull(false)
+  @Column(DataType.TEXT)
+  sdptitle!: string;
+
+  @AllowNull(false)
+  @Column(DataType.NUMERIC)
+  year!: number;
+  
+  @AllowNull(false)
   @ForeignKey(() => Users)
   @Column
   UserID!: number;

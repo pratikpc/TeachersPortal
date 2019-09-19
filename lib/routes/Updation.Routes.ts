@@ -1,9 +1,38 @@
 import { Router } from "express";
 import { RoutesCommon } from "./Common.Routes";
-import * as Model from "../Models/Users.Model";
+import * as Models from "../Models/Models";
 
 export const Updation = Router();
+Updation.get("/newpassword", RoutesCommon.IsAuthenticated, (req, res) => {
+    return res.render("changepassword.html");
+});
+Updation.post("/newpassword", RoutesCommon.IsAuthenticated, async (req, res) => {
+    try {
+        const id = Number(req.user!.id);
 
+        const params = RoutesCommon.GetParameters(req);
+        const old_pass = String(params.OldPassword);
+        const new_pass = String(params.NewPassword);
+
+        const user = await Models.Users.findOne({ where: { id: id } });
+
+        // Check if User Exists
+        if (!user) return res.json({ success: false });
+        // Check if Password Entered is Correct
+        const match = await user!.ComparePassword(old_pass);
+        if (!match) return res.json({ success: false });
+
+        const [count] = await Models.Users.update(
+            { Password: new_pass },
+            { where: { id: id } }
+        );
+
+        if (count !== 1) return res.json({ success: false });
+        return res.json({ success: true });
+    } catch (error) {
+        return res.json({ success: false });
+    }
+});
 Updation.get("/updated", RoutesCommon.IsAuthenticated, (req, res) => {
     return res.render("update.html");
 });
@@ -58,7 +87,7 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const opost = String(params.opost);
 
     const userId = Number(req.user!.id);
-    await Model.Users.update(
+    await Models.Users.update(
         {
             title: title,
             firstname: firstname, middlename: middlename, lastname: lastname,
@@ -79,7 +108,7 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
 
 Updation.get("/details", RoutesCommon.IsAuthenticated, async (req, res) => {
     const userId = Number(req.user!.id);
-    const user = await Model.Users.findOne({
+    const user = await Models.Users.findOne({
         where: { id: userId }
     }
     );
@@ -100,4 +129,74 @@ Updation.get("/details", RoutesCommon.IsAuthenticated, async (req, res) => {
         oduration: user.oduration, oinstitute: user.oinstitute, opost: user.opost
     }
     );
+});
+Updation.get("/upload", RoutesCommon.IsAuthenticated, (req, res) => {
+    return res.render("documents.html");
+});
+
+Updation.post(
+    "/upload",
+    RoutesCommon.IsAuthenticated,
+    RoutesCommon.upload.array("file"),
+    async (req, res) => {
+        try {
+            const files = req.files as any[];
+            if (files == null || files.length === 0) return res.status(422).send("Upload Failed");
+
+            const params = RoutesCommon.GetParameters(req);
+            if (params == null) return res.status(422).send("Upload Failed");
+
+            const userId = Number(req.user!.id);
+            const year = Number(params.year);
+            const sdptitle = String(params.sdptitle);
+            const Category = String(params.Category);
+
+            // Iterate over all the files
+            files.forEach(async file => {
+                await Models.Files.create({
+                    UserID: userId,
+                    Location: file.path,
+                    year: year,
+                    sdptitle: sdptitle,
+                    Category: Category
+                });
+            });
+
+            return res.status(200).redirect("/upload");
+        } catch (error) {
+            console.error(error);
+            return res.status(422).send("Upload Failed");
+        }
+    }
+);
+Updation.get("/files", RoutesCommon.IsAuthenticated, async (req, res) => {
+    const userId = Number(req.user!.id);
+    const files = await Models.Files.findAll({
+        where: { UserID: userId }
+    });
+    console.log(files);
+    const files_json: any[] = [];
+    files.forEach(file => {
+        console.log(file);
+        files_json.push({ id: file.id, Category: file.Category, sdptitle: file.sdptitle, year: file.year });
+    })
+
+    return res.json(files_json);
+});
+
+Updation.get("/file-viewer", RoutesCommon.IsAuthenticated, async (req, res) => {
+    try {
+        const userId = Number(req.user!.id);
+        const params = RoutesCommon.GetParameters(req);
+        const id = params.id;
+
+        const file = await Models.Files.findOne({
+            where: { UserID: userId, id: id }
+        });
+        if (!file) return res.sendStatus(404);
+
+        const path = file.Location;
+        return res.download(path);
+    } catch (err) { }
+    return res.sendStatus(404);
 });

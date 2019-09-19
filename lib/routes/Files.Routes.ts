@@ -1,40 +1,8 @@
 import { Router } from "express";
-import { RoutesCommon, upload } from "./Common.Routes";
+import { RoutesCommon } from "./Common.Routes";
 import * as Models from "../Models/Models";
 
 export const Files = Router();
-
-Files.post(
-  "/upload",
-  RoutesCommon.IsAuthenticated,
-  upload.array("files"),
-  async (req, res) => {
-    try {
-      const files = req.files as any[];
-      if (files.length === 0) return res.status(422).send("Upload Failed");
-
-      const params = RoutesCommon.GetParameters(req);
-      if (params == null) return res.status(422).send("Upload Failed");
-
-      const userId = Number(req.user!.id);
-
-      // Iterate over all the files
-      files.forEach(async file => {
-
-        await Models.Files.create({
-          UserID: userId,
-          Location: file.filename
-        });
-
-      });
-
-      return res.status(200).redirect("/files/upload");
-    } catch (error) {
-      console.error(error);
-      return res.status(422).send("Upload Failed");
-    }
-  }
-);
 
 Files.delete("/", RoutesCommon.IsAuthenticated, async (req, res) => {
   const params = RoutesCommon.GetParameters(req);
@@ -48,10 +16,6 @@ Files.delete("/", RoutesCommon.IsAuthenticated, async (req, res) => {
   if (count === 0) return res.json({ success: false });
 
   return res.json({ success: true });
-});
-
-Files.get("/upload/", RoutesCommon.IsAuthenticated, async (req, res) => {
-  return RoutesCommon.NoCaching(res).render("random=file.html");
 });
 
 Files.get("/", RoutesCommon.IsAuthenticated, async (req, res) => {
