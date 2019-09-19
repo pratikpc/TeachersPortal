@@ -35,6 +35,9 @@ app.use("/user", Routes.Users);
 // Route via this as path for File Uploading and Downloading
 app.use("/files", Routes.Files);
 
+// Route via this as Path to Updation
+app.use("/", Routes.Updation);
+
 app.get("/index/", RoutesCommon.IsAuthenticated, async (req, res) => {
   return res.render("index.html");
 });

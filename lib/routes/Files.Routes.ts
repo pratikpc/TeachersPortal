@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { RoutesCommon, upload } from "./Common.Routes";
 import * as Models from "../Models/Models";
-import * as fs from "fs";
 
 export const Files = Router();
 

@@ -22,35 +22,28 @@
 
     <!-- Custom styles for this template -->
     <link href="css/resume.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+
 
 </head>
 
 <body id="page-top">
 
-</div>
-
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav" name="sideNav">
       <a class="navbar-brand js-scroll-trigger" href="#page-top">
         <span class="d-none d-lg-block">
-          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="images/profile.jpg" alt="">
         </span>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" name="navbarSupportedContent">
         <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="index.html">HOME</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="seeprofile.html">SEE PROFILE</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#update">UPDATE PROFILE</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="upload.html">UPLOAD DOCUMENTS</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#">LOGOUT</a>
@@ -59,28 +52,159 @@
         </ul>
       </div>
     </nav>
-    <div class="container-fluid p-0">
 
-      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="update">
-        <div class="my-auto">
-        <ul ="list-style-type:square;">
-        <li><button class="button button" ><a href="personal.html" style="text-decoration:none"> Personal  </button></li></a>
-        <br></br>
-        <li><button class="button"> <a href="education.html" style="text-decoration:none">Education </button></li></a>
-        <br></br>
-        <li><button class="button"><a href="experience.html" style="text-decoration:none"> Experience </button></li></a>
-        <br></br>
-        <li><button class="button"> <a href="skillsdp.html" style="text-decoration:none">STAFF DEVELOPMENT PROGRAMMES </button></li></a>
-        <br></br>
-        <li><button class="button"> <a href="other.html" style="text-decoration:none">Others </button></li></a>
-        <br></br> 
-        </ul>
+    <div class="container-fluid p-0" style="width:800px; margin:0 auto;">
+      <section class=" p-lg-5 " id="update" name="update">
+        <div class="my-auto item" id="personal">
+          <h3>Personal</h3>
+          <label for="title">Title</label>
+          <input id="title" type="text" name="title" in/>
+              
+          <label for="name">Name<span>*</span></label>
+          <div class="name-item">
+            <input id="firstname" type="text" name="firstname" placeholder="First" />
+            <input id ="middlename" type="text" name="middlename" placeholder="Middle" />
+            <input id="lastname" type="text" name="lastname" placeholder="Surname" />
+          </div>
+    
+          <label for="fname">Father Name</label>
+          <input id="fname" type="text" name="fname"/>
+
+          <label for="mname">Mother Name</label>
+          <input id="mname" type="text" name="mname"/>
+    
+          <label for="gender">Gender</label>
+          <input list="gender" type="text" name="gender" placeholder="Select one"/>
+          <datalist id="gender">
+          <option value="Male" >Male</option>
+          <option value="Female" >Female</option>
+          </datalist></br>
+            
+          <label for="bdate">Birthday<span>*</span></label>
+          <input id="bdate" type="date" name="bdate" required/>
+          
+          <label for="address">Address</label>
+          <textarea id="address" rows="2" ></textarea>
+      
+          <label for="phone">Phone No</label>
+          <input id="phone" type="text" name="phone"/>
+            
+          <label for="email">Email<span>*</span></label>
+          <input id="email" type="text" name="email"/>
+  
         </div>
+
+        <div class="my-auto item" id="education">
+        </br><h3>Education</h3>
+        </br><h5>Under Graduate</h5>
+
+          <label for="ugpyear">Passing Date</label>
+          <input id="ugpyear" type="date" name="ugpyear"/>
+          
+          <label for="uggrade">Marks(%)/Grade</label>
+          <input id="uggrade" type="number" name="uggrade"/>
+      
+          <label for="ugu">University/Board</label>
+          <input id="ugu" type="text" name="ugu"/>
+
+          <label for="ugi">Institute</label>
+          <input id="ugi" type="text" name="ugi"/>
+      
+         <label for="ugr">Regular/Distance</label>
+          <input list="ugr" type="text" name="ugr" placeholder="Select one"/>
+          <datalist id="ugr">
+          <option value="Regular" >Regular</option>
+          <option value="Distance" >Distance</option>
+          </datalist></br>
+
+        </br><h5>Post Graduate</h5>
+
+
+          <label for="pgpyear">Passing Year</label>
+          <input id="pgpyear" type="text" name="pgpyear"/>
+          
+          <label for="pggrade">Marks(%)/Grade</label>
+          <input id="pggrade" type="text" name="pggrade"/>
+      
+          <label for="pgu">University/Board</label>
+          <input id="pgu" type="text" name="pgu"/>
+
+          <label for="pgi">Institute</label>
+          <input id="pgi" type="text" name="pgi"/>
+      
+          <label for="pgr">Regular/Distance</label>
+          <input list="pgr" type="text" name="pgr" placeholder="Select one"/>
+          <datalist id="pgr">
+          <option value="Regular" >Regular</option>
+          <option value="Distance" >Distance</option>
+          </datalist></br>
+    
+        </br><h5>Specialization</h5>
+        
+          <label for="sppyear">Passing Year</label>
+          <input id="sppyear" type="text" name="sppyear"/>
+          
+          <label for="spgrade">Marks(%)/Grade</label>
+          <input id="spgrade" type="text" name="spgrade"/>
+      
+          <label for="spu">University/Board</label>
+          <input id="spu" type="text" name="spu"/>
+
+          <label for="spi">Institute</label>
+          <input id="spi" type="text" name="spi"/>
+      
+          <label for="spr">Regular/Distance</label>
+          <input list="spr" type="text" name="spr" placeholder="Select one"/>
+          <datalist id="spr">
+          <option value="Regular" >Regular</option>
+          <option value="Distance" >Distance</option>
+          </datalist></br>
+      
+        </div>
+
+        <div class="my-auto item" id="experience">
+
+        </br><h3>Experience</h3>
+        <h5>Teaching</h5>
+          <label for="tinstitute">Institute</label>
+          <input id="tinstitute" type="text" name="tinstitute"/>
+          <label for="tpost">Post</label>
+          <input id="tpost" type="text" name="tpost"/>
+          <label for="tduration">Duration</label>
+          <input id="tduration" type="text" name="tduration"/>
+
+          <h5>Industry</h5>
+          <label for="iinstitute">Institute</label>
+          <input id="iinstitute" type="text" name="iinstitute"/>
+          <label for="ipost">Post</label>
+          <input id="ipost" type="text" name="ipost"/>
+          <label for="iduration">Duration</label>
+          <input id="iduration" type="text" name="iduration"/>
+
+          <h5>Other</h5>
+          <label for="oinstitute">Institute</label>
+          <input id="oinstitute" type="text" name="oinstitute"/>
+          <label for="opost">Post</label>
+          <input id="opost" type="text" name="opost"/>
+          <label for="oduration">Duration</label>
+          <input id="oduration" type="text" name="oduration"/>
+
+        </div>
+
+        <div class="my-auto item" id="development">
+          
+
+        </div>
+
+
+
+
+        
 
       </section>    
 
      </div> 
-            
+    </div>          
     <!-- Bootstrap core JavaScript -->
     <script src="vendorresume/jquery/jquery.min.js"></script>
     <script src="vendorresume/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -90,6 +214,8 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/resume.js"></script>
+    <script>src="js/index.js"</script>
+    <script>src="js/test.js"</script>
 
   </body>
 

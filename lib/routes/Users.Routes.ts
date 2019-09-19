@@ -8,7 +8,7 @@ export const Users = Router();
 
 Users.get("/login/", (req, res) => {
   if (req.isUnauthenticated()) return res.render("login.html");
-  return res.redirect("/files/upload");
+  return res.redirect("/");
 });
 // This is the Uri
 // By default when Post Request is Made
@@ -18,7 +18,7 @@ Users.post(
   "/login/",
   passport.authenticate("app", { failureRedirect: "/" }),
   (req, res) => {
-    return res.redirect("/files/upload");
+    return res.redirect("/");
   }
 );
 
