@@ -1,0 +1,40 @@
+{
+            "title":"Assistant Professor",
+            "first_name":"Mahendra",
+            "middle_name":"Mahendra",
+            "last_name":"Mehra",
+            "mother_name":"Something",
+            "father_name":"Something",
+            "gender":"Male",
+            "birthdate":"26-10-1973",
+            "address":"Bandstand, Bandra(W)",
+            "phone":"9833388899",
+            "email":"abc@gmail.com",
+            "pgInstitute": "Sardar Patel College of Engineering",
+            "pgCourse": "Computer Engineering",
+            "pgUniversity": "Mumbai University",
+            "pgRegular": "Regular",
+            "pgScore":"SGPA: 9.20",
+            "pgDuration": "2013-15",
+            "ugInstitute": "Sardar Patel College of Engineering & Technology",
+            "ugCourse": "Computer Engineering",
+            "ugUniversity": "Mumbai University",
+            "ugRegular": "Regular",
+            "ugScore":"SGPA: 8.20",
+            "ugDuration": "2009-13",
+            "tpost": "Assitant Professor",
+            "tinstitute": "FR CRCE",
+            "tduration": "2017 - Present",
+            "ipost": "Junior Developer",
+            "icompany": "Ravis Private Ltd",
+            "iduration":"2015 - 17",
+            "opost": "Club Senior Executive",
+            "ocompany": "Mozilla Club",
+            "oduration":"2011 - 13"
+
+
+
+
+
+}
+
