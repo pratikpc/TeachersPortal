@@ -36,10 +36,6 @@ app.use("/user", Routes.Users);
 // Route via this as Path to Updation
 app.use("/", Routes.Updation);
 
-app.get("/index/", RoutesCommon.IsAuthenticated, async (req, res) => {
-  return res.render("index.html");
-});
-
 app.get("/", (req, res) => {
   if (req.isUnauthenticated()) return res.render("login.html");
   return res.redirect("/index");

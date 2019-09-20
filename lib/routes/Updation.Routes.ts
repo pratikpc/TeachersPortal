@@ -36,7 +36,11 @@ Updation.post("/newpassword", RoutesCommon.IsAuthenticated, async (req, res) => 
 Updation.get("/updated", RoutesCommon.IsAuthenticated, (req, res) => {
     return res.render("update.html");
 });
-
+Updation.get("/index/", RoutesCommon.IsAuthenticated, async (req, res) => {
+    return res.render("index.html");
+  });
+  
+  
 Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const params = RoutesCommon.GetParameters(req);
     if (params == null) return res.status(422).send("Upload Failed");
@@ -57,7 +61,10 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const phone = String(params.phone);
     const email = String(params.email);
 
-    const ugpyear = String(params.ugpyear);
+    const dept = String(params.dept);
+    const aos = String(params.aos);
+
+    const upgyear = String(params.upgyear);
     const uggrade = String(params.uggrade);
     const ugu = String(params.ugu);
     const ugi = String(params.ugi);
@@ -73,7 +80,6 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const spi = String(params.spi);
     const spr = String(params.spr);
 
-
     const tduration = String(params.tduration);
     const tinstitute = String(params.tinstitute);
     const tpost = String(params.tpost);
@@ -87,13 +93,16 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const opost = String(params.opost);
 
     const userId = Number(req.user!.id);
+
+    console.log(address, upgyear);
     await Models.Users.update(
         {
             title: title,
             firstname: firstname, middlename: middlename, lastname: lastname,
             fname: fname, mname: mname,
+            dept: dept, aos: aos,
             gender: gender, bdate: bdate, address: address, phone: phone, email: email,
-            upgyear: ugpyear, uggrade: uggrade, ugu: ugu, ugi: ugi,
+            ugpyear: upgyear, uggrade: uggrade, ugu: ugu, ugi: ugi,
             pgyear: pgyear, pggrade: pggrade, pgu: pgu, pgi: pgi,
             spyear: spyear, spgrade: spgrade, spu: spu, spi: spi, spr: spr,
             tduration: tduration, tinstitute: tinstitute, tpost: tpost,
@@ -106,6 +115,11 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     return res.redirect("/");
 });
 
+function EmptyUndef(key: any){
+    if (key == null || key === "undefined")
+        return "";
+    return key;
+}
 Updation.get("/details", RoutesCommon.IsAuthenticated, async (req, res) => {
     const userId = Number(req.user!.id);
     const user = await Models.Users.findOne({
@@ -117,16 +131,17 @@ Updation.get("/details", RoutesCommon.IsAuthenticated, async (req, res) => {
         return res.json({});
 
     return res.json({
-        title: user.title,
-        firstname: user.firstname, middlename: user.middlename, lastname: user.lastname,
-        fname: user.fname, mname: user.mname,
-        gender: user.gender, bdate: user.bdate, address: user.address, phone: user.phone, email: user.email,
-        upgyear: user.ugpyear, uggrade: user.uggrade, ugu: user.ugu, ugi: user.ugi,
-        pgyear: user.pgyear, pggrade: user.pggrade, pgu: user.pgu, pgi: user.pgi,
-        spyear: user.spyear, spgrade: user.spgrade, spu: user.spu, spi: user.spi, spr: user.spr,
-        tduration: user.tduration, tinstitute: user.tinstitute, tpost: user.tpost,
-        iduration: user.iduration, iinstitute: user.iinstitute, ipost: user.ipost,
-        oduration: user.oduration, oinstitute: user.oinstitute, opost: user.opost
+        title: EmptyUndef(user.title),
+        firstname: EmptyUndef(user.firstname), middlename: EmptyUndef(user.middlename), lastname: EmptyUndef(user.lastname),
+        fname: EmptyUndef(user.fname), mname: EmptyUndef(user.mname),
+        gender: EmptyUndef(user.gender), bdate: EmptyUndef(user.bdate), address: EmptyUndef(user.address), phone: EmptyUndef(user.phone), email: EmptyUndef(user.email),
+        dept: EmptyUndef(user.dept), aos: EmptyUndef(user.aos),
+        upgyear: EmptyUndef(user.ugpyear), uggrade: EmptyUndef(user.uggrade), ugu: EmptyUndef(user.ugu), ugi: EmptyUndef(user.ugi),
+        pgyear: EmptyUndef(user.pgyear), pggrade: EmptyUndef(user.pggrade), pgu: EmptyUndef(user.pgu), pgi: EmptyUndef(user.pgi),
+        spyear: EmptyUndef(user.spyear), spgrade: EmptyUndef(user.spgrade), spu: EmptyUndef(user.spu), spi: EmptyUndef(user.spi), spr: EmptyUndef(user.spr),
+        tduration: EmptyUndef(user.tduration), tinstitute: EmptyUndef(user.tinstitute), tpost: EmptyUndef(user.tpost),
+        iduration: EmptyUndef(user.iduration), iinstitute: EmptyUndef(user.iinstitute), ipost: EmptyUndef(user.ipost),
+        oduration: EmptyUndef(user.oduration), oinstitute: EmptyUndef(user.oinstitute), opost: EmptyUndef(user.opost)
     }
     );
 });

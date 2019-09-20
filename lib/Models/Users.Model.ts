@@ -90,6 +90,15 @@ export class Users extends Model<Users> {
   @AllowNull(false)
   @Default("")
   @Column(DataType.TEXT)
+  dept!: string;
+  @AllowNull(false)
+  @Default("")
+  @Column(DataType.TEXT)
+  aos!: string;
+
+  @AllowNull(false)
+  @Default("")
+  @Column(DataType.TEXT)
   ugpyear!: string;
   @AllowNull(false)
   @Default("")

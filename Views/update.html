@@ -1,177 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>Fr.CRCE</title>
+  <title>Fr.CRCE</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendorresume/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="vendorresume/bootstrap/css/bootstrap.css" rel="stylesheet">
 
-    <!-- Custom fonts for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
-    <link href="vendorresume/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="vendorresume/devicons/css/devicons.min.css" rel="stylesheet">
-    <link href="vendorresume/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+  <!-- Custom fonts for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+    rel="stylesheet">
+  <link href="vendorresume/font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="vendorresume/devicons/css/devicons.min.css" rel="stylesheet">
+  <link href="vendorresume/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/resume.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="css/resume.css" rel="stylesheet">
+  <link href="css/custom.css" rel="stylesheet">
 
 
 </head>
 
 <body id="page-top" onload="loadAgeSelector()">
 
-   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">
-        <span class="d-none d-lg-block">
-          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="images/profile.jpg" alt="">
-        </span>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="index.html">HOME</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="update.html">UPDATE PROFILE</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="documents.html">UPLOAD DOCUMENTS</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="changepassword.html">CHANGE PASSWORD</a>
-          </li>
-            <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/user/logout">LOGOUT</a>
-          </li>
-          
-        </ul>
-      </div>
-    </nav>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+      <span class="d-none d-lg-block">
+        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="images/profile.jpg" alt="">
+      </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/index">HOME</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/updated">UPDATE PROFILE</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/upload">UPLOAD DOCUMENTS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/newpassword">CHANGE PASSWORD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/user/logout">LOGOUT</a>
+        </li>
 
-
-    <div class="container-fluid p-0" style="width:1100px;"> 
-      <section class=" p-lg-4 " id="update" >
-          <form method="POST" action="/updated" >
+      </ul>
+    </div>
+  </nav>
+  <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
+    <section class=" p-lg-4 " id="update">
+      <form method="POST" action="/updated">
 
         <div class="my-auto item" id="personal">
           <h4><label for="title" style="color:black;font-size:24px;">Title<span>*</span></label></h4>
-          <input id="title" type="text" name="title" required/>
-              
+          <input id="title" type="text" name="title"  />
+
           <h4><label for="name" style="color:black;font-size:24px;">Name<span>*</span></label></h4>
           <div class="name-item">
-            <input id="name" type="text" name="name" placeholder="First" required/>
-            <input type="text" name="name" placeholder="Middle" required/>
-            <input type="text" name="name" placeholder="Surname" required/>
+            <input type="text" name="firstname" id="firstname" placeholder="First"  />
+            <input type="text" name="middlename" id="middlename" placeholder="Middle"  />
+            <input type="text" name="lastname" id="lastname" placeholder="Surname"  />
           </div>
-    
+
           <h4><label for="fname" style="color:black;font-size:24px;">Father Name<span>*</span></label></h4>
-          <input id="fname" type="text" name="fname" required/>
+          <input id="fname" type="text" name="fname"  />
 
           <h4><label for="mname" style="color:black;font-size:24px;">Mother Name<span>*</span></label></h4>
-          <input id="mname" type="text" name="mname" required/>
-    
+          <input id="mname" type="text" name="mname"  />
+
           <h4><label style="color:black;font-size:24px;">Gender<span>*</span></label></br></h4>
-          <select id="gender" name="gender" style="width: 25%;padding:5px;" required>
-          <option value="" selected="selected">Select One</option>
-          <option value="male" >Male</option>
-          <option value="female" >Female</option>
+          <select id="gender" name="gender" style="width: 25%;padding:5px;" >
+            <option value="one" selected>Select One</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
           </select></br>
-            
+
           <h4><label for="bdate" style="color:black;font-size:24px;">Birthday<span>*</span></label></h4>
-          <input id="bdate" type="date" name="bdate" required/>
-          
+          <input id="bdate" type="date" name="bdate"  />
+
           <h4><label for="address" style="color:black;font-size:24px;">Address<span>*</span></label></h4>
-          <textarea id="address" rows="2" style="height:150px;" required></textarea>
-      
+          <textarea id="address" name="address" rows="2" style="height:150px;" ></textarea>
+
           <h4><label for="phone" style="color:black;font-size:24px;">Phone No<span>*</span></label></h4>
-          <input id="phone" type="text" name="phone" required/>
-            
+          <input id="phone" type="text" name="phone"  />
+
           <h4><label for="email" style="color:black;font-size:24px;">Email<span>*</span></label></h4>
-          <input id="email" type="email" name="email" required/>
-  
+          <input id="email" type="email" name="email"  />
+
+          <h4><label style="color:black;font-size:24px;">Department<span>*</span></label></br></h4>
+          <select id="dept" name="dept" style="width: 25%;padding:5px;" >
+            <option value="two" selected="selected">Select One</option>
+            <option value="CS">Computer Science</option>
+            <option value="IT">IT</option>
+            <option value="ELEX">Electronics</option>
+            <option value="PROD">Production</option>
+          </select>
+
+          <h4><label for="aos" style="color:black;font-size:24px;">Area of Specialization<span>*</span></label></h4>
+          <input id="aos" type="text" name="aos"  />
+
         </div>
 
         <div class="my-auto item" id="education">
 
-        </br><h4>Under Graduate<span>*</span></h4>
-        </br>
+          </br>
+          <h4>Under Graduate<span>*</span></h4>
+          </br>
 
-          <label for="ugpyear">Passing Year</label>
-          <input id="ugpyear" type="text" name="ugpyear" required/>
-          
+          <label for="upgyear">Passing Year</label>
+          <input id="upgyear" type="text" name="upgyear"  />
+
           <label for="uggrade">Marks(%)/Grade</label>
-          <input id="uggrade" type="text" name="uggrade" required/>
-      
+          <input id="uggrade" type="text" name="uggrade"  />
+
           <label for="ugu">University/Board</label>
-          <input id="ugu" type="text" name="ugu" required/>
+          <input id="ugu" type="text" name="ugu"  />
 
           <label for="ugi">Institute</label>
-          <input id="ugi" type="text" name="ugi" required/>
-      
-          <label >Regular/Distance</label></br>
-          <select id="ugr" name="ugr" style="width: 25%;padding:5px;" required>
-          <option value="" selected="uselected">Select One</option>
-          <option value="uregular" >Regular</option>
-          <option value="udistance" >Distance</option>
+          <input id="ugi" type="text" name="ugi"  />
+
+          <label>Regular/Distance</label></br>
+          <select id="ugr" name="ugr" style="width: 25%;padding:5px;" >
+            <option value="two" selected="selected">Select One</option>
+            <option value="uregular">Regular</option>
+            <option value="udistance">Distance</option>
           </select>
 
-        </br><h4>Post Graduate<span>*</span></h4>
-        </br>
+          </br>
+          <h4>Post Graduate<span>*</span></h4>
+          </br>
 
 
-          <label for="pgpyear">Passing Year</label>
-          <input id="pgpyear" type="text" name="pgpyear" required/>
-          
+          <label for="pgyear">Passing Year</label>
+          <input id="pgyear" type="text" name="pgyear"  />
+
           <label for="pggrade">Marks(%)/Grade</label>
-          <input id="pggrade" type="text" name="pggrade" required/>
-      
+          <input id="pggrade" type="text" name="pggrade"  />
+
           <label for="pgu">University/Board</label>
-          <input id="pgu" type="text" name="pgu" required/>
+          <input id="pgu" type="text" name="pgu"  />
 
           <label for="pgi">Institute</label>
-          <input id="pgi" type="text" name="pgi" required/>
-      
-          <label>Regular/Distance</label></br>
-          <select id="pgr" name="pgr" style="width: 25%;padding:5px;" required>
-          <option value="" selected="pselected">Select One</option>
-          <option value="pregular" >Regular</option>
-          <option value="pdistance" >Distance</option>
-          </select>
-        
-        </br><h4>Specialization</h4>
-        </br>
+          <input id="pgi" type="text" name="pgi"  />
 
-          <label for="sppyear">Passing Year</label>
-          <input id="sppyear" type="text" name="sppyear"/>
-          
+          <label>Regular/Distance</label></br>
+          <select id="pgr" name="pgr" style="width: 25%;padding:5px;" >
+            <option value="three" selected="selected">Select One</option>
+            <option value="pregular">Regular</option>
+            <option value="pdistance">Distance</option>
+          </select>
+
+          </br>
+          <h4>Specialization</h4>
+          </br>
+
+          <label for="spyear">Passing Year</label>
+          <input id="spyear" type="text" name="spyear" />
+
           <label for="spgrade">Marks(%)/Grade</label>
-          <input id="spgrade" type="text" name="spgrade"/>
-      
+          <input id="spgrade" type="text" name="spgrade" />
+
           <label for="spu">University/Board</label>
-          <input id="spu" type="text" name="spu"/>
+          <input id="spu" type="text" name="spu" />
 
           <label for="spi">Institute</label>
-          <input id="spi" type="text" name="spi"/>
-      
+          <input id="spi" type="text" name="spi" />
+
           <label>Regular/Distance</label></br>
-          <select id="spr" name="spr" style="width: 25%;padding:5px;">
-          <option value="" selected="sselected" >Select One</option>
-          <option value="sregular" >Regular</option>
-          <option value="sdistance" >Distance</option>
-          </select>
-      
+          <select id="spr" name="spr" style="width: 25%;padding:5px;" >
+            <option value="three" selected="selected">Select One</option>
+            <option value="pregular">Regular</option>
+            <option value="pdistance">Distance</option>
+          </select></br>
+          <label for="spyear">Duration</label>
+          <input id="spyear" type="text" name="spyear" />
+
         </div>
 
         <div class="my-auto item" id="experience">
@@ -179,68 +197,80 @@
         
           <h4>Teaching</h4>
           <label for="tinstitute">Institute</label>
-          <input id="tinstitute" type="text" name="tinstitute"/>
+          <input id="tinstitute" type="text" name="tinstitute" required value=""/>
           <label for="tpost">Post</label>
-          <input id="tpost" type="text" name="tpost"/>
+          <input id="tpost" type="text" name="tpost" required value=""/>
           <label for="tduration">Duration</label>
-          <input id="tduration" type="text" name="tduration"/>
+          <input id="tduration" type="text" name="tduration" required value=""/>
 
           <h4>Industrial</h4>
           <label for="iinstitute">Institute</label>
-          <input id="iinstitute" type="text" name="iinstitute"/>
+          <input id="iinstitute" type="text" name="iinstitute" required value=""/>
           <label for="ipost">Post</label>
-          <input id="ipost" type="text" name="ipost"/>
+          <input id="ipost" type="text" name="ipost" required value=""/>
           <label for="iduration">Duration</label>
-          <input id="iduration" type="text" name="iduration"/>
+          <input id="iduration" type="text" name="iduration" required value=""/>
 
           <h4>Other</h4>
           <label for="oinstitute">Institute</label>
-          <input id="oinstitute" type="text" name="oinstitute"/>
-          <label for="odpost">Post</label>
-          <input id="odpost" type="text" name="odpost"/>
+          <input id="oinstitute" type="text" name="oinstitute" required value=""/>
+          <label for="opost">Post</label>
+          <input id="opost" type="text" name="opost" required value=""/>
           <label for="oduration">Duration</label>
-          <input id="oduration" type="text" name="oduration"/>
+          <input id="oduration" type="text" name="oduration" required value=""/>
 
         </div>
 
-        </div>
-              <button class="btn btn--radius-2 btn--red" type="submit"> Upload </button>
-        </div>
-      </form>
-      </section>    
 
-    </div>  
-      
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendorresume/jquery/jquery.js"></script>
-    <script src="vendorresume/bootstrap/js/bootstrap.bundle.js"></script>
+  </div>
+  <button class="btn btn--radius-2 btn--red" type="submit"> Upload </button>
+  </div>
+  </form>
+  </section>
 
-    <!-- Plugin JavaScript -->
-    <script src="vendorresume/jquery-easing/jquery.easing.js"></script>
+  </div>
 
-    <!-- Custom scripts for this template -->
-    <script src="js/resume.js"></script>
-    <script>src="js/index.js"</script>
-    <script>src="js/test.js"</script>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendorresume/jquery/jquery.js"></script>
+  <script src="vendorresume/bootstrap/js/bootstrap.bundle.js"></script>
 
-    <script src="js/dropzone.js"></script>
+  <!-- Plugin JavaScript -->
+  <script src="vendorresume/jquery-easing/jquery.easing.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <!-- Custom scripts for this template -->
+  <script src="js/resume.js"></script>
 
-    <script>
 
-    $('#year').each(function() {
+  <script src="js/dropzone.js"></script>
 
-  var start = new Date().getFullYear();
-var end = 1970;
-var options = "";
-for(var year = start ; year >=end; year--){
-  options += "<option>"+ year +"</option>";
-}
-document.getElementById("year").innerHTML = options;
-})
-</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-  </body>
+  <!-- <script>
+
+    $('#year').each(function () {
+
+      var start = new Date().getFullYear();
+      var end = 1970;
+      var options = "";
+      for (var year = start; year >= end; year--) {
+        options += "<option>" + year + "</option>";
+      }
+      document.getElementById("year").innerHTML = options;
+    })
+  </script> -->
+  <script>
+    $.getJSON("/details", function (data) {
+      console.log(data);
+      Object.keys(data).forEach(function (key) {
+        let value=data[key];
+        if(value == null)
+          value="3";
+        $("#" + key).val(value);
+        console.log(key, value);
+      });
+    });
+  </script>
+
+</body>
 
 </html>
