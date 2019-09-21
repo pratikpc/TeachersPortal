@@ -38,7 +38,7 @@ Updation.get("/updated", RoutesCommon.IsAuthenticated, (req, res) => {
 });
 Updation.get("/index/", RoutesCommon.IsAuthenticated, async (req, res) => {
     const userId = Number(req.user!.id);
-    const details = GetUserDetails(userId);
+    const details = await GetUserDetails(userId);
     return res.render("index.ejs", details);
 });
 
