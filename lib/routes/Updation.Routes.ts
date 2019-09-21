@@ -72,11 +72,13 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const uggrade = String(params.uggrade);
     const ugu = String(params.ugu);
     const ugi = String(params.ugi);
+    const ugr = String(params.ugr);
 
     const pgyear = String(params.pgyear);
     const pggrade = String(params.pggrade);
     const pgu = String(params.pgu);
     const pgi = String(params.pgi);
+    const pgr = String(params.pgr);
 
     const spyear = String(params.spyear);
     const spgrade = String(params.spgrade);
@@ -105,8 +107,8 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
             fname: fname, mname: mname,
             dept: dept, aos: aos,
             gender: gender, bdate: bdate, address: address, phone: phone, email: email,
-            ugpyear: upgyear, uggrade: uggrade, ugu: ugu, ugi: ugi,
-            pgyear: pgyear, pggrade: pggrade, pgu: pgu, pgi: pgi,
+            ugpyear: upgyear, uggrade: uggrade, ugu: ugu, ugi: ugi, ugr: ugr,
+            pgyear: pgyear, pggrade: pggrade, pgu: pgu, pgi: pgi, pgr: pgr,
             spyear: spyear, spgrade: spgrade, spu: spu, spi: spi, spr: spr,
             tduration: tduration, tinstitute: tinstitute, tpost: tpost,
             iduration: iduration, iinstitute: iinstitute, ipost: ipost,
@@ -140,8 +142,8 @@ async function GetUserDetails(userId: any) {
             fname: EmptyUndef(user.fname), mname: EmptyUndef(user.mname),
             gender: EmptyUndef(user.gender), bdate: EmptyUndef(user.bdate), address: EmptyUndef(user.address), phone: EmptyUndef(user.phone), email: EmptyUndef(user.email),
             dept: EmptyUndef(user.dept), aos: EmptyUndef(user.aos),
-            upgyear: EmptyUndef(user.ugpyear), uggrade: EmptyUndef(user.uggrade), ugu: EmptyUndef(user.ugu), ugi: EmptyUndef(user.ugi),
-            pgyear: EmptyUndef(user.pgyear), pggrade: EmptyUndef(user.pggrade), pgu: EmptyUndef(user.pgu), pgi: EmptyUndef(user.pgi),
+            upgyear: EmptyUndef(user.ugpyear), uggrade: EmptyUndef(user.uggrade), ugu: EmptyUndef(user.ugu), ugi: EmptyUndef(user.ugi), ugr: EmptyUndef(user.ugr),
+            pgyear: EmptyUndef(user.pgyear), pggrade: EmptyUndef(user.pggrade), pgu: EmptyUndef(user.pgu), pgi: EmptyUndef(user.pgi), pgr: EmptyUndef(user.pgr),
             spyear: EmptyUndef(user.spyear), spgrade: EmptyUndef(user.spgrade), spu: EmptyUndef(user.spu), spi: EmptyUndef(user.spi), spr: EmptyUndef(user.spr),
             tduration: EmptyUndef(user.tduration), tinstitute: EmptyUndef(user.tinstitute), tpost: EmptyUndef(user.tpost),
             iduration: EmptyUndef(user.iduration), iinstitute: EmptyUndef(user.iinstitute), ipost: EmptyUndef(user.ipost),
