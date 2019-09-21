@@ -37,10 +37,12 @@ Updation.get("/updated", RoutesCommon.IsAuthenticated, (req, res) => {
     return res.render("update.html");
 });
 Updation.get("/index/", RoutesCommon.IsAuthenticated, async (req, res) => {
-    return res.render("index.html");
-  });
-  
-  
+    const userId = Number(req.user!.id);
+    const details = GetUserDetails(userId);
+    return res.render("index.ejs", details);
+});
+
+
 Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const params = RoutesCommon.GetParameters(req);
     if (params == null) return res.status(422).send("Upload Failed");
@@ -94,7 +96,6 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
 
     const userId = Number(req.user!.id);
 
-    console.log(address, upgyear);
     await Models.Users.update(
         {
             title: title,
@@ -115,36 +116,37 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     return res.redirect("/");
 });
 
-function EmptyUndef(key: any){
+function EmptyUndef(key: any) {
     if (key == null || key === "undefined")
         return "";
     return key;
 }
-Updation.get("/details", RoutesCommon.IsAuthenticated, async (req, res) => {
-    const userId = Number(req.user!.id);
+
+async function GetUserDetails(userId: any) {
     const user = await Models.Users.findOne({
         where: { id: userId }
     }
     );
 
     if (user == null)
-        return res.json({});
+        return {};
 
-    return res.json({
-        title: EmptyUndef(user.title),
-        firstname: EmptyUndef(user.firstname), middlename: EmptyUndef(user.middlename), lastname: EmptyUndef(user.lastname),
-        fname: EmptyUndef(user.fname), mname: EmptyUndef(user.mname),
-        gender: EmptyUndef(user.gender), bdate: EmptyUndef(user.bdate), address: EmptyUndef(user.address), phone: EmptyUndef(user.phone), email: EmptyUndef(user.email),
-        dept: EmptyUndef(user.dept), aos: EmptyUndef(user.aos),
-        upgyear: EmptyUndef(user.ugpyear), uggrade: EmptyUndef(user.uggrade), ugu: EmptyUndef(user.ugu), ugi: EmptyUndef(user.ugi),
-        pgyear: EmptyUndef(user.pgyear), pggrade: EmptyUndef(user.pggrade), pgu: EmptyUndef(user.pgu), pgi: EmptyUndef(user.pgi),
-        spyear: EmptyUndef(user.spyear), spgrade: EmptyUndef(user.spgrade), spu: EmptyUndef(user.spu), spi: EmptyUndef(user.spi), spr: EmptyUndef(user.spr),
-        tduration: EmptyUndef(user.tduration), tinstitute: EmptyUndef(user.tinstitute), tpost: EmptyUndef(user.tpost),
-        iduration: EmptyUndef(user.iduration), iinstitute: EmptyUndef(user.iinstitute), ipost: EmptyUndef(user.ipost),
-        oduration: EmptyUndef(user.oduration), oinstitute: EmptyUndef(user.oinstitute), opost: EmptyUndef(user.opost)
-    }
-    );
-});
+    return {
+        data: {
+            title: EmptyUndef(user.title),
+            firstname: EmptyUndef(user.firstname), middlename: EmptyUndef(user.middlename), lastname: EmptyUndef(user.lastname),
+            fname: EmptyUndef(user.fname), mname: EmptyUndef(user.mname),
+            gender: EmptyUndef(user.gender), bdate: EmptyUndef(user.bdate), address: EmptyUndef(user.address), phone: EmptyUndef(user.phone), email: EmptyUndef(user.email),
+            dept: EmptyUndef(user.dept), aos: EmptyUndef(user.aos),
+            upgyear: EmptyUndef(user.ugpyear), uggrade: EmptyUndef(user.uggrade), ugu: EmptyUndef(user.ugu), ugi: EmptyUndef(user.ugi),
+            pgyear: EmptyUndef(user.pgyear), pggrade: EmptyUndef(user.pggrade), pgu: EmptyUndef(user.pgu), pgi: EmptyUndef(user.pgi),
+            spyear: EmptyUndef(user.spyear), spgrade: EmptyUndef(user.spgrade), spu: EmptyUndef(user.spu), spi: EmptyUndef(user.spi), spr: EmptyUndef(user.spr),
+            tduration: EmptyUndef(user.tduration), tinstitute: EmptyUndef(user.tinstitute), tpost: EmptyUndef(user.tpost),
+            iduration: EmptyUndef(user.iduration), iinstitute: EmptyUndef(user.iinstitute), ipost: EmptyUndef(user.ipost),
+            oduration: EmptyUndef(user.oduration), oinstitute: EmptyUndef(user.oinstitute), opost: EmptyUndef(user.opost)
+        }
+    };
+}
 Updation.get("/upload", RoutesCommon.IsAuthenticated, (req, res) => {
     return res.render("documents.html");
 });
