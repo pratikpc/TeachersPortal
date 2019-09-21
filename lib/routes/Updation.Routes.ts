@@ -33,8 +33,10 @@ Updation.post("/newpassword", RoutesCommon.IsAuthenticated, async (req, res) => 
         return res.json({ success: false });
     }
 });
-Updation.get("/updated", RoutesCommon.IsAuthenticated, (req, res) => {
-    return res.render("update.html");
+Updation.get("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
+    const userId = Number(req.user!.id);
+    const details = await GetUserDetails(userId);
+    return res.render("update.ejs", details);
 });
 Updation.get("/index/", RoutesCommon.IsAuthenticated, async (req, res) => {
     const userId = Number(req.user!.id);
