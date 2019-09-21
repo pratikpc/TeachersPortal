@@ -221,3 +221,18 @@ Updation.get("/file-viewer", RoutesCommon.IsAuthenticated, async (req, res) => {
     } catch (err) { }
     return res.sendStatus(404);
 });
+
+Updation.get("/displaypicture", RoutesCommon.IsAuthenticated, async (req, res) => {
+    try {
+        const userId = Number(req.user!.id);
+
+        const file = await Models.Users.findOne({
+            where: { id: userId }
+        });
+        if (!file) return res.sendStatus(404);
+
+        const path = file.ImagePath;
+        return res.download(path);
+    } catch (err) { }
+    return res.sendStatus(404);
+});

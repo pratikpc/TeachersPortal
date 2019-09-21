@@ -200,6 +200,11 @@ export class Users extends Model<Users> {
   opost!: string;
 
   @AllowNull(false)
+  @Default("")
+  @Column(DataType.TEXT)
+  ImagePath!: string;
+
+  @AllowNull(false)
   @Unique
   @Column(DataType.TEXT)
   Name!: string;
