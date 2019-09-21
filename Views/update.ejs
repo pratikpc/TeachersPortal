@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ./partials/head.ejs %>
+  <link href="css/custom.css" rel="stylesheet">
+</head>
+
+<body id="page-top" onload="loadAgeSelector()">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <% include ./partials/navbar %>
+  </nav>
+  <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
+    <section class=" p-lg-4 " id="update">
+      <form method="POST" action="/updated">
+
+        <div class="my-auto item" id="personal">
+          <h4><label for="title" style="color:black;font-size:24px;">Title<span>*</span></label></h4>
+          <input id="title" type="text" name="title" value="<%- data.title %>" />
+
+          <h4><label for="name" style="color:black;font-size:24px;">Name<span>*</span></label></h4>
+          <div class="name-item">
+            <input type="text" name="firstname" id="firstname" placeholder="First" value="<%- data.firstname %>" />
+            <input type="text" name="middlename" id="middlename" placeholder="Middle" value="<%- data.middlename %>" />
+            <input type="text" name="lastname" id="lastname" placeholder="Surname" value="<%- data.lastname %>" />
+          </div>
+
+          <h4><label for="fname" style="color:black;font-size:24px;">Father Name<span>*</span></label></h4>
+          <input id="fname" type="text" name="fname" value="<%- data.fname %>" />
+
+          <h4><label for="mname" style="color:black;font-size:24px;">Mother Name<span>*</span></label></h4>
+          <input id="mname" type="text" name="mname" value="<%- data.mname %>" />
+
+          <h4><label style="color:black;font-size:24px;">Gender<span>*</span></label></br></h4>
+          <select id="gender" name="gender" style="width: 25%;padding:5px;">
+            <option value="<%- data.gender %>" selected="selected">Select One</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select></br>
+
+          <h4><label for="bdate" style="color:black;font-size:24px;">Birthday<span>*</span></label></h4>
+          <input id="bdate" type="date" name="bdate" value="<%- data.bdate %>" />
+
+          <h4><label for="address" style="color:black;font-size:24px;">Address<span>*</span></label></h4>
+          <textarea id="address" name="address" rows="2" style="height:150px;"><%- data.address %> </textarea>
+
+          <h4><label for="phone" style="color:black;font-size:24px;">Phone No<span>*</span></label></h4>
+          <input id="phone" type="text" name="phone" value="<%- data.phone %>" />
+
+          <h4><label for="email" style="color:black;font-size:24px;">Email<span>*</span></label></h4>
+          <input id="email" type="email" name="email" value="<%- data.email %>" />
+
+          <h4><label style="color:black;font-size:24px;">Department<span>*</span></label></br></h4>
+          <select id="dept" name="dept" style="width: 25%;padding:5px;" >
+            <option value="<%- data.dept %>" selected="selected">Select One</option>
+            <option value="CS">Computer Science</option>
+            <option value="IT">IT</option>
+            <option value="ELEX">Electronics</option>
+            <option value="PROD">Production</option>
+          </select>
+
+          <h4><label for="aos" style="color:black;font-size:24px;">Area of Specialization<span>*</span></label></h4>
+          <input id="aos" type="text" name="aos" value="<%- data.aos %> "/>
+
+        </div>
+
+        <div class="my-auto item" id="education">
+
+          </br>
+          <h4>Under Graduate<span>*</span></h4>
+          </br>
+
+          <label for="upgyear">Passing Year</label>
+          <input id="upgyear" type="text" name="upgyear" value="<%- data.upgyear %> "/>
+
+          <label for="uggrade">Marks(%)/Grade</label>
+          <input id="uggrade" type="text" name="uggrade" value="<%- data.uggrade %>" />
+
+          <label for="ugu">University/Board</label>
+          <input id="ugu" type="text" name="ugu" value="<%- data.ugu %>" />
+
+          <label for="ugi">Institute</label>
+          <input id="ugi" type="text" name="ugi" value="<%- data.ugi %>" />
+
+          <label>Regular/Distance</label></br>
+          <select id="ugr" name="ugr" style="width: 25%;padding:5px;" >
+            <option value="<%- data.ugr %>" selected="selected">Select One</option>
+            <option value="uregular">Regular</option>
+            <option value="udistance">Distance</option>
+          </select>
+
+          </br>
+          <h4>Post Graduate<span>*</span></h4>
+          </br>
+
+
+          <label for="pgyear">Passing Year</label>
+          <input id="pgyear" type="text" name="pgyear" value="<%- data.pgyear %>"  />
+
+          <label for="pggrade">Marks(%)/Grade</label>
+          <input id="pggrade" type="text" name="pggrade" value="<%- data.pggrade %>"  />
+
+          <label for="pgu">University/Board</label>
+          <input id="pgu" type="text" name="pgu" value="<%- data.pgu %>" />
+
+          <label for="pgi">Institute</label>
+          <input id="pgi" type="text" name="pgi" value="<%- data.pgi %>" />
+
+          <label>Regular/Distance</label></br>
+          <select id="pgr" name="pgr" style="width: 25%;padding:5px;" >
+            <option value="<%- data.pgr %>" selected="selected">Select One</option>
+            <option value="pregular">Regular</option>
+            <option value="pdistance">Distance</option>
+          </select>
+
+          </br>
+          <h4>Specialization</h4>
+          </br>
+
+          <label for="spyear">Passing Year</label>
+          <input id="spyear" type="text" name="spyear" value="<%- data.spyear %>" />
+
+          <label for="spgrade">Marks(%)/Grade</label>
+          <input id="spgrade" type="text" name="spgrade" value="<%- data.spgrade %>"/>
+
+          <label for="spu">University/Board</label>
+          <input id="spu" type="text" name="spu" value="<%- data.spu %>"/>
+
+          <label for="spi">Institute</label>
+          <input id="spi" type="text" name="spi" value="<%- data.spi %>" />
+
+          <label>Regular/Distance</label></br>
+          <select id="spr" name="spr" style="width: 25%;padding:5px;" >
+            <option value="<%- data.spr %>" selected="selected">Select One</option>
+            <option value="pregular">Regular</option>
+            <option value="pdistance">Distance</option>
+          </select></br>
+
+        </div>
+
+        <div class="my-auto item" id="experience">
+
+        
+          <h4>Teaching</h4>
+          <label for="tinstitute">Institute</label>
+          <input id="tinstitute" type="text" name="tinstitute" required value="<%- data.tinstitute %>"/>
+          <label for="tpost">Post</label>
+          <input id="tpost" type="text" name="tpost" required value="<%- data.tpost %>"/>
+          <label for="tduration">Duration</label>
+          <input id="tduration" type="text" name="tduration" required value="<%- data.tduration %>"/>
+
+          <h4>Industrial</h4>
+          <label for="iinstitute">Institute</label>
+          <input id="iinstitute" type="text" name="iinstitute" required value="<%- data.iinstitute %>"/>
+          <label for="ipost">Post</label>
+          <input id="ipost" type="text" name="ipost" required value="<%- data.ipost %>"/>
+          <label for="iduration">Duration</label>
+          <input id="iduration" type="text" name="iduration" required value="<%- data.iduration %>"/>
+
+          <h4>Other</h4>
+          <label for="oinstitute">Institute</label>
+          <input id="oinstitute" type="text" name="oinstitute" required value="<%- data.oinstitute %>"/>
+          <label for="opost">Post</label>
+          <input id="opost" type="text" name="opost" required value="<%- data.opost %>"/>
+          <label for="oduration">Duration</label>
+          <input id="oduration" type="text" name="oduration" required value="<%- data.oduration %>"/>
+
+        </div>
+
+
+  </div>
+  <button class="btn btn--radius-2 btn--red" type="submit"> Upload </button>
+  </div>
+  </form>
+  </section>
+
+  </div>
+   
+  <% include ./partials/bootjs %>
+  <script src="js/dropzone.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <!-- <script>
+
+    $('#year').each(function () {
+
+      var start = new Date().getFullYear();
+      var end = 1970;
+      var options = "";
+      for (var year = start; year >= end; year--) {
+        options += "<option>" + year + "</option>";
+      }
+      document.getElementById("year").innerHTML = options;
+    })
+  </script> -->
+  <!--<script>
+    $.getJSON("/details", function (data) {
+      console.log(data);
+      Object.keys(data).forEach(function (key) {
+        let value=data[key];
+        if(value == null)
+          value="3";
+        $("#" + key).val(value);
+        console.log(key, value);
+      });
+    });
+  </script> -->
+
+</body>
+
+</html>
