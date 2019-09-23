@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ./partials/head.ejs %>
+  <link href="css/custom.css" rel="stylesheet">
+</head>
+
+<body id="page-top" onload="loadAgeSelector()">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <% include ./partials/navbar %>
+  </nav>
+  <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
+    <section class=" p-lg-4 " id="update">
+      <form method="POST" action="/updated">
+        <div class="my-auto item" id="documents">
+          
+        </br><h4> Seminar / Workshop  </h4>
+        </br>
+
+        <label> Type </label></br>
+        <select id="swtype" name="swtype" style="width: 25%;padding:5px;">
+        <option value="<%- semwork.swtype %>" selected="selected" >Select One</option>
+        <option value="seminar" > Seminar </option>
+        <option value="workshop" > Workshop </option>
+        </select>
+        </br>
+
+        <label > Date</label></br>
+        <input id="swdate" type="date" name="swdate" value="<%- semwork.swdate %>"/>
+        
+        <label > Title</label></br>
+        <input id="swt" type="text" name="swt" value="<%- semwork.swt %>"/>
+
+        <label > College  </label></br>
+        <input id="swcol" type="text" name="swcol" value="<%- semwork.swcol %>"/>   
+
+        <label > No of Days </label></br>
+        <input id="swnd" type="text" name="swnd" value="<%- semwork.swnd %>"/>
+        
+        <label>Upload Certificate</label></br>
+        <div class="fallback">
+        <input name="swcerti" type="file" multiple id="swcerti" value="<%- semwork.swcerti %>" />
+        </div>
+
+    </div>
+      <button class="btn btn--radius-2 btn--red" type="submit"> Upload </button>
+    </div>
+  </form>
+  </section>
+  </div>
+   
+  <% include ./partials/bootjs %>
+  <script src="js/dropzone.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+</body>
+
+</html>

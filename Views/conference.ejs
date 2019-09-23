@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ./partials/head.ejs %>
+  <link href="css/custom.css" rel="stylesheet">
+</head>
+
+<body id="page-top" onload="loadAgeSelector()">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <% include ./partials/navbar %>
+  </nav>
+  <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
+    <section class=" p-lg-4 " id="update">
+      <form method="POST" action="/updated">
+        <div class="my-auto item" id="documents">
+          
+        </br><h4>Conference</h4>
+        </br>
+
+        <label >Conference Date</label></br>
+        <input id="cdate" type="date" name="cdate" value="<%- conference.cdate %>"/>
+        
+        <label >Conference Title</label></br>
+        <input id="ct" type="text" name="ct" value="<%- conference.jt %>"/>
+
+        <label >Research Title</label></br>
+        <input id="crpt" type="text" name="crpt" value="<%- conference.crpt %>"/>
+
+        <label>International/National</label></br>
+        <select id="ci" name="ci" style="width: 25%;padding:5px;">
+        <option value="<%- conference.ci %>" selected="selected" >Select One</option>
+        <option value="International" > International </option>
+        <option value="National" > National </option>
+        </select>
+        </br>
+
+        <label>Main Author</label></br>
+        <select id="cma" name="cma" style="width: 25%;padding:5px;">
+        <option value="<%- conference.cma %>" selected="selected" >Select One</option>
+        <option value="yes" > Yes </option>
+        <option value="no" > No </option>
+        </select>
+        </br>
+
+        <label >ISSN Number</label></br>
+        <input id="cissn" type="text" name="cissn" value="<%- conference.cissn %>"/>
+        
+        <label>Upload Certificate</label></br>
+        <div class="fallback">
+        <input name="ccerti" type="file" multiple id="ccerti" value="<%- conference.ccerti %>" />
+        </div>
+
+    </div>
+      <button class="btn btn--radius-2 btn--red" type="submit"> Upload </button>
+    </div>
+  </form>
+  </section>
+  </div>
+   
+  <% include ./partials/bootjs %>
+  <script src="js/dropzone.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+</body>
+
+</html>
