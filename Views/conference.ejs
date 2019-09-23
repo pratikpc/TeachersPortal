@@ -20,7 +20,7 @@
         </br>
 
         <label >Conference Date</label></br>
-        <input id="cdate" type="date" name="cdate" value="<%- conference.cdate %>"/>
+        <input id="cdate" type="text" name="cdate" value="<%- conference.cdate %>"/>
         
         <label >Conference Title</label></br>
         <input id="ct" type="text" name="ct" value="<%- conference.jt %>"/>
@@ -60,8 +60,16 @@
   </div>
    
   <% include ./partials/bootjs %>
+  <script>
+    $( function() {
+      $( "#cdate" ).datepicker();
+    } );
+    </script>
   <script src="js/dropzone.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 
 </body>

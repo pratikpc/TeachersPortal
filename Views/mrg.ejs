@@ -25,6 +25,12 @@
 
         <label > Year Approved</label></br>
         <input id="mrgya" type="date" name="mrgya" value="<%- mrg.mrgya %>"/>
+
+        <label> Year Approved </label></br>
+        <select id="mrgya" name="mrgya" style="width: 25%;padding:5px;">
+        <option value="<%- mrg.mrgya %>" selected="selected" >Select One</option>
+        </select>
+        </br>
         
         <label > Grant Approved </label></br>
         <input id="mrgga" type="text" name="mrgga" value="<%- mrg.mrgga %>"/>
@@ -49,6 +55,15 @@
   <% include ./partials/bootjs %>
   <script src="js/dropzone.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>
+    var year = 1980;
+    var till = 2030;
+    var options = "";
+    for(var y=year; y<=till; y++){
+      options += "<option>"+ y +"</option>";
+      }
+    document.getElementById("mrgya").innerHTML = options;  
+  </script>
 
 
 </body>

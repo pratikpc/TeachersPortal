@@ -20,7 +20,7 @@
         </br>
 
         <label >Journal Date</label></br>
-        <input id="jdate" type="date" name="jdate" value="<%- journal.jdate %>"/>
+        <input id="jdate" type="text" name="jdate" value="<%- journal.jdate %>"/>
         
         <label >Journal Title</label></br>
         <input id="jt" type="text" name="jt" value="<%- journal.jt %>"/>
@@ -60,9 +60,15 @@
   </div>
    
   <% include ./partials/bootjs %>
+  <script>
+    $( function() {
+      $( "#jdate" ).datepicker();
+    } );
+    </script>
   <script src="js/dropzone.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 </body>
 

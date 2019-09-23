@@ -20,7 +20,7 @@
         </br>
 
         <label > Date</label></br>
-        <input id="sttpdate" type="date" name="sttpdate" value="<%- sttp.sttpdate %>"/>
+        <input id="sttpdate" type="text" name="sttpdate" value="<%- sttp.sttpdate %>"/>
         
         <label > Title</label></br>
         <input id="sttpt" type="text" name="jt" value="<%- sttp.sttpt %>"/>
@@ -44,8 +44,15 @@
   </div>
    
   <% include ./partials/bootjs %>
+  <script>
+    $( function() {
+      $( "#sttpdate" ).datepicker();
+    } );
+    </script>
   <script src="js/dropzone.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
 </body>
