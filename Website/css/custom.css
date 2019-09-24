@@ -175,7 +175,7 @@ html, body {
     }
     }
     .btn {
-        display: inline-blok;
+        display: inline-block;
         line-height: 50px;
         margin-left: 45%;
         padding: 0 20px;
@@ -192,6 +192,27 @@ html, body {
         border:2px solid rgb(68, 68, 68) ;
         margin-top: 30px;
       }
+      .btn1 {
+        padding-right: 3%;
+        padding-left: 1.5%;
+        padding-top: 1%;
+        padding-bottom: 1%;
+        -webkit-transition: all 0.4s ease;
+        -o-transition: all 0.4s ease;
+        -moz-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+        width:3%;
+        cursor: pointer;
+        font-size: 10px;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: rgb(0, 0, 0);
+        font-family: Open Sans;
+        border:5px  ;
+        margin-top: 30px;
+        text-align: center;
+      }
       .btn--radius-2 {
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
@@ -199,6 +220,9 @@ html, body {
       }
       .btn--red {
         background: #BD5D38;
+      }
+      .btn--blue {
+        background: rgb(156, 156, 156);
       }
       
       .btn--red:hover {

@@ -6,7 +6,7 @@
   <link href="css/custom.css" rel="stylesheet">
 </head>
 
-<body id="page-top" onload="loadAgeSelector()">
+<body id="page-top" >
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
       <% include ./partials/navbar %>
@@ -142,30 +142,34 @@
         <div class="my-auto item" id="experience">
 
         
-          <h4>Teaching</h4>
+        <div class="input_fields_wrap">
+          <h4>Teaching<button class="add_field_button btn1  btn--blue" style="margin-left: 86%;"> Add </h4></button>
           <label for="tinstitute">Institute</label>
           <input id="tinstitute" type="text" name="tinstitute" required value="<%- data.tinstitute %>"/>
           <label for="tpost">Post</label>
           <input id="tpost" type="text" name="tpost" required value="<%- data.tpost %>"/>
           <label for="tduration">Duration</label>
           <input id="tduration" type="text" name="tduration" required value="<%- data.tduration %>"/>
+        </div>
 
-          <h4>Industrial</h4>
-          <label for="iinstitute">Institute</label>
+        <div class="input_fields_wrap1">  
+          <h4>Industrial<button class="add_field_button1 btn1  btn--blue" style="margin-left:84%;"> Add </h4></button>
+          <label for="iinstitute">Industry</label>
           <input id="iinstitute" type="text" name="iinstitute" required value="<%- data.iinstitute %>"/>
           <label for="ipost">Post</label>
           <input id="ipost" type="text" name="ipost" required value="<%- data.ipost %>"/>
           <label for="iduration">Duration</label>
           <input id="iduration" type="text" name="iduration" required value="<%- data.iduration %>"/>
+        </div>
 
-          <h4>Other</h4>
+        <div class="input_fields_wrap2">
+          <h4>Other<button class="add_field_button2 btn1  btn--blue" style="margin-left: 95%;" > Add</h4> </button>
           <label for="oinstitute">Institute</label>
           <input id="oinstitute" type="text" name="oinstitute" required value="<%- data.oinstitute %>"/>
           <label for="opost">Post</label>
           <input id="opost" type="text" name="opost" required value="<%- data.opost %>"/>
           <label for="oduration">Duration</label>
           <input id="oduration" type="text" name="oduration" required value="<%- data.oduration %>"/>
-
         </div>
 
 
@@ -183,7 +187,61 @@
       $( "#bdate" ).datepicker();
     } );
     </script>
-  <script src="js/dropzone.js"></script>
+  <script>
+      $(document).ready(function() {
+        var max_fields      = 4; //maximum input boxes allowed
+        var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
+        var add_button      = $(".add_field_button"); //Add button ID
+        var wrapper1   		= $(".input_fields_wrap1"); //Fields wrapper
+        var add_button1      = $(".add_field_button1"); //Add button ID
+        var wrapper2   		= $(".input_fields_wrap2"); //Fields wrapper
+        var add_button2      = $(".add_field_button2"); //Add button ID
+        
+        var x = 1; //initlal text box count
+
+        $(add_button).click(function(e){ //on add input button click
+          e.preventDefault();
+          if(x < max_fields){ //max input box allowed
+            x++; //text box increment
+            $(wrapper).append('<div><label> Institute </label><input type="text" name="tinstitute"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+            $(wrapper).append('<div><label> Post </label><input type="text" name="tpost"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+            $(wrapper).append('<div><label> Duration </label><input type="text" name="tduration"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+          }
+        });
+        
+        $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+          e.preventDefault(); $(this).parent('div').remove(); x--;
+        })
+
+        $(add_button1).click(function(e){ //on add input button click
+          e.preventDefault();
+          if(x < max_fields){ //max input box allowed
+            x++; //text box increment
+            $(wrapper1).append('<div><label> Industry </label><input type="text" name="iinstitute"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+            $(wrapper1).append('<div><label> Post </label><input type="text" name="ipost"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+            $(wrapper1).append('<div><label> Duration </label><input type="text" name="iduration"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+          }
+        });
+        
+        $(wrapper1).on("click",".remove_field", function(e){ //user click on remove text
+          e.preventDefault(); $(this).parent('div').remove(); x--;
+        })
+
+        $(add_button2).click(function(e){ //on add input button click
+          e.preventDefault();
+          if(x < max_fields){ //max input box allowed
+            x++; //text box increment
+            $(wrapper2).append('<div><label> Institute </label><input type="text" name="oinstitute"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+            $(wrapper2).append('<div><label> Post </label><input type="text" name="opost"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+            $(wrapper2).append('<div><label> Duration </label><input type="text" name="oduration"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+          }
+        });
+        
+        $(wrapper2).on("click",".remove_field", function(e){ //user click on remove text
+          e.preventDefault(); $(this).parent('div').remove(); x--;
+        })
+      });
+  </script>  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
