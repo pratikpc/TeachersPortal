@@ -120,12 +120,6 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     return res.redirect("/");
 });
 
-function EmptyUndef(key: any) {
-    if (key == null || key === "undefined")
-        return "";
-    return key;
-}
-
 async function GetUserDetails(userId: any) {
     const user = await Models.Users.findOne({
         where: { id: userId }
@@ -137,90 +131,20 @@ async function GetUserDetails(userId: any) {
 
     return {
         data: {
-            title: EmptyUndef(user.title),
-            firstname: EmptyUndef(user.firstname), middlename: EmptyUndef(user.middlename), lastname: EmptyUndef(user.lastname),
-            fname: EmptyUndef(user.fname), mname: EmptyUndef(user.mname),
-            gender: EmptyUndef(user.gender), bdate: EmptyUndef(user.bdate), address: EmptyUndef(user.address), phone: EmptyUndef(user.phone), email: EmptyUndef(user.email),
-            dept: EmptyUndef(user.dept), aos: EmptyUndef(user.aos),
-            upgyear: EmptyUndef(user.ugpyear), uggrade: EmptyUndef(user.uggrade), ugu: EmptyUndef(user.ugu), ugi: EmptyUndef(user.ugi), ugr: EmptyUndef(user.ugr),
-            pgyear: EmptyUndef(user.pgyear), pggrade: EmptyUndef(user.pggrade), pgu: EmptyUndef(user.pgu), pgi: EmptyUndef(user.pgi), pgr: EmptyUndef(user.pgr),
-            spyear: EmptyUndef(user.spyear), spgrade: EmptyUndef(user.spgrade), spu: EmptyUndef(user.spu), spi: EmptyUndef(user.spi), spr: EmptyUndef(user.spr),
-            tduration: EmptyUndef(user.tduration), tinstitute: EmptyUndef(user.tinstitute), tpost: EmptyUndef(user.tpost),
-            iduration: EmptyUndef(user.iduration), iinstitute: EmptyUndef(user.iinstitute), ipost: EmptyUndef(user.ipost),
-            oduration: EmptyUndef(user.oduration), oinstitute: EmptyUndef(user.oinstitute), opost: EmptyUndef(user.opost)
+            title: RoutesCommon.EmptyUndef(user.title),
+            firstname: RoutesCommon.EmptyUndef(user.firstname), middlename: RoutesCommon.EmptyUndef(user.middlename), lastname: RoutesCommon.EmptyUndef(user.lastname),
+            fname: RoutesCommon.EmptyUndef(user.fname), mname: RoutesCommon.EmptyUndef(user.mname),
+            gender: RoutesCommon.EmptyUndef(user.gender), bdate: RoutesCommon.EmptyUndef(user.bdate), address: RoutesCommon.EmptyUndef(user.address), phone: RoutesCommon.EmptyUndef(user.phone), email: RoutesCommon.EmptyUndef(user.email),
+            dept: RoutesCommon.EmptyUndef(user.dept), aos: RoutesCommon.EmptyUndef(user.aos),
+            upgyear: RoutesCommon.EmptyUndef(user.ugpyear), uggrade: RoutesCommon.EmptyUndef(user.uggrade), ugu: RoutesCommon.EmptyUndef(user.ugu), ugi: RoutesCommon.EmptyUndef(user.ugi), ugr: RoutesCommon.EmptyUndef(user.ugr),
+            pgyear: RoutesCommon.EmptyUndef(user.pgyear), pggrade: RoutesCommon.EmptyUndef(user.pggrade), pgu: RoutesCommon.EmptyUndef(user.pgu), pgi: RoutesCommon.EmptyUndef(user.pgi), pgr: RoutesCommon.EmptyUndef(user.pgr),
+            spyear: RoutesCommon.EmptyUndef(user.spyear), spgrade: RoutesCommon.EmptyUndef(user.spgrade), spu: RoutesCommon.EmptyUndef(user.spu), spi: RoutesCommon.EmptyUndef(user.spi), spr: RoutesCommon.EmptyUndef(user.spr),
+            tduration: RoutesCommon.EmptyUndef(user.tduration), tinstitute: RoutesCommon.EmptyUndef(user.tinstitute), tpost: RoutesCommon.EmptyUndef(user.tpost),
+            iduration: RoutesCommon.EmptyUndef(user.iduration), iinstitute: RoutesCommon.EmptyUndef(user.iinstitute), ipost: RoutesCommon.EmptyUndef(user.ipost),
+            oduration: RoutesCommon.EmptyUndef(user.oduration), oinstitute: RoutesCommon.EmptyUndef(user.oinstitute), opost: RoutesCommon.EmptyUndef(user.opost)
         }
     };
 }
-Updation.get("/upload", RoutesCommon.IsAuthenticated, (req, res) => {
-    return res.render("documents.html");
-});
-
-Updation.post(
-    "/upload",
-    RoutesCommon.IsAuthenticated,
-    RoutesCommon.upload.array("file"),
-    async (req, res) => {
-        try {
-            const files = req.files as any[];
-            if (files == null || files.length === 0) return res.status(422).send("Upload Failed");
-
-            const params = RoutesCommon.GetParameters(req);
-            if (params == null) return res.status(422).send("Upload Failed");
-
-            const userId = Number(req.user!.id);
-            const year = Number(params.year);
-            const sdptitle = String(params.sdptitle);
-            const Category = String(params.Category);
-
-            // Iterate over all the files
-            files.forEach(async file => {
-                await Models.Files.create({
-                    UserID: userId,
-                    Location: file.path,
-                    year: year,
-                    sdptitle: sdptitle,
-                    Category: Category
-                });
-            });
-
-            return res.status(200).redirect("/upload");
-        } catch (error) {
-            console.error(error);
-            return res.status(422).send("Upload Failed");
-        }
-    }
-);
-Updation.get("/files", RoutesCommon.IsAuthenticated, async (req, res) => {
-    const userId = Number(req.user!.id);
-    const files = await Models.Files.findAll({
-        where: { UserID: userId }
-    });
-    console.log(files);
-    const files_json: any[] = [];
-    files.forEach(file => {
-        console.log(file);
-        files_json.push({ id: file.id, Category: file.Category, sdptitle: file.sdptitle, year: file.year });
-    })
-
-    return res.json(files_json);
-});
-
-Updation.get("/file-viewer", RoutesCommon.IsAuthenticated, async (req, res) => {
-    try {
-        const userId = Number(req.user!.id);
-        const params = RoutesCommon.GetParameters(req);
-        const id = params.id;
-
-        const file = await Models.Files.findOne({
-            where: { UserID: userId, id: id }
-        });
-        if (!file) return res.sendStatus(404);
-
-        const path = file.Location;
-        return res.download(path);
-    } catch (err) { }
-    return res.sendStatus(404);
-});
 
 Updation.get("/displaypicture", RoutesCommon.IsAuthenticated, async (req, res) => {
     try {

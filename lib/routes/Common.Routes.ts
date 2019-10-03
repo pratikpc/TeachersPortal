@@ -8,6 +8,12 @@ import * as Path from "path";
 import * as process from "process";
 
 export namespace RoutesCommon {
+  export function EmptyUndef(key: any) {
+    if (key == null || key === "undefined")
+      return "";
+    return key;
+  }
+
 
   const storage = multer.diskStorage({
     destination: async (request: any, file: any, callback: any) => {
