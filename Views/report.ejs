@@ -9,47 +9,61 @@
 <body id="page-top" >
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-      <% include ./partials/navbar %>
+      <% include ./partials/navbaradmin %>
   </nav>
   <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
-    <section class=" p-lg-4 " id="update">
-      <form method="POST" action="/updated">
+    <section class=" p-lg-4 " id="report">
+      <form method="POST" action="/report">
         <div class="my-auto item" id="documents">
           
-        </br><h4>Journal</h4>
+        </br><h4>Report</h4>
         </br>
 
-        <label >Journal Date</label></br>
-        <input id="jdate" type="text" name="jdate" value="<%- journal.jdate %>"/>
+        <label >Year</label></br>
+        <input id="ryear" type="text" name="ryear" value="<%- report.ryear %>"/>
         
-        <label >Journal Title</label></br>
-        <input id="jt" type="text" name="jt" value="<%- journal.jt %>"/>
+        <label >report Title</label></br>
+        <input id="jt" type="text" name="jt" value="<%- report.jt %>"/>
 
         <label >Research Title</label></br>
-        <input id="jrpt" type="text" name="jrpt" value="<%- journal.jrpt %>"/>
+        <input id="jrpt" type="text" name="jrpt" value="<%- report.jrpt %>"/>
+
+        <label>Depatment</label></br>
+        <select id="rdept" name="rdept" style="width: 25%;padding:5px;">
+        <option value="<%- report.rdept %>" selected="selected" >Select One</option>
+        <option value="CS">Computer Science</option>
+        <option value="IT">IT</option>
+        <option value="ELEX">Electronics</option>
+        <option value="PROD">Production</option>
+        </select>
+        </br>
 
         <label>International/National</label></br>
-        <select id="ji" name="ji" style="width: 25%;padding:5px;">
-        <option value="<%- journal.ji %>" selected="selected" >Select One</option>
+        <select id="ri" name="ri" style="width: 25%;padding:5px;">
+        <option value="<%- report.ri %>" selected="selected" >Select One</option>
         <option value="International" > International </option>
         <option value="National" > National </option>
         </select>
         </br>
 
-        <label>Main Author</label></br>
+        <label>Category</label></br>
         <select id="jma" name="jma" style="width: 25%;padding:5px;">
-        <option value="<%- journal.jma %>" selected="selected" >Select One</option>
-        <option value="yes" > Yes </option>
-        <option value="no" > No </option>
+        <option value="<%- report.jma %>" selected="selected" >Select One</option>
+        <option value="yes" > Faculty Development Program </option>
+        <option value="no" > Short Term Training Programs </option>
+        <option value="no" > MRG </option>
+        <option value="no" > Journals </option>
+        <option value="no" > Conference </option>
+        <option value="no" > Programs Attended </option>
         </select>
         </br>
 
         <label >ISSN Number</label></br>
-        <input id="jissn" type="text" name="jissn" value="<%- journal.jissn %>"/>
+        <input id="jissn" type="text" name="jissn" value="<%- report.jissn %>"/>
         
         <label>Upload Certificate</label></br>
         <div class="fallback">
-        <input name="jcerti" type="file" multiple id="jcerti" value="<%- journal.jcerti %>" />
+        <input name="jcerti" type="file" multiple id="jcerti" value="<%- report.jcerti %>" />
         </div>
 
     </div>
@@ -62,10 +76,9 @@
   <% include ./partials/bootjs %>
   <script>
     $( function() {
-      $( "#jdate" ).datepicker();
+      $( "#ryear" ).yearpicker();
     } );
     </script>
-  <script src="js/dropzone.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
