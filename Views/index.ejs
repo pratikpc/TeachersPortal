@@ -15,9 +15,22 @@
         <div class="my-auto">
           <% var name = data.firstname +  " " + data.middlename + " " + data.lastname; %>
           <h2 class="mb-0" id="teacher-name"><%= name %></h2>
-          <div class="subheading mb-4 " id="title"><%= data.title %></div>
+          <div class="subheading" id="title"><%= data.title %></div>
+          <div class="subheading" id="dept"><%= data.dept %></div>
+          <div class="subheading" id="dept"><%= data.aos %></div>
+
           <div class="subheading " id="dob"><%= data.dob %></div>
           <div class="subheading " id="address"><%= data.address %></div>
+          <% var start = parseInt(data.tduration.substring(0,4)); %>
+          <% var end = data.tduration.substring(6); %>
+          <%   var exp = 0; %>
+          <%  if (end = "Present"){ %>
+            <%    var year = new Date().getFullYear(); %>
+            <%    exp = year - start; %>
+          <%  }else{ %>
+            <%   exp = parseInt(end) - start; %>
+          <% } %>
+          <div class="subheading " id="address">Experience <%= exp %></div>
           <div class="subheading" id="email"><%= data.email %></div>
           <div class="subheading" id="phone"><%= data.address %></div>
         </div>
