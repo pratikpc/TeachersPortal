@@ -3,7 +3,8 @@ html, body {
     }
     body, div, form, input, select, textarea, label { 
     padding: 0;
-    margin-bottom: 20px;
+    margin-bottom: 2%;
+    margin-top: 0.5%;
     outline: none;
     font-family: Open Sans;
     font-size: 16px;
@@ -153,12 +154,9 @@ html, body {
     border-radius: 5px; 
     background: #cc7a00;
     font-size: 16px;
-    color: #fff;
-    cursor: pointer;
+    color:white;
     }
-    button:hover {
-    background: #ff9800;
-    }
+
     @media (min-width: 568px) {
     .name-item, .city-item {
     display: flex;
@@ -187,7 +185,7 @@ html, body {
         font-size: 20px;
         text-transform: uppercase;
         font-weight: 600;
-        color: #fff;
+        color: white;
         font-family: Open Sans;
         border:2px solid rgb(68, 68, 68) ;
         margin-top: 30px;
@@ -197,21 +195,11 @@ html, body {
         padding-left: 1.5%;
         padding-top: 1%;
         padding-bottom: 1%;
-        -webkit-transition: all 0.4s ease;
-        -o-transition: all 0.4s ease;
-        -moz-transition: all 0.4s ease;
-        transition: all 0.4s ease;
         width:3%;
         cursor: pointer;
-        font-size: 10px;
-        text-align: center;
-        text-transform: uppercase;
-        font-weight: 600;
-        color: rgb(0, 0, 0);
-        font-family: Open Sans;
-        border:5px  ;
+        color:red;
         margin-top: 30px;
-        text-align: center;
+        background: transparent;
       }
       .btn--radius-2 {
         -webkit-border-radius: 5px;
@@ -220,11 +208,7 @@ html, body {
       }
       .btn--red {
         background: #BD5D38;
-      }
-      .btn--blue {
-        background: rgb(156, 156, 156);
-      }
-      
+      }  
       .btn--red:hover {
         background-color: #fffb00;
         box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
