@@ -7,7 +7,7 @@ body {
 
 @media (min-width: 992px) {
   body {
-    padding-top: 0;
+    
     padding-left: 20%;
     padding-left: 17rem;
   color: #000000; }
@@ -37,25 +37,14 @@ h2 {
   font: Opens Sans;
   font-size: 20px; /* Address font */
   color: #000000; }
-
-.list-social-icons a {
-  color: #000000; }
-  .list-social-icons a:hover {
-    color: #BD5D38; }
-  .list-social-icons a .fa-lg {
-    font-size: 40px; }
-
-.list-icons {
-  font-size: 20px; }
-  .list-icons .list-inline-item i:hover {
-    color: #BD5D38; }
-
 #sideNav .navbar-nav .nav-item .nav-link {
-  font-weight: 600;
+  font-weight: 650;
   text-transform: uppercase;
-  font-size: 21px;
+  font-size: 22px;
   color: white;
 }
+#sideNav .navbar-nav .nav-item .nav-link:hover, #sideNav .navbar-nav .nav-item .nav-link:focus, #sideNav .navbar-nav .nav-item .nav-link:active {
+  color: yellow;}
 
 @media (min-width: 992px) {
   #sideNav {
@@ -72,10 +61,6 @@ h2 {
       display: flex;
       margin: auto auto 0;
       padding: 0.5rem; }
-      #sideNav .navbar-brand .img-profile {
-        max-width: 12rem;
-        max-height: 14rem;
-        border: 0.3rem solid rgba(255, 255, 255, 0.493); }
     #sideNav .navbar-collapse {
       display: flex;
       align-items: flex-start;
@@ -109,15 +94,15 @@ section.resume-section {
     padding-bottom: 3rem !important; } }
 
 .bg-primary {
-  background-color: #BD5D38 !important; }
+  background-color: #007bff !important; }
 
 .text-primary {
-  color: #BD5D38 !important; }
+  color: #007bff !important; }
 
 a {
-  color: #BD5D38; }
+  color: red; }
   a:hover, a:focus, a:active {
-    color: #824027;}
+    color: yellowgreen;}
 .button {
       background-color:transparent; /* Green */
       border: none;
