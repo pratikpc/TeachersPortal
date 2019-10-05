@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <% include ./partials/head %>
+  </head>
+
+  <body id="page-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <% include ./partials/navbaradmin %>
+    </nav>
+
+    <div class="container-fluid p-0" style="width:69%;margin-right:20%;">
+      <section class=" p-lg-4 " id="update">
+        <form method="POST" action="/deleteuser">
+          <div class="my-auto item" id="personal">
+
+            <h4><label for="username style="color:black;font-size:24px;">Username</label></h4>
+            <input id="username" type="text" name="username" style="width: 30%;padding:5px;" required />
+            
+            <button class="btn btn--radius-2 btn--red" onclick="myFunction()" type="submit"> DELETE </button>
+          </div>
+        </form>
+      </section>
+    </div>  
+
+    <% include ./partials/bootjs %>
+    <script>
+      function myFunction() 
+      {
+       var txt;
+         if (confirm("Are you sure you want to delete this user ?"))
+           {
+              alert("User Deleted ")
+             
+           } 
+         else 
+           {
+             alert("User could not be deleted ");
+           }
+     }   
+     </script>
+
+  </body>
+
+</html>
