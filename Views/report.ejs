@@ -13,17 +13,14 @@
   </nav>
   <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
     <section class=" p-lg-4 " id="report">
-      <form method="POST" action="/report">
+      <form method="POST" action="/generatereport">
         <div class="my-auto item" id="documents">
           
-        </br><h4>Report</h4>
+        </br><h4>Report Generation</h4>
         </br>
 
         <label >Year</label></br>
         <input id="ryear" type="text" name="ryear" value="<%- report.ryear %>"/>
-        
-        <label >report Title</label></br>
-        <input id="jt" type="text" name="jt" value="<%- report.jt %>"/>
 
         <label >Research Title</label></br>
         <input id="jrpt" type="text" name="jrpt" value="<%- report.jrpt %>"/>
@@ -47,24 +44,21 @@
         </br>
 
         <label>Category</label></br>
-        <select id="jma" name="jma" style="width: 25%;padding:5px;">
-        <option value="<%- report.jma %>" selected="selected" >Select One</option>
-        <option value="yes" > Faculty Development Program </option>
-        <option value="no" > Short Term Training Programs </option>
-        <option value="no" > MRG </option>
-        <option value="no" > Journals </option>
-        <option value="no" > Conference </option>
-        <option value="no" > Programs Attended </option>
-        <option value="no" > Seminar </option>
-        <option value="no" > Workshops </option>
+        <select id="rma" name="rma" style="width: 25%;padding:5px;">
+        <option value="<%- report.rma %>" selected="selected" >Select One</option>
+        <option value="fdp" > Faculty Development Program </option>
+        <option value="sttp" > Short Term Training Programs </option>
+        <option value="mrg" > MRG </option>
+        <option value="journal" > Journals </option>
+        <option value="conference" > Conference </option>
+        <option value="progatt" > Programs Attended </option>
+        <option value="seminar" > Seminar </option>
+        <option value="workshop" > Workshops </option>
         </select>
         </br>
 
-        <label >ISSN Number</label></br>
-        <input id="jissn" type="text" name="jissn" value="<%- report.jissn %>"/>
-
     </div>
-      <button class="btn btn--radius-2 btn--red" type="submit"> Upload </button>
+      <button class="btn btn--radius-2 btn--red" type="submit"> Report </button>
     </div>
   </form>
   </section>
