@@ -13,29 +13,35 @@
   </nav>
   <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
     <section class=" p-lg-4 " id="update">
-      <form method="POST" action="/mrg" enctype="multipart/form-data">
+      <br method="POST" action="/mrg" enctype="multipart/form-data">
         <div class="my-auto item" id="documents">
           
-        </br><h4> MRG </h4>
+        </br><h4> Research & Development / Consultancy  </h4>
         </br>
         <input id="id" name="id" type="hidden" value="<%- id %>">
        
+        <label> Category </label></br>
+        <select id="mrgcat" name="mrgcat" style="width: 24%;padding:5px;">
+        <option value="<%- mrgcat %>" selected= "selected" >Select One</option>
+        <option value="Research & Development" > Research & Development </option>
+        <option value="MRG" > MRG </option>
+        <option value="Consultancy" > Consultancy </option>
+        </select>
+        </br>
+
+        <label > Year Approved</label></br>
+        <input id="mrgya" type="text" name="mrgya" value="<%- mrgya %>" style="width: 24%;padding:5px;"/></br>
+        
         <label > Title</label></br>
         <input id="mrgt" type="text" name="mrgt" value="<%- mrgt %>"/>
 
-        <label > Year Approved</label></br>
-        <input id="mrgya" type="text" name="mrgya" value="<%- mrgya %>"/>
+        <label > Authority Approved </label></br>
+        <input id="mrgauth" type="text" name="mrgauth" value="<%- mrgauth %>"/>
 
-        <label> Year Approved </label></br>
-        <select id="mrgya" name="mrgya" style="width: 25%;padding:5px;">
-        <option value="<%- mrgya %>" selected="selected" >Select One</option>
-        </select>
-        </br>
-        
         <label > Grant Approved </label></br>
         <input id="mrgga" type="text" name="mrgga" value="<%- mrgga %>"/>
 
-        <label>Upload Certificate</label></br>
+        <label> Upload Certificate </label></br>
         <div class="fallback">
         <input name="mrgcerti" type="file" multiple id="mrgcerti" value="" />
         </div>
@@ -55,16 +61,10 @@
   <% include ./partials/bootjs %>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script>
-    var year = 1980;
-    var till = 2030;
-    var options = "";
-    for(var y=year; y<=till; y++){
-      options += "<option>"+ y +"</option>";
-      }
-    document.getElementById("mrgya").innerHTML = options;  
-  </script>
-
-
+    $( function() {
+      $( "#mrgya" ).datepicker();
+    } );
+    </script>
 </body>
 
 </html>

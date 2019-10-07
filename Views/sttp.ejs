@@ -19,19 +19,27 @@
         </br><h4> Short Term Training Programs </h4>
         </br>
         <input id="id" name="id" type="hidden" value="<%- id %>">
-        <label > Date</label></br>
-        <input id="sttpdate" type="text" name="sttpdate" value="<%- sttpdate %>"/>
+        <label > Date </label></br>
+        <input id="sttpdate" type="text" name="sttpdate" value="<%- sttpdate %>" style="width: 24%;padding:5px;"/></br>
+
+        <label> Sponsorship </label></br>
+        <select id="sttptype" name="sttptype" style="width: 24%;padding:5px;">
+        <option value="<%- sttptype %>" selected="selected" >Select One</option>
+        <option value="College Sponsored" > College Sponsored </option>
+        <option value="Self Sponsored" > Self Sponsored </option>
+        </select>
+        </br>
         
-        <label > Title</label></br>
+        <label > Title </label></br>
         <input id="sttpt" type="text" name="sttpt" value="<%- sttpt %>"/>
 
-        <label > College</label></br>
+        <label > College </label></br>
         <input id="sttpcol" type="text" name="sttpcol" value="<%- sttpcol %>"/>
 
         <label > No. of Weeks </label></br>
         <input id="sttpnw" type="text" name="sttpnw" value="<%- sttpnw %>"/>
         
-        <label>Upload Certificate</label></br>
+        <label> Upload Certificate </label></br>
         <div class="fallback">
         <input name="sttpcerti" type="file" multiple id="sttpcerti" value="" />
         </div>

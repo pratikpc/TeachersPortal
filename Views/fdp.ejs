@@ -19,8 +19,16 @@
         </br><h4> Faculty Development Program </h4>
         </br>
         <input id="id" name="id" type="hidden" value="<%- id %>">
-        <label > Date</label></br>
-        <input id="fdpdate" type="text" name="fdpdate" value="<%- fdpdate %>"/>
+        <label > Date </label></br>
+        <input id="fdpdate" type="text" name="fdpdate" value="<%- fdpdate %>" style="width:24%;padding:5px;"/></br>
+
+        <label> Sponsorship </label></br>
+        <select id="fdptype" name="fdptype" style="width: 24%;padding:5px;">
+        <option value="<%- fdptype %>" selected="selected" >Select One</option>
+        <option value="College Sponsored" > College Sponsored </option>
+        <option value="Self Sponsored" > Self Sponsored </option>
+        </select>
+        </br>
         
         <label > Title</label></br>
         <input id="fdpt" type="text" name="fdpt" value="<%- fdpt %>"/>
@@ -31,7 +39,7 @@
         <label > No. of Days </label></br>
         <input id="fdpnd" type="text" name="fdpnd" value="<%- fdpnd %>"/>
 
-        <label>Upload Certificate</label></br>
+        <label> Upload Certificate </label></br>
         <div class="fallback">
         <input name="fdpcerti" type="file" multiple id="fdpcerti" value="" />
         </div>
