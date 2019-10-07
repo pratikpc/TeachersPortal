@@ -12,7 +12,7 @@
       <% include ./partials/navbaradmin %>
   </nav>
   <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
-    <section class=" p-lg-4 " id="report">
+    <br class=" p-lg-4 " id="report">
       <br method="POST" action="/report">
         <div class="my-auto item" id="documents">
           
@@ -20,10 +20,10 @@
         </br>
 
         <label > Year </label></br>
-        <select id="ryear" type="text" name="ryear" value="<%- ryear %>" style="width: 24%;padding:5px;"/></br>
+        <select id="ryear" type="text" name="ryear" value="<%- ryear %>" style="width: 24%;padding:5px;"></select></br>
 
         <label > Faculty Name </label></br>
-        <input id="rfn" type="text" name="rfn" value="<%- rfn %>"/></br>
+        <input id="rfn" type="text" name="rfn" value="<%- rfn %>" style="width:24%;padding:5px;"/></br>
 
         <label>Depatment</label></br>
         <select id="rdept" name="rdept" style="width: 24%;padding:5px;">
@@ -64,11 +64,11 @@
         <option value="<%- rspon %>" selected="selected" >Select One</option>
         <option value="College Sponsored" > College Sponsored </option>
         <option value="Self Sponsored" > Self Sponsored </option>
-        </select>
+        </select></br>
         </br>
 
     </div>
-      <button class="btn btn--radius-2 btn--red" type="submit"> Report </button>
+      <button class="btn btn--radius-2 btn--red" type="submit"> Report </button></br>
     </div>
   </form>
   </section>

@@ -12,7 +12,7 @@
       <% include ./partials/navbar %>
   </nav>
   <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
-    <section class=" p-lg-4 " id="update">
+x`    <br class=" p-lg-4 " id="update">
       <br method="POST" action="/mrg" enctype="multipart/form-data">
         <div class="my-auto item" id="documents">
           
@@ -30,29 +30,29 @@
         </br>
 
         <label > Year Approved</label></br>
-        <select id="mrgya" type="text" name="mrgya" value="<%- mrgya %>" style="width: 24%;padding:5px;"/></br>
+        <select id="mrgya" type="text" name="mrgya" value="<%- mrgya %>" style="width: 24%;padding:5px;"></select></br> 
         
         <label > Title</label></br>
-        <input id="mrgt" type="text" name="mrgt" value="<%- mrgt %>"/>
+        <input id="mrgt" type="text" name="mrgt" value="<%- mrgt %>"/></br>
 
         <label > Authority Approved </label></br>
-        <input id="mrgauth" type="text" name="mrgauth" value="<%- mrgauth %>"/>
+        <input id="mrgauth" type="text" name="mrgauth" value="<%- mrgauth %>"/></br>
 
         <label > Grant Approved </label></br>
-        <input id="mrgga" type="text" name="mrgga" value="<%- mrgga %>"/>
+        <input id="mrgga" type="text" name="mrgga" value="<%- mrgga %>"/></br>
 
         <label> Upload Certificate </label></br>
         <div class="fallback">
-        <input name="mrgcerti" type="file" multiple id="mrgcerti" value="" />
+        <input name="mrgcerti" type="file" multiple id="mrgcerti" value="" /></br>
         </div>
 
         <label> Upload Report </label></br>
         <div class="fallback">
-        <input name="mrgr" type="file" multiple id="mrgr" value="" />
+        <input name="mrgr" type="file" multiple id="mrgr" value="" /></br>
         </div>
-
+      </br>
     </div>
-      <button class="btn btn--radius-2 btn--red" type="submit"> Upload </button>
+      <button class="btn btn--radius-2 btn--red" type="submit"> Upload </button></br>
     </div>
   </form>
   </section>
