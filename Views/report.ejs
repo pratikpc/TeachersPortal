@@ -13,14 +13,14 @@
   </nav>
   <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
     <section class=" p-lg-4 " id="report">
-      <form method="POST" action="/report">
+      <br method="POST" action="/report">
         <div class="my-auto item" id="documents">
           
         </br><h4> Report Generation </h4>
         </br>
 
         <label > Year </label></br>
-        <input id="ryear" type="text" name="ryear" value="<%- ryear %>"/>
+        <input id="ryear" type="text" name="ryear" value="<%- ryear %>" style="width: 24%;padding:5px;"/></br>
 
         <label > Faculty Name </label></br>
         <input id="rfn" type="text" name="rfn" value="<%- rfn %>"/>
@@ -76,10 +76,15 @@
    
   <% include ./partials/bootjs %>
   <script>
-    $( function() {
-      $( "#ryear" ).yearpicker();
-    } );
+    $('.ryear').yearselect({
+      start: 1980,
+      end: 2020,
+      step:1,
+      order:'desc'
+    });
     </script>
+  <script src="//code.jquery.com/jquery.min.js"></script>
+  <script src="lib/year-select.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
