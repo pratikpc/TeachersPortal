@@ -20,10 +20,10 @@
         </br>
 
         <label > Year </label></br>
-        <input id="ryear" type="text" name="ryear" value="<%- ryear %>" style="width: 24%;padding:5px;"/></br>
+        <select id="ryear" type="text" name="ryear" value="<%- ryear %>" style="width: 24%;padding:5px;"/></br>
 
         <label > Faculty Name </label></br>
-        <input id="rfn" type="text" name="rfn" value="<%- rfn %>"/>
+        <input id="rfn" type="text" name="rfn" value="<%- rfn %>"/></br>
 
         <label>Depatment</label></br>
         <select id="rdept" name="rdept" style="width: 24%;padding:5px;">
@@ -76,15 +76,14 @@
    
   <% include ./partials/bootjs %>
   <script>
-    $('.ryear').yearselect({
-      start: 1980,
-      end: 2020,
-      step:1,
-      order:'desc'
-    });
-    </script>
-  <script src="//code.jquery.com/jquery.min.js"></script>
-  <script src="lib/year-select.js"></script>
+var end = 1900;
+var start = new Date().getFullYear();
+var options = "";
+for(var year = start ; year >=end; year--){
+      options += "<option>"+ year +"</option>";
+  }
+document.getElementById("ryear").innerHTML = options;
+  </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

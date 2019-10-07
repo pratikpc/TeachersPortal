@@ -30,7 +30,7 @@
         </br>
 
         <label > Year Approved</label></br>
-        <input id="mrgya" type="text" name="mrgya" value="<%- mrgya %>" style="width: 24%;padding:5px;"/></br>
+        <select id="mrgya" type="text" name="mrgya" value="<%- mrgya %>" style="width: 24%;padding:5px;"/></br>
         
         <label > Title</label></br>
         <input id="mrgt" type="text" name="mrgt" value="<%- mrgt %>"/>
@@ -61,10 +61,14 @@
   <% include ./partials/bootjs %>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script>
-    $( function() {
-      $( "#mrgya" ).datepicker();
-    } );
-    </script>
+    var end = 1900;
+    var start = new Date().getFullYear();
+    var options = "";
+    for(var year = start ; year >=end; year--){
+          options += "<option>"+ year +"</option>";
+      }
+    document.getElementById("mrgya").innerHTML = options;
+   </script>
 </body>
 
 </html>
