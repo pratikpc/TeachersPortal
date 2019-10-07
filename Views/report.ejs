@@ -16,17 +16,17 @@
       <form method="POST" action="/generatereport">
         <div class="my-auto item" id="documents">
           
-        </br><h4>Report Generation</h4>
+        </br><h4> Report Generation </h4>
         </br>
 
-        <label >Year</label></br>
+        <label > Year </label></br>
         <input id="ryear" type="text" name="ryear" value="<%- ryear %>"/>
 
-        <label >Faculty Name</label></br>
-        <input id="jrpt" type="text" name="jrpt" value="<%- jrpt %>"/>
+        <label > Faculty Name </label></br>
+        <input id="rfn" type="text" name="rfn" value="<%- rfn %>"/>
 
         <label>Depatment</label></br>
-        <select id="rdept" name="rdept" style="width: 25%;padding:5px;">
+        <select id="rdept" name="rdept" style="width: 24%;padding:5px;">
         <option value="<%- rdept %>" selected="selected" >Select One</option>
         <option value="CS">Computer Science</option>
         <option value="IT">IT</option>
@@ -36,7 +36,7 @@
         </br>
 
         <label>International/National</label></br>
-        <select id="ri" name="ri" style="width: 25%;padding:5px;">
+        <select id="ri" name="ri" style="width: 24%;padding:5px;">
         <option value="<%- ri %>" selected="selected" >Select One</option>
         <option value="International" > International </option>
         <option value="National" > National </option>
@@ -44,8 +44,8 @@
         </br>
 
         <label>Category</label></br>
-        <select id="rma" name="rma" style="width: 25%;padding:5px;">
-        <option value="<%- rma %>" selected="selected" >Select One</option>
+        <select id="rcat" name="rcat" style="width: 24%;padding:5px;">
+        <option value="<%- rcat %>" selected="selected" >Select One</option>
         <option value="fdp" > Faculty Development Program </option>
         <option value="sttp" > Short Term Training Programs </option>
         <option value="mrg" > MRG </option>
@@ -54,6 +54,16 @@
         <option value="progatt" > Programs Attended </option>
         <option value="seminar" > Seminar </option>
         <option value="workshop" > Workshops </option>
+        <option value="Research & Development" > Research & Development </option>
+        <option value="Consultancy" > Consultancy </option>
+        </select>
+        </br>
+
+        <label> Sponsorship </label></br>
+        <select id="rspon" name="rspon" style="width: 24%;padding:5px;">
+        <option value="<%- rspon %>" selected="selected" >Select One</option>
+        <option value="College Sponsored" > College Sponsored </option>
+        <option value="Self Sponsored" > Self Sponsored </option>
         </select>
         </br>
 
