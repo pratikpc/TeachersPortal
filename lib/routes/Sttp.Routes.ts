@@ -2,33 +2,29 @@
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
-export const Conference = Router();
+export const Sttp = Router();
 
 function GetUploadJson(file: any) {
 if (file==null)
 	return {
 		id:"nullish",
-		ci: "",
-		cma: "",
-		cissn: "",
-		cdate: "",
-		ct: "",
-		crpt: ""
+		sttpt: "",
+		sttpcol: "",
+		sttpnw: "",
+		sttpdate: ""
 	};
 return {
 	id:file.id,
-	ci: file.ci,
-	cma: file.cma,
-	cissn: file.cissn,
-	cdate: file.cdate,
-	ct: file.ct,
-	crpt: file.crpt
+	sttpt: file.sttpt,
+	sttpcol: file.sttpcol,
+	sttpnw: file.sttpnw,
+	sttpdate: file.sttpdate
 	};
 }
 
 
-Conference.post("/conference", RoutesCommon.IsAuthenticated,
- RoutesCommon.upload.array('ccerti'), async (req, res) => {
+Sttp.post("/sttp", RoutesCommon.IsAuthenticated,
+ RoutesCommon.upload.array('sttpcerti'), async (req, res) => {
     try {
         const files = req.files as any[];
         if (files == null || files.length === 0)
@@ -37,54 +33,48 @@ Conference.post("/conference", RoutesCommon.IsAuthenticated,
         if (params == null)
             return res.status(422).send("Upload Failed");
         const userId = Number(req.user!.id);
-        const id = String(params.id);const ci = String(params.ci);
-	const cma = String(params.cma);
-	const cissn = String(params.cissn);
-	const cdate = String(params.cdate);
-	const ct = String(params.ct);
-	const crpt = String(params.crpt);
+        const id = String(params.id);const sttpt = String(params.sttpt);
+	const sttpcol = String(params.sttpcol);
+	const sttpnw = String(params.sttpnw);
+	const sttpdate = String(params.sttpdate);
 	
         // Iterate over all the files
         files.forEach(async (file) => {
             if (id === "nullish")
-                await Models.Conference.create({
+                await Models.Sttp.create({
                     UserID: userId,
                     Location: file.path,
-                    ci:ci,
-                    cma:cma,
-                    cissn:cissn,
-                    cdate:cdate,
-                    ct:ct,
-                    crpt:crpt,
+                    sttpt:sttpt,
+                    sttpcol:sttpcol,
+                    sttpnw:sttpnw,
+                    sttpdate:sttpdate,
 
             });
             else
-                await Models.Conference.update({
-                    ci:ci,
-                    cma:cma,
-                    cissn:cissn,
-                    cdate:cdate,
-                    ct:ct,
-                    crpt:crpt,
+                await Models.Sttp.update({
+                    sttpt:sttpt,
+                    sttpcol:sttpcol,
+                    sttpnw:sttpnw,
+                    sttpdate:sttpdate,
 
                     },
                     { where: { id: id, UserID: userId } }
                 );
 
         });
-        return res.status(200).redirect("/conference");
+        return res.status(200).redirect('/sttp');
     }
     catch (error) {
         console.error(error);
         return res.status(422).send("Upload Failed");
     }
 });
-Conference.get("/conference", RoutesCommon.IsAuthenticated, (req, res) => {
-    return res.render('conference.ejs', GetUploadJson(null));
+Sttp.get("/sttp", RoutesCommon.IsAuthenticated, (req, res) => {
+    return res.render('sttp.ejs', GetUploadJson(null));
 });
-Conference.get("/conference/files", RoutesCommon.IsAuthenticated, async (req, res) => {
+Sttp.get("/sttp/files", RoutesCommon.IsAuthenticated, async (req, res) => {
     const userId = Number(req.user!.id);
-    const files = await Models.Conference.findAll({
+    const files = await Models.Sttp.findAll({
         where: { UserID: userId }
     });
     const files_json: any[] = [];
@@ -93,21 +83,21 @@ Conference.get("/conference/files", RoutesCommon.IsAuthenticated, async (req, re
     });
     return res.json(files_json);
 });
-Conference.get("/conference/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+Sttp.get("/sttp/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
     const userId = Number(req.user!.id);
     const params = RoutesCommon.GetParameters(req);
     const id = params.id;
-    const file = await Models.Conference.findOne({
+    const file = await Models.Sttp.findOne({
         where: { UserID: userId, id: id }
     });
-    return res.render('conference.ejs', GetUploadJson(file));
+    return res.render('sttp.ejs', GetUploadJson(file));
 });
-Conference.get("/conference/file-viewer/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+Sttp.get("/sttp/file-viewer/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
     try {
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
-        const file = await Models.Conference.findOne({
+        const file = await Models.Sttp.findOne({
             where: { UserID: userId, id: id }
         });
         if (!file)

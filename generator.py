@@ -1,6 +1,6 @@
-items = ["ci","cma","cissn","cdate","ct","crpt"]
-route = "conference"
-upload_file = "ccerti"
+items = ["mrgt","mrgga","mrgya"]
+route = "mrg"
+upload_file = "mrgcerti"
 clsName = route.title()
 
 models_str = ""
@@ -92,7 +92,7 @@ routes_str += """
         // Iterate over all the files
         files.forEach(async (file) => {
             if (id === "nullish")
-                await Models.Files.create({
+                await Models.""" + clsName + """.create({
                     UserID: userId,
                     Location: file.path,
 """
@@ -102,7 +102,7 @@ for item in items:
 routes_str += """
             });
             else
-                await Models.Users.update({
+                await Models.""" + clsName + """.update({
 """
 for item in items:
 	routes_str += """                    """ + item + """:""" + item + """,
@@ -113,7 +113,7 @@ routes_str += """
                 );
 
         });
-        return res.status(200).redirect("/conference");
+        return res.status(200).redirect('/""" + route + """');
     }
     catch (error) {
         console.error(error);
@@ -122,15 +122,6 @@ routes_str += """
 });
 """ + clsName + """.get("/""" + route+ """", RoutesCommon.IsAuthenticated, (req, res) => {
     return res.render('""" + route + """.ejs', GetUploadJson(null));
-});
-""" + clsName + """.get("/""" + route+ """/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
-    const userId = Number(req.user!.id);
-    const params = RoutesCommon.GetParameters(req);
-    const id = params.id;
-    const file = await Models.""" + clsName + """.findOne({
-        where: { UserID: userId, id: id }
-    });
-    return res.render('""" + route + """.ejs', GetUploadJson(file));
 });
 """ + clsName + """.get("/""" + route+ """/files", RoutesCommon.IsAuthenticated, async (req, res) => {
     const userId = Number(req.user!.id);
@@ -142,6 +133,15 @@ routes_str += """
         files_json.push(GetUploadJson(file));
     });
     return res.json(files_json);
+});
+""" + clsName + """.get("/""" + route+ """/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+    const userId = Number(req.user!.id);
+    const params = RoutesCommon.GetParameters(req);
+    const id = params.id;
+    const file = await Models.""" + clsName + """.findOne({
+        where: { UserID: userId, id: id }
+    });
+    return res.render('""" + route + """.ejs', GetUploadJson(file));
 });
 """ + clsName + """.get("/""" + route+ """/file-viewer/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
     try {

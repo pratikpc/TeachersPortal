@@ -4,7 +4,6 @@ import * as Models from "./Models/Sequelize";
 import * as Routes from "./routes/Routes";
 import * as cors from "cors";
 import { PassportModelsGenerate } from "./Models/Passport.Models";
-import { RoutesCommon } from "./routes/Common.Routes";
 
 export const app = express();
 // app.use(bodyParser.json());
@@ -35,8 +34,16 @@ app.use("/user", Routes.Users);
 
 // Route via this as Path to Updation
 app.use("/", Routes.Updation);
+// Route via this as Path to Updation
+app.use("/", Routes.Upload);
 // Route via this as Path to Conference
 app.use("/", Routes.Conference);
+app.use("/", Routes.Fdp);
+app.use("/", Routes.Sttp);
+app.use("/", Routes.Journal);
+app.use("/", Routes.Progatt);
+app.use("/", Routes.Semwork);
+app.use("/", Routes.Mrg);
 
 app.get("/", (req, res) => {
   if (req.isUnauthenticated()) return res.render("login.html");

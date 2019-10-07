@@ -39,8 +39,9 @@
             <option value="female">Female</option>
           </select></br>
 
-          <h4><label for="bdate" style="color:black;font-size:24px;">Birthday<span>*</span></label></h4>
-          <input id="bdate" type="text" name="bdate" value="<%- data.bdate %>" />
+          <h4><label for="bdate" style="color:black;font-size:24px;">Date of Birth<span>*</span></label></h4>
+          <input id="bdate" style="width:24%;" type="text" name="bdate" value="<%- data.bdate %>" />
+         
 
           <h4><label for="address" style="color:black;font-size:24px;">Address<span>*</span></label></h4>
           <textarea id="address" name="address" rows="2" style="height:150px;"><%- data.address %> </textarea>
@@ -143,7 +144,7 @@
 
         
         <div class="input_fields_wrap">
-          <h4>Teaching<button class="add_field_button btn1" style="margin-left: 86%;"> ADD </h4></button>
+          <h4>Teaching</h4><!--<button class="add_field_button btn1" style="margin-left: 86%;"> ADD </button>-->
           <label for="tinstitute">Institute</label>
           <input id="tinstitute" type="text" name="tinstitute" required value="<%- data.tinstitute %>"/>
           <label for="tpost">Post</label>
@@ -152,8 +153,8 @@
           <input id="tduration" type="text" name="tduration" required value="<%- data.tduration %>"/>
         </div>
 
-        <div class="input_fields_wrap1">  
-          <h4>Industrial<button class="add_field_button1 btn1" style="margin-left:84%;"> ADD </h4></button>
+        <div class="input_fields_wrap1">    
+          <h4>Industrial</h4><!--<button class="add_field_button1 btn1" style="margin-left:84%;"> ADD</button>-->
           <label for="iinstitute">Industry</label>
           <input id="iinstitute" type="text" name="iinstitute" required value="<%- data.iinstitute %>"/>
           <label for="ipost">Post</label>
@@ -163,7 +164,7 @@
         </div>
 
         <div class="input_fields_wrap2">
-          <h4>Other<button class="add_field_button2 btn1" style="margin-left: 89%;" > ADD </i></h4> </button>
+          <h4>Other</h4><!--<button class="add_field_button2 btn1" style="margin-left: 89%;" > ADD </i></h4> </button>-->
           <label for="oinstitute">Institute</label>
           <input id="oinstitute" type="text" name="oinstitute" required value="<%- data.oinstitute %>"/>
           <label for="opost">Post</label>
@@ -186,8 +187,9 @@
     $( function() {
       $( "#bdate" ).datepicker();
     } );
-    </script>
-  <script>
+    </script> 
+    
+  <script> 
       $(document).ready(function() {
         var max_fields      = 4; //maximum input boxes allowed
         var wrapper   		= $(".input_fields_wrap"); //Fields wrapper

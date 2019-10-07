@@ -3,7 +3,7 @@
 
 <head>
   <% include ./partials/head.ejs %>
-  <link href="css/custom.css" rel="stylesheet">
+  <link href="/css/custom.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -13,12 +13,12 @@
   </nav>
   <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
     <section class=" p-lg-4 " id="update">
-      <form method="POST" action="/updated">
+      <form method="POST" action="/conference" enctype="multipart/form-data">
         <div class="my-auto item" id="documents">
           
         </br><h4>Conference</h4>
         </br>
-
+        <input id="id" name="id" type="hidden" value="<%- id %>">
         <label >Conference Date</label></br>
         <input id="cdate" type="text" name="cdate" value="<%- cdate %>"/>
         
@@ -49,7 +49,7 @@
         
         <label>Upload Certificate</label></br>
         <div class="fallback">
-        <input name="ccerti" type="file" multiple id="ccerti" value="<%- ccerti %>" />
+        <input name="ccerti" type="file" multiple id="ccerti" />
         </div>
 
     </div>
@@ -65,7 +65,6 @@
       $( "#cdate" ).datepicker();
     } );
     </script>
-  <script src="js/dropzone.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

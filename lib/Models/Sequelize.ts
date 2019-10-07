@@ -6,6 +6,13 @@ import { Pool } from "pg";
 
 import { Users } from "./Users.Model";
 import { Files } from "./Files.Models";
+import { Conference } from "./Conference.Models";
+import { Fdp } from "./Fdp.Models";
+import { Journal } from "./Journal.Models";
+import { Mrg } from "./Mrg.Models";
+import { Progatt } from "./Progatt.Models";
+import { Semwork } from "./Semwork.Models";
+import { Sttp } from "./Sttp.Models";
 
 // Create the Connection
 export const SequelizeSql = new Sequelize({
@@ -53,7 +60,7 @@ export async function RunSynchronisation() {
   // Authenticate if Entered Information is correct
   await SequelizeSql.authenticate();
 
-  SequelizeSql.addModels([Users, Files]);
+  SequelizeSql.addModels([Users, Files, Conference, Fdp, Journal, Mrg, Progatt, Semwork, Sttp]);
   // End up creating the Table
   // If it does not exist
   await Users.sync({ force: false });
@@ -61,4 +68,12 @@ export async function RunSynchronisation() {
   await Users.InsertIfNotExists(Users.DefaultUser);
   
   await Files.sync({ force: false });
+
+  await Conference.sync({force : false});
+  await Fdp.sync({force : false});
+  await Journal.sync({force : false});
+  await Mrg.sync({force : false});
+  await Sttp.sync({force : false});
+  await Progatt.sync({force : false});
+  await Semwork.sync({force : false});
 }

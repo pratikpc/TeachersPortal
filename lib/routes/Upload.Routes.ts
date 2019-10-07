@@ -5,20 +5,12 @@ import * as Models from "../Models/Models";
 export const Upload = Router();
 
 Upload.get("/upload", RoutesCommon.IsAuthenticated, (req, res) => {
-    return res.render("documents.html");
+    console.log("Pednekar is Here")
+    return res.render("documents.ejs");
 });
 function GetUploadJson(file: any) {
     return { id: file.id, Category: file.Category, sdptitle: file.sdptitle, year: file.year };
 }
-Upload.get("/upload/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
-    const userId = Number(req.user!.id);
-    const params = RoutesCommon.GetParameters(req);
-    const id = params.id;
-    const file = await Models.Files.findOne({
-        where: { UserID: userId, id: id }
-    });
-    return res.render("documents.html", GetUploadJson(file));
-});
 Upload.post("/upload", RoutesCommon.IsAuthenticated, RoutesCommon.upload.array("file"), async (req, res) => {
     try {
         const files = req.files as any[];
@@ -74,4 +66,13 @@ Upload.get("/upload/file-viewer/:id", RoutesCommon.IsAuthenticated, async (req, 
     }
     catch (err) { }
     return res.sendStatus(404);
+});
+Upload.get("/upload/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+    const userId = Number(req.user!.id);
+    const params = RoutesCommon.GetParameters(req);
+    const id = params.id;
+    const file = await Models.Files.findOne({
+        where: { UserID: userId, id: id }
+    });
+    return res.render("documents.ejs", GetUploadJson(file));
 });
