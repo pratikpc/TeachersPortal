@@ -33,6 +33,7 @@ Sttp.post("/sttp", RoutesCommon.IsAuthenticated,
         if (params == null)
             return res.status(422).send("Upload Failed");
         const userId = Number(req.user!.id);
+        console.log(params);
         const id = String(params.id);const sttpt = String(params.sttpt);
 	const sttpcol = String(params.sttpcol);
 	const sttpnw = String(params.sttpnw);
