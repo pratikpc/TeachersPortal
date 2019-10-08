@@ -249,6 +249,13 @@
                 </div>
             </div>          
     </div>
+   
+    <script>
+            var staticUrl = '/conference/files';
+            $.getJSON(staticUrl, function(data) {
+              console.log(data);
+            });
+    </script>
 
     <% include ./partials/bootjs %>
 
