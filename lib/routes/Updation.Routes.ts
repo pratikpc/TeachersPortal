@@ -45,7 +45,7 @@ Updation.get("/index", RoutesCommon.IsAuthenticated, async (req, res) => {
     return res.render("index.ejs", details);
 });
 
-Updation.get("/displaypicture", RoutesCommon.IsAuthenticated, async (req, res) => {
+Updation.get("/display", RoutesCommon.IsAuthenticated, async (req, res) => {
     try {
         const userId = Number(req.user!.id);
 
