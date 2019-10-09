@@ -144,6 +144,20 @@ catch (error) {
     });
     return res.json(files_json);
 });
+""" + clsName + """.get("/""" + route+ """/files/:userId", RoutesCommon.IsAdmin, async (req, res) => {
+    const params = RoutesCommon.GetParameters(req);
+    if (params == null)
+        return res.json([]);
+    const userId = params.userId;
+    const files = await Models.""" + clsName + """.findAll({
+        where: { UserID: userId }
+    });
+    const files_json: any[] = [];
+    files.forEach(file => {
+        files_json.push(GetUploadJson(file));
+    });
+    return res.json(files_json);
+});
 """ + clsName + """.get("/""" + route+ """/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
     const userId = Number(req.user!.id);
     const params = RoutesCommon.GetParameters(req);
