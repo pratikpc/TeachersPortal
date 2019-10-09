@@ -3,32 +3,31 @@
 
   <head>
     <% include ./partials/head %>
+
     <style>
-        body{
-        background: -webkit-linear-gradient(left);
-    }
+       
     .emp-profile{
-        padding: 3%;
+        padding-right: 50%;
         margin-top: 3%;
         margin-bottom: 3%;
         border-radius: 0.5rem;
-        background: #fff;
-    }
-    .profile-img{
-        text-align: center;
+        background: aliceblue;
+        margin-left:3%;
+        margin-right: 10%; 
     }
     .profile-img img{
-        width: 70%;
+        width: 100%;
         height: 100%;
+        border-radius: 5px;
     }
     .profile-img .file {
         position: relative;
         overflow: hidden;
-        margin-top: -20%;
-        width: 70%;
+        margin-top: -15%;
+        width: 100%;
         border: none;
-        border-radius: 0;
-        font-size: 15px;
+        border-radius: 3px;
+        font-size: 18px;
         background: #212529b8;
     }
     .profile-img .file input {
@@ -52,40 +51,30 @@
         color: #6c757d;
         cursor: pointer;
     }
-    .proile-rating{
-        font-size: 12px;
-        color: #818182;
-        margin-top: 5%;
-    }
-    .proile-rating span{
-        color: #495057;
-        font-size: 15px;
-        font-weight: 600;
-    }
     .profile-head .nav-tabs{
-        margin-bottom:5%;
+        margin-bottom:1%;
     }
     .profile-head .nav-tabs .nav-link{
         font-weight:600;
         border: none;
+        font-size: larger;
+        font-style: oblique;
+        font-size: 30px;
+        margin-right: 10%;
     }
     .profile-head .nav-tabs .nav-link.active{
         border: none;
         border-bottom:2px solid #0062cc;
     }
-    .profile-work{
-        padding: 14%;
-        margin-top: -15%;
-    }
     .profile-work p{
-        font-size: 12px;
-        color: #818182;
+        font-size: 20px;
+        color: #000000;
         font-weight: 600;
         margin-top: 10%;
     }
     .profile-work a{
         text-decoration: none;
-        color: #495057;
+        color: #000000;
         font-weight: 600;
         font-size: 14px;
     }
@@ -94,13 +83,16 @@
     }
     .profile-tab label{
         font-weight: 600;
+        font-size: 20px;
     }
     .profile-tab p{
         font-weight: 600;
+        font-size: 20px;
         color: #0062cc;
     }
     .profile-tab a{
         font-weight: 600;
+        font-size: 20px;
         color: #0062cc;
     }
     #view { display: none; }
@@ -110,31 +102,25 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body id="page-top">
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top " id="sideNav" style="background-color: #007bff;width:15.02%;">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top " id="sideNav" style="background-color: #007bff;width:15.02%">
       <% include ./partials/navbar %>
     </nav>
-    <div class="container emp-profile">
+    <div class="container emp-profile col-lg-10"  style="margin-left:10%;margin-top:4%;">
             <div class="row">
                 <div class="col-md-4">
+                <form method="POST" action="/profileupdate" >
                     <div class="profile-img">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
-                        <!-- <form method="POST" action="/profileupdate" enctype="multipart/form-data">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />  
                             <div class="file btn btn-lg btn-primary">
                             Change Photo
                             <input type="file" name="profile"/>
-                            </form>
-                        </div> -->
+                        </div>                                                       
                     </div>
+                </form>  
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="profile-head">
-                        <% var name = data.firstname +  " " + data.middlename + " " + data.lastname; %>
-                        <h5>
-                            <%= name %>       
-                        </h5>
-                        <h6>
-                            <%= data.title %>
-                        </h6>
+
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -164,14 +150,15 @@
                 <div class="col-md-8">
                     <div class="tab-content profile-tab" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <% var fullname = data.firstname +  " " + data.middlename + " " + data.lastname; %>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Name</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <p><%= name %>  </p>
+                                            <p><%= fullname %>  </p>
                                         </div>
-                                    </div>
+                                    </div></br>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Profession</label>
@@ -179,7 +166,7 @@
                                         <div class="col-md-6">
                                             <p><%= data.title %></p>
                                         </div>
-                                    </div>
+                                    </div></br>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Department</label>
@@ -187,7 +174,7 @@
                                         <div class="col-md-6">
                                             <p><%= data.dept %></p>
                                         </div>
-                                    </div>
+                                    </div></br>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Area of Specialization</label>
@@ -195,7 +182,7 @@
                                         <div class="col-md-6">
                                             <p><%= data.aos %></p>
                                         </div>
-                                    </div>
+                                    </div></br>
                                     <%   var start = 0; %>
                                     <%  if (parseInt(data.tduration.substring(0,4)) < parseInt(data.iduration.substring(0,4))){ %>
                                         <%   start = parseInt(data.tduration.substring(0,4));  %>
@@ -217,7 +204,7 @@
                                         <div class="col-md-6">
                                             <p><%= exp %> years</p>
                                         </div>
-                                    </div>
+                                    </div></br>
                                    
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -228,7 +215,7 @@
                                         <div class="col-md-6">
                                             <p><%= data.tduration %></p>
                                         </div>
-                                    </div>
+                                    </div></br>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Teaching Institute</label>
@@ -236,7 +223,7 @@
                                         <div class="col-md-6">
                                             <p><%= data.tinstitute %></p>
                                         </div>
-                                    </div>
+                                    </div></br>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Industry Duration</label>
@@ -244,7 +231,7 @@
                                         <div class="col-md-6">
                                             <p><%= data.iduration %></p>
                                         </div>
-                                    </div>
+                                    </div></br>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Industry</label>
@@ -252,7 +239,7 @@
                                         <div class="col-md-6">
                                             <p><%= data.iinstitute %></p>
                                         </div>
-                                    </div>
+                                    </div></br>
                                     
                         </div>
                         <div class="tab-pane fade" id="program" role="tabpanel" aria-labelledby="program-tab">
@@ -263,7 +250,7 @@
                                 <div class="col-md-6">
                                     <a id="fdpa" name="fdpa" href=""></a>
                                 </div>
-                            </div>
+                            </div></br>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Short Term Training Program</label>
@@ -271,7 +258,7 @@
                                 <div class="col-md-6">
                                     <a id="sttpa" name="sttpa" href=""></a>
                                 </div>
-                            </div>
+                            </div></br>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Conferences</label>
@@ -279,7 +266,7 @@
                                 <div class="col-md-6">
                                     <a id="ca" rel="view" href="#view" class="link"></a>
                                 </div>
-                            </div>
+                            </div></br>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Journals</label>
@@ -287,7 +274,7 @@
                                 <div class="col-md-6">
                                     <a id="ja" name="ja" href=""></a>
                                 </div>
-                            </div>
+                            </div></br>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Seminars/Workshops Attended</label>
@@ -295,7 +282,7 @@
                                 <div class="col-md-6">
                                     <a id="swaa" name="swaa" href=""></a>
                                 </div>
-                            </div>
+                            </div></br>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>RnD/Consultancy</label>
@@ -303,7 +290,7 @@
                                 <div class="col-md-6">
                                     <a id="rca" name="rca" href=""></a>
                                 </div>
-                            </div>
+                            </div></br>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Programs Attended</label>
@@ -311,7 +298,7 @@
                                 <div class="col-md-6">
                                     <a id="paa" name="paa" href=""></a>
                                 </div>
-                            </div>
+                            </div></br>
                             
                 </div>
                     </div>
