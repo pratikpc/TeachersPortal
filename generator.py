@@ -204,6 +204,26 @@ catch (error) {
     with open(fname, "w") as text_file:
         text_file.write(routes_str)
 
+'''
+items = ["jdate","jt","jrpt","jissn","ji","jma","jdui"]
+route = "journal"
+upload_file = "jcerti"
+items = ["mrgcat","mrgt","mrgauth","mrgya","mrgga"]
+route = "mrg"
+upload_file = "mrgcerti"
+items = ["fdpdate","fdpt","fdpcol","fdpnd","fdptype"]
+route = "fdp"
+upload_file = "fdpcerti"
+items = ["sttpdate","sttpt","sttpcol","sttpnw","sttptype"]
+route = "sttp"
+upload_file = "sttpcerti"
+items = ["swdate","swt","swcol","swnd","swtype"]Before
+route = "semwork"
+upload_file = "swcerti"
+items = ["patdate","patype","pat","patcol","patspon","patnd"]
+route = "progatt"
+upload_file = "patcerti"
+'''
 items = ["ci","cma","cissn","cdate","ct","crpt", "cdui"]
 route = "conference"
 upload_file = "ccerti"
