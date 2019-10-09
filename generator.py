@@ -74,7 +74,7 @@ import * as Models from "../Models/Models";
     routes_str += "}\n";
     routes_str += """
 
-""" + clsName + """.post("/""" + route+ """", RoutesCommon.IsAuthenticated,
+""" + clsName + """.post("/""" + route+ """", RoutesCommon.IsNotAdmin,
 RoutesCommon.upload.array('""" + upload_file + """'), async (req, res) => {
     try {
         const params = RoutesCommon.GetParameters(req);
@@ -130,10 +130,10 @@ catch (error) {
     return res.status(422).send("Upload Failed");
 }
 });
-""" + clsName + """.get("/""" + route+ """", RoutesCommon.IsAuthenticated, (req, res) => {
+""" + clsName + """.get("/""" + route+ """", RoutesCommon.IsNotAdmin, (req, res) => {
     return res.render('""" + route + """.ejs', GetUploadJson(null));
 });
-""" + clsName + """.get("/""" + route+ """/files", RoutesCommon.IsAuthenticated, async (req, res) => {
+""" + clsName + """.get("/""" + route+ """/files", RoutesCommon.IsNotAdmin, async (req, res) => {
     const userId = Number(req.user!.id);
     const files = await Models.""" + clsName + """.findAll({
         where: { UserID: userId }
@@ -158,7 +158,7 @@ catch (error) {
     });
     return res.json(files_json);
 });
-""" + clsName + """.get("/""" + route+ """/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+""" + clsName + """.get("/""" + route+ """/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     const userId = Number(req.user!.id);
     const params = RoutesCommon.GetParameters(req);
     const id = params.id;
@@ -167,7 +167,7 @@ catch (error) {
     });
     return res.render('""" + route + """.ejs', GetUploadJson(file));
 });
-""" + clsName + """.get("/""" + route+ """/file-viewer/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+""" + clsName + """.get("/""" + route+ """/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);
@@ -183,7 +183,7 @@ catch (error) {
     catch (err) { }
     return res.sendStatus(404);
 });
-""" + clsName + """.get("/""" + route+ """/delete/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+""" + clsName + """.get("/""" + route+ """/delete/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);
