@@ -24,15 +24,23 @@ import {
 
     @AllowNull(false)
     @Column(DataType.TEXT)
+    mrgcat!: string;
+
+    @AllowNull(false)
+    @Column(DataType.TEXT)
     mrgt!: string;
 
     @AllowNull(false)
     @Column(DataType.TEXT)
-    mrgga!: string;
+    mrgauth!: string;
 
     @AllowNull(false)
     @Column(DataType.TEXT)
     mrgya!: string;
+
+    @AllowNull(false)
+    @Column(DataType.TEXT)
+    mrgga!: string;
 
 
     @BeforeValidate

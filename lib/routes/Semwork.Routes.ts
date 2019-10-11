@@ -8,18 +8,18 @@ function GetUploadJson(file: any) {
 if (file==null)
 	return {
 		id:"nullish",
+		swdate: "",
 		swt: "",
 		swcol: "",
 		swnd: "",
-		swdate: "",
 		swtype: ""
 	};
 return {
 	id:file.id,
+	swdate: file.swdate,
 	swt: file.swt,
 	swcol: file.swcol,
 	swnd: file.swnd,
-	swdate: file.swdate,
 	swtype: file.swtype
 	};
 }
@@ -35,10 +35,10 @@ Semwork.post("/semwork", RoutesCommon.IsAuthenticated,
         if (params == null)
             return res.status(422).send("Upload Failed");
         const userId = Number(req.user!.id);
-        const id = String(params.id);const swt = String(params.swt);
+        const id = String(params.id);const swdate = String(params.swdate);
+	const swt = String(params.swt);
 	const swcol = String(params.swcol);
 	const swnd = String(params.swnd);
-	const swdate = String(params.swdate);
 	const swtype = String(params.swtype);
 	
         // Iterate over all the files
@@ -47,19 +47,19 @@ Semwork.post("/semwork", RoutesCommon.IsAuthenticated,
                 await Models.Semwork.create({
                     UserID: userId,
                     Location: file.path,
+                    swdate:swdate,
                     swt:swt,
                     swcol:swcol,
                     swnd:swnd,
-                    swdate:swdate,
                     swtype:swtype,
 
             });
             else
                 await Models.Semwork.update({
+                    swdate:swdate,
                     swt:swt,
                     swcol:swcol,
                     swnd:swnd,
-                    swdate:swdate,
                     swtype:swtype,
 
                     },

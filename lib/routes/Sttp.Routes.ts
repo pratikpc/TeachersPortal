@@ -8,17 +8,19 @@ function GetUploadJson(file: any) {
 if (file==null)
 	return {
 		id:"nullish",
+		sttpdate: "",
 		sttpt: "",
 		sttpcol: "",
 		sttpnw: "",
-		sttpdate: ""
+		sttptype: ""
 	};
 return {
 	id:file.id,
+	sttpdate: file.sttpdate,
 	sttpt: file.sttpt,
 	sttpcol: file.sttpcol,
 	sttpnw: file.sttpnw,
-	sttpdate: file.sttpdate
+	sttptype: file.sttptype
 	};
 }
 
@@ -33,11 +35,11 @@ Sttp.post("/sttp", RoutesCommon.IsAuthenticated,
         if (params == null)
             return res.status(422).send("Upload Failed");
         const userId = Number(req.user!.id);
-        console.log(params);
-        const id = String(params.id);const sttpt = String(params.sttpt);
+        const id = String(params.id);const sttpdate = String(params.sttpdate);
+	const sttpt = String(params.sttpt);
 	const sttpcol = String(params.sttpcol);
 	const sttpnw = String(params.sttpnw);
-	const sttpdate = String(params.sttpdate);
+	const sttptype = String(params.sttptype);
 	
         // Iterate over all the files
         files.forEach(async (file) => {
@@ -45,18 +47,20 @@ Sttp.post("/sttp", RoutesCommon.IsAuthenticated,
                 await Models.Sttp.create({
                     UserID: userId,
                     Location: file.path,
+                    sttpdate:sttpdate,
                     sttpt:sttpt,
                     sttpcol:sttpcol,
                     sttpnw:sttpnw,
-                    sttpdate:sttpdate,
+                    sttptype:sttptype,
 
             });
             else
                 await Models.Sttp.update({
+                    sttpdate:sttpdate,
                     sttpt:sttpt,
                     sttpcol:sttpcol,
                     sttpnw:sttpnw,
-                    sttpdate:sttpdate,
+                    sttptype:sttptype,
 
                     },
                     { where: { id: id, UserID: userId } }

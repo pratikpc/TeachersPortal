@@ -24,6 +24,10 @@ import {
 
     @AllowNull(false)
     @Column(DataType.TEXT)
+    fdpdate!: string;
+
+    @AllowNull(false)
+    @Column(DataType.TEXT)
     fdpt!: string;
 
     @AllowNull(false)
@@ -36,7 +40,7 @@ import {
 
     @AllowNull(false)
     @Column(DataType.TEXT)
-    fdpdate!: string;
+    fdptype!: string;
 
 
     @BeforeValidate

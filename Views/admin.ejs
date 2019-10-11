@@ -3,6 +3,9 @@
 
   <head>
     <% include ./partials/head %>
+    <style>
+    #adminviewer { display: none; }
+        </style>
   </head>
 
   <body id="page-top">
@@ -10,14 +13,70 @@
       <% include ./partials/navbaradmin %>
     </nav>
 
-    <div class="container-fluid p-0" style="width:69%;margin-right:20%;">
-      <section class=" p-lg-4 " id="update">
-        
-        <!--Display the list of users over here-->
-      </section>
-    </div>  
-
+    <div class=" box" style="width:69%;margin-right:20%;" id="adminviewer">
+      
+     
+    </div>
     <% include ./partials/bootjs %>
+    <script>
+      
+      function create()
+            {
+                const request = new XMLHttpRequest();
+                request.open('GET', '/user');
+                request.send(); 
+                
+                request.onload = function() {
+                if (request.status === 200) {
+                    console.log("Success"); 
+                    data = JSON.parse(request.response);
+                    var col = [];
+                    for (var i = 0; i < data.length; i++) {
+                        for (var key in data[i]) {
+                            if (col.indexOf(key) === -1) {
+                                col.push(key);
+                            }
+                        }
+                    }
+                    var table = document.createElement("table");
+                    table.setAttribute("class", "table table-striped table-primary");
+                    var tr = table.insertRow(-1); 
+                    for (var i = 0; i < col.length; i++) {
+                        var th = document.createElement("th");
+                        console.log(col[i]);
+                        th.innerHTML = col[i];
+                        tr.appendChild(th);
+                    }
+                    var th = document.createElement("th");
+                    th.innerHTML = 'Action';
+                    tr.appendChild(th);
+                    for (var i = 0; i < data.length; i++) {
+                        tr = table.insertRow(-1);
+                        var tabCell = ""
+                        var id = 0;
+                        for (var j = 1; j <= col.length; j++) {
+                            tabCell = tr.insertCell(-1);
+                            tabCell.innerHTML = data[i][col[j]];
+                        }
+                        id = data[i][col[0]];
+                        tabCell.innerHTML = "<a class=\"btn btn-danger btn-xs\" href=\" /user/" + id + "\"><i class=\"fa fa-trash\"></i></a>";
+                        
+                    }
+                    var divContainer = document.getElementById("adminviewer");
+                    divContainer.innerHTML = "";
+                    divContainer.appendChild(table);
+                    } 
+                };
+                
+                request.onerror = () => {
+                console.log("error")
+                };
+            }
+            create();
+      
+
+</script>
+
    
   </body>
 

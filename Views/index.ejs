@@ -315,7 +315,7 @@
                     $(id).text(count); 
                 });
             }
-           function create(rel, id, url)
+           function create(rel, id, url, url1)
             {
                 const request = new XMLHttpRequest();
                 request.open('GET', url);
@@ -353,7 +353,10 @@
                             tabCell.innerHTML = data[i][col[j]];
                         }
                         id = data[i][col[0]];
-                        tabCell.innerHTML = "<a class=\"btn btn-primary btn-xs\" href=\" /conference/" + id + "\"><i class=\"fa fa-edit\"></i></a>";
+                        tabCell.innerHTML = "<a class=\"btn btn-primary btn-xs\" href=\"" +url1 + id + "\"><i class=\"fa fa-edit\"></i></a> <a class=\"btn btn-danger btn-xs\" href=\"" +url1 + "delete/" + id + "\"><i class=\"fa fa-trash\"></i></a> <a class=\"btn btn-primary btn-xs\" href=\"" +url1 + "file-viewer/" + id + "\"><i class=\"fa fa-download\"></i></a>";
+                        
+
+                        
                     }
                     var divContainer = document.getElementById("view");
                     divContainer.innerHTML = "";
@@ -379,28 +382,35 @@
                 switch (id) {
                     case 'fdpa':
                         url = "/fdp/files";
+                        url1 = "/fdp/";
                         break;
                     case 'sttpa':
                         url = "/sttp/files";
+                        url1 = "/sttp/";
                         break;
                     case 'ca':
                         url = "/conference/files";
+                        url1 = "/conference/";
                         break;
                     case 'ja':
                         url = "/journal/files";
+                        url1 = "/journal/";
                         break;
                     case 'swaa':
                         url = "/semwork/files";
+                        url1 = "/semwork/";
                         break;
                     case 'rca':
                         url = "/mrg/files";
+                        url1 = "/mrg/";
                         break;
                     case 'paa':
                         url = "/progatt/files";
+                        url1 = "/progatt/";
                         break;
                    
                 }
-                create(rel, id, url);
+                create(rel, id, url, url1);
                 $('#'+rel).slideToggle('fast');
             });
 

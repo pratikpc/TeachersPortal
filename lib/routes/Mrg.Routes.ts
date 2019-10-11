@@ -8,15 +8,19 @@ function GetUploadJson(file: any) {
 if (file==null)
 	return {
 		id:"nullish",
+		mrgcat: "",
 		mrgt: "",
-		mrgga: "",
-		mrgya: ""
+		mrgauth: "",
+		mrgya: "",
+		mrgga: ""
 	};
 return {
 	id:file.id,
+	mrgcat: file.mrgcat,
 	mrgt: file.mrgt,
-	mrgga: file.mrgga,
-	mrgya: file.mrgya
+	mrgauth: file.mrgauth,
+	mrgya: file.mrgya,
+	mrgga: file.mrgga
 	};
 }
 
@@ -31,9 +35,11 @@ Mrg.post("/mrg", RoutesCommon.IsAuthenticated,
         if (params == null)
             return res.status(422).send("Upload Failed");
         const userId = Number(req.user!.id);
-        const id = String(params.id);const mrgt = String(params.mrgt);
-	const mrgga = String(params.mrgga);
+        const id = String(params.id);const mrgcat = String(params.mrgcat);
+	const mrgt = String(params.mrgt);
+	const mrgauth = String(params.mrgauth);
 	const mrgya = String(params.mrgya);
+	const mrgga = String(params.mrgga);
 	
         // Iterate over all the files
         files.forEach(async (file) => {
@@ -41,16 +47,20 @@ Mrg.post("/mrg", RoutesCommon.IsAuthenticated,
                 await Models.Mrg.create({
                     UserID: userId,
                     Location: file.path,
+                    mrgcat:mrgcat,
                     mrgt:mrgt,
-                    mrgga:mrgga,
+                    mrgauth:mrgauth,
                     mrgya:mrgya,
+                    mrgga:mrgga,
 
             });
             else
                 await Models.Mrg.update({
+                    mrgcat:mrgcat,
                     mrgt:mrgt,
-                    mrgga:mrgga,
+                    mrgauth:mrgauth,
                     mrgya:mrgya,
+                    mrgga:mrgga,
 
                     },
                     { where: { id: id, UserID: userId } }

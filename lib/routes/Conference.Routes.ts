@@ -5,85 +5,114 @@ import * as Models from "../Models/Models";
 export const Conference = Router();
 
 function GetUploadJson(file: any) {
-if (file==null)
+	if (file==null)
+		return {
+			id:"nullish",
+			ci: "",
+			cma: "",
+			cissn: "",
+			cdate: "",
+			ct: "",
+			crpt: "",
+			cdui: ""
+		};
 	return {
-		id:"nullish",
-		ci: "",
-		cma: "",
-		cissn: "",
-		cdate: "",
-		ct: "",
-		crpt: ""
-	};
-return {
-	id:file.id,
-	ci: file.ci,
-	cma: file.cma,
-	cissn: file.cissn,
-	cdate: file.cdate,
-	ct: file.ct,
-	crpt: file.crpt
-	};
+			id:file.id,
+			ci: file.ci,
+			cma: file.cma,
+			cissn: file.cissn,
+			cdate: file.cdate,
+			ct: file.ct,
+			crpt: file.crpt,
+			cdui: file.cdui
+		};
 }
 
 
 Conference.post("/conference", RoutesCommon.IsAuthenticated,
- RoutesCommon.upload.array('ccerti'), async (req, res) => {
+RoutesCommon.upload.array('ccerti'), async (req, res) => {
     try {
-        const files = req.files as any[];
-        if (files == null || files.length === 0)
-            return res.status(422).send("Upload Failed");
         const params = RoutesCommon.GetParameters(req);
         if (params == null)
             return res.status(422).send("Upload Failed");
         const userId = Number(req.user!.id);
-        const id = String(params.id);const ci = String(params.ci);
-	const cma = String(params.cma);
-	const cissn = String(params.cissn);
-	const cdate = String(params.cdate);
-	const ct = String(params.ct);
-	const crpt = String(params.crpt);
-	
-        // Iterate over all the files
-        files.forEach(async (file) => {
-            if (id === "nullish")
-                await Models.Conference.create({
-                    UserID: userId,
-                    Location: file.path,
+        const id = String(params.id);
+        const files = req.files as any[];
+        // ID Nullish is Used for First time Upload
+        if (id === "nullish" && (files == null || files.length === 0))
+            return res.status(422).send("Upload Failed");
+        const ci = String(params.ci);
+    const cma = String(params.cma);
+    const cissn = String(params.cissn);
+    const cdate = String(params.cdate);
+    const ct = String(params.ct);
+    const crpt = String(params.crpt);
+    const cdui = String(params.cdui);
+    
+        let file = null;
+        // ID Nullish is Used for First time Upload
+        if (files != null && files.length !== 0)
+            file = files[0]
+        if (id === "nullish"){
+            await Models.Conference.create({
+                UserID: userId,
+                Location: file.path,
                     ci:ci,
-                    cma:cma,
-                    cissn:cissn,
-                    cdate:cdate,
-                    ct:ct,
-                    crpt:crpt,
-
+                        cma:cma,
+                        cissn:cissn,
+                        cdate:cdate,
+                        ct:ct,
+                        crpt:crpt,
+                        cdui:cdui,
+    
             });
-            else
-                await Models.Conference.update({
-                    ci:ci,
+        }
+        else{
+            await Models.Conference.update({
+                ci:ci,
                     cma:cma,
                     cissn:cissn,
                     cdate:cdate,
                     ct:ct,
                     crpt:crpt,
-
+                    cdui:cdui,
+    
+                },
+                { where: { id: id, UserID: userId } }
+            );
+            if (file != null)
+                    await Models.Conference.update({
+                        Location: file.path
                     },
                     { where: { id: id, UserID: userId } }
-                );
-
-        });
-        return res.status(200).redirect("/conference");
-    }
-    catch (error) {
-        console.error(error);
-        return res.status(422).send("Upload Failed");
-    }
+                    );
+            }
+    return res.status(200).redirect('/conference');
+}
+catch (error) {
+    console.error(error);
+    return res.status(422).send("Upload Failed");
+}
 });
 Conference.get("/conference", RoutesCommon.IsAuthenticated, (req, res) => {
     return res.render('conference.ejs', GetUploadJson(null));
 });
 Conference.get("/conference/files", RoutesCommon.IsAuthenticated, async (req, res) => {
     const userId = Number(req.user!.id);
+    const files = await Models.Conference.findAll({
+        where: { UserID: userId }
+    });
+    const files_json: any[] = [];
+    files.forEach(file => {
+        files_json.push(GetUploadJson(file));
+    });
+    return res.json(files_json);
+});
+Conference.get("/conference/files/:userId", RoutesCommon.IsAdmin, async (req, res) => {
+    const params = RoutesCommon.GetParameters(req);
+    if (params == null)
+        return res.json([]);
+    const userId = params.userId;
     const files = await Models.Conference.findAll({
         where: { UserID: userId }
     });
@@ -118,3 +147,18 @@ Conference.get("/conference/file-viewer/:id", RoutesCommon.IsAuthenticated, asyn
     catch (err) { }
     return res.sendStatus(404);
 });
+Conference.get("/conference/delete/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+    try {
+        const userId = Number(req.user!.id);
+        const params = RoutesCommon.GetParameters(req);
+        const id = params.id;
+        const file = await Models.Conference.destroy({
+            where: { UserID: userId, id: id }
+        });
+        const success = (file !== 0);
+        return res.json({ success: success });
+    }
+    catch (err) { 
+        return res.json({ success: false });
+    }
+    });

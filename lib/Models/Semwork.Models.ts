@@ -24,6 +24,10 @@ import {
 
     @AllowNull(false)
     @Column(DataType.TEXT)
+    swdate!: string;
+
+    @AllowNull(false)
+    @Column(DataType.TEXT)
     swt!: string;
 
     @AllowNull(false)
@@ -33,10 +37,6 @@ import {
     @AllowNull(false)
     @Column(DataType.TEXT)
     swnd!: string;
-
-    @AllowNull(false)
-    @Column(DataType.TEXT)
-    swdate!: string;
 
     @AllowNull(false)
     @Column(DataType.TEXT)

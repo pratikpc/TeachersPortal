@@ -24,6 +24,10 @@ import {
 
     @AllowNull(false)
     @Column(DataType.TEXT)
+    patdate!: string;
+
+    @AllowNull(false)
+    @Column(DataType.TEXT)
     patype!: string;
 
     @AllowNull(false)
@@ -36,11 +40,11 @@ import {
 
     @AllowNull(false)
     @Column(DataType.TEXT)
-    patnd!: string;
+    patspon!: string;
 
     @AllowNull(false)
     @Column(DataType.TEXT)
-    patdate!: string;
+    patnd!: string;
 
 
     @BeforeValidate

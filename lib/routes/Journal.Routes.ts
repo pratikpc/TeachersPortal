@@ -8,21 +8,23 @@ function GetUploadJson(file: any) {
 if (file==null)
 	return {
 		id:"nullish",
-		ji: "",
+		jdate: "",
 		jt: "",
 		jrpt: "",
-		jma: "",
 		jissn: "",
-		jdate: ""
+		ji: "",
+		jma: "",
+		jdui: ""
 	};
 return {
 	id:file.id,
-	ji: file.ji,
+	jdate: file.jdate,
 	jt: file.jt,
 	jrpt: file.jrpt,
-	jma: file.jma,
 	jissn: file.jissn,
-	jdate: file.jdate
+	ji: file.ji,
+	jma: file.jma,
+	jdui: file.jdui
 	};
 }
 
@@ -37,12 +39,13 @@ Journal.post("/journal", RoutesCommon.IsAuthenticated,
         if (params == null)
             return res.status(422).send("Upload Failed");
         const userId = Number(req.user!.id);
-        const id = String(params.id);const ji = String(params.ji);
+        const id = String(params.id);const jdate = String(params.jdate);
 	const jt = String(params.jt);
 	const jrpt = String(params.jrpt);
-	const jma = String(params.jma);
 	const jissn = String(params.jissn);
-	const jdate = String(params.jdate);
+	const ji = String(params.ji);
+	const jma = String(params.jma);
+	const jdui = String(params.jdui);
 	
         // Iterate over all the files
         files.forEach(async (file) => {
@@ -50,22 +53,24 @@ Journal.post("/journal", RoutesCommon.IsAuthenticated,
                 await Models.Journal.create({
                     UserID: userId,
                     Location: file.path,
-                    ji:ji,
+                    jdate:jdate,
                     jt:jt,
                     jrpt:jrpt,
-                    jma:jma,
                     jissn:jissn,
-                    jdate:jdate,
+                    ji:ji,
+                    jma:jma,
+                    jdui:jdui,
 
             });
             else
                 await Models.Journal.update({
-                    ji:ji,
+                    jdate:jdate,
                     jt:jt,
                     jrpt:jrpt,
-                    jma:jma,
                     jissn:jissn,
-                    jdate:jdate,
+                    ji:ji,
+                    jma:jma,
+                    jdui:jdui,
 
                     },
                     { where: { id: id, UserID: userId } }

@@ -8,17 +8,19 @@ function GetUploadJson(file: any) {
 if (file==null)
 	return {
 		id:"nullish",
+		fdpdate: "",
 		fdpt: "",
 		fdpcol: "",
 		fdpnd: "",
-		fdpdate: ""
+		fdptype: ""
 	};
 return {
 	id:file.id,
+	fdpdate: file.fdpdate,
 	fdpt: file.fdpt,
 	fdpcol: file.fdpcol,
 	fdpnd: file.fdpnd,
-	fdpdate: file.fdpdate
+	fdptype: file.fdptype
 	};
 }
 
@@ -33,10 +35,11 @@ Fdp.post("/fdp", RoutesCommon.IsAuthenticated,
         if (params == null)
             return res.status(422).send("Upload Failed");
         const userId = Number(req.user!.id);
-        const id = String(params.id);const fdpt = String(params.fdpt);
+        const id = String(params.id);const fdpdate = String(params.fdpdate);
+	const fdpt = String(params.fdpt);
 	const fdpcol = String(params.fdpcol);
 	const fdpnd = String(params.fdpnd);
-	const fdpdate = String(params.fdpdate);
+	const fdptype = String(params.fdptype);
 	
         // Iterate over all the files
         files.forEach(async (file) => {
@@ -44,18 +47,20 @@ Fdp.post("/fdp", RoutesCommon.IsAuthenticated,
                 await Models.Fdp.create({
                     UserID: userId,
                     Location: file.path,
+                    fdpdate:fdpdate,
                     fdpt:fdpt,
                     fdpcol:fdpcol,
                     fdpnd:fdpnd,
-                    fdpdate:fdpdate,
+                    fdptype:fdptype,
 
             });
             else
                 await Models.Fdp.update({
+                    fdpdate:fdpdate,
                     fdpt:fdpt,
                     fdpcol:fdpcol,
                     fdpnd:fdpnd,
-                    fdpdate:fdpdate,
+                    fdptype:fdptype,
 
                     },
                     { where: { id: id, UserID: userId } }

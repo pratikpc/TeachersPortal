@@ -5,13 +5,13 @@ import {
     Column,
     DataType,
     ForeignKey,
-    BeforeValidate,
+    BeforeCreate,
     Model} from "sequelize-typescript";
-  import { existsSync } from "fs";
-  import { Users } from "./Users.Model";
+import { existsSync } from "fs";
+import { Users } from "./Users.Model";
 
-  @Table
-  export class Conference extends Model<Conference> {
+@Table
+export class Conference extends Model<Conference> {
     @AllowNull(false)
     @Column(DataType.TEXT)
     Location!: string;
@@ -25,31 +25,36 @@ import {
     @AllowNull(false)
     @Column(DataType.TEXT)
     ci!: string;
-
+    
     @AllowNull(false)
     @Column(DataType.TEXT)
     cma!: string;
-
+    
     @AllowNull(false)
     @Column(DataType.TEXT)
     cissn!: string;
-
+    
     @AllowNull(false)
     @Column(DataType.TEXT)
     cdate!: string;
-
+    
     @AllowNull(false)
     @Column(DataType.TEXT)
     ct!: string;
-
+    
     @AllowNull(false)
     @Column(DataType.TEXT)
     crpt!: string;
+    
+    @AllowNull(false)
+    @Column(DataType.TEXT)
+    cdui!: string;
+    
 
-
-    @BeforeValidate
+    @BeforeCreate
     public static CheckFileExistence(File: Conference): void {
-      if (!existsSync(File.Location))
+    if (!existsSync(File.Location))
         throw "File Not Exists at " + File.Location;
     }
-  }
+}
+    

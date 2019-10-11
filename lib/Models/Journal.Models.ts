@@ -24,7 +24,7 @@ import {
 
     @AllowNull(false)
     @Column(DataType.TEXT)
-    ji!: string;
+    jdate!: string;
 
     @AllowNull(false)
     @Column(DataType.TEXT)
@@ -36,15 +36,19 @@ import {
 
     @AllowNull(false)
     @Column(DataType.TEXT)
-    jma!: string;
-
-    @AllowNull(false)
-    @Column(DataType.TEXT)
     jissn!: string;
 
     @AllowNull(false)
     @Column(DataType.TEXT)
-    jdate!: string;
+    ji!: string;
+
+    @AllowNull(false)
+    @Column(DataType.TEXT)
+    jma!: string;
+
+    @AllowNull(false)
+    @Column(DataType.TEXT)
+    jdui!: string;
 
 
     @BeforeValidate

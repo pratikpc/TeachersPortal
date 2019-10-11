@@ -24,6 +24,10 @@ import {
 
     @AllowNull(false)
     @Column(DataType.TEXT)
+    sttpdate!: string;
+
+    @AllowNull(false)
+    @Column(DataType.TEXT)
     sttpt!: string;
 
     @AllowNull(false)
@@ -36,7 +40,7 @@ import {
 
     @AllowNull(false)
     @Column(DataType.TEXT)
-    sttpdate!: string;
+    sttptype!: string;
 
 
     @BeforeValidate

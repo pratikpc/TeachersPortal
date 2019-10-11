@@ -8,19 +8,21 @@ function GetUploadJson(file: any) {
 if (file==null)
 	return {
 		id:"nullish",
+		patdate: "",
 		patype: "",
 		pat: "",
 		patcol: "",
-		patnd: "",
-		patdate: ""
+		patspon: "",
+		patnd: ""
 	};
 return {
 	id:file.id,
+	patdate: file.patdate,
 	patype: file.patype,
 	pat: file.pat,
 	patcol: file.patcol,
-	patnd: file.patnd,
-	patdate: file.patdate
+	patspon: file.patspon,
+	patnd: file.patnd
 	};
 }
 
@@ -35,11 +37,12 @@ Progatt.post("/progatt", RoutesCommon.IsAuthenticated,
         if (params == null)
             return res.status(422).send("Upload Failed");
         const userId = Number(req.user!.id);
-        const id = String(params.id);const patype = String(params.patype);
+        const id = String(params.id);const patdate = String(params.patdate);
+	const patype = String(params.patype);
 	const pat = String(params.pat);
 	const patcol = String(params.patcol);
+	const patspon = String(params.patspon);
 	const patnd = String(params.patnd);
-	const patdate = String(params.patdate);
 	
         // Iterate over all the files
         files.forEach(async (file) => {
@@ -47,20 +50,22 @@ Progatt.post("/progatt", RoutesCommon.IsAuthenticated,
                 await Models.Progatt.create({
                     UserID: userId,
                     Location: file.path,
+                    patdate:patdate,
                     patype:patype,
                     pat:pat,
                     patcol:patcol,
+                    patspon:patspon,
                     patnd:patnd,
-                    patdate:patdate,
 
             });
             else
                 await Models.Progatt.update({
+                    patdate:patdate,
                     patype:patype,
                     pat:pat,
                     patcol:patcol,
+                    patspon:patspon,
                     patnd:patnd,
-                    patdate:patdate,
 
                     },
                     { where: { id: id, UserID: userId } }
