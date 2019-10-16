@@ -9,7 +9,7 @@ Updation.get("/newpassword", RoutesCommon.IsAuthenticated, (req, res) => {
 Updation.get("/upload", RoutesCommon.IsNotAdmin, (req, res) => {
     return res.render("documents.ejs");
 });
-Updation.post("/newpassword", RoutesCommon.IsAuthenticated, async (req, res) => {
+Updation.post("/newpassword", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
         const id = Number(req.user!.id);
 
