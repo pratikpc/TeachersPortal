@@ -53,8 +53,15 @@ export class Conference extends Model<Conference> {
 
     @BeforeCreate
     public static CheckFileExistence(File: Conference): void {
-    if (!existsSync(File.Location))
-        throw "File Not Exists at " + File.Location;
+        const locations = JSON.parse(File.Location) as string[];
+        locations.forEach(location => {
+            if (!existsSync(location))
+                throw "File Not Exists at " + File.Location;
+        });
+    }
+
+    public FileLocationsAsArray(): string[]{
+        return JSON.parse(this.Location) as string[];
     }
 }
     

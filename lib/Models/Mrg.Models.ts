@@ -5,48 +5,55 @@ import {
     Column,
     DataType,
     ForeignKey,
-    BeforeValidate,
+    BeforeCreate,
     Model} from "sequelize-typescript";
-  import { existsSync } from "fs";
-  import { Users } from "./Users.Model";
-  
-  @Table
-  export class Mrg extends Model<Mrg> {
+import { existsSync } from "fs";
+import { Users } from "./Users.Model";
+
+@Table
+export class Mrg extends Model<Mrg> {
     @AllowNull(false)
     @Column(DataType.TEXT)
     Location!: string;
-  
+
     @AllowNull(false)
     @ForeignKey(() => Users)
     @Column
     UserID!: number;
-  
+
 
     @AllowNull(false)
     @Column(DataType.TEXT)
     mrgcat!: string;
-
+    
     @AllowNull(false)
     @Column(DataType.TEXT)
     mrgt!: string;
-
+    
     @AllowNull(false)
     @Column(DataType.TEXT)
     mrgauth!: string;
-
+    
     @AllowNull(false)
     @Column(DataType.TEXT)
     mrgya!: string;
-
+    
     @AllowNull(false)
     @Column(DataType.TEXT)
     mrgga!: string;
+    
 
-
-    @BeforeValidate
+    @BeforeCreate
     public static CheckFileExistence(File: Mrg): void {
-      if (!existsSync(File.Location))
-        throw "File Not Exists at " + File.Location;
+        const locations = JSON.parse(File.Location) as string[];
+        locations.forEach(location => {
+            if (!existsSync(location))
+                throw "File Not Exists at " + File.Location;
+        });
     }
-  }
 
+    public FileLocationsAsArray(): string[]{
+        return JSON.parse(this.Location) as string[];
+    }
+}
+    

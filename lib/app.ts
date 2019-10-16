@@ -36,8 +36,6 @@ app.use("/admin", Routes.Admin);
 
 // Route via this as Path to Updation
 app.use("/", Routes.Updation);
-// Route via this as Path to Updation
-app.use("/", Routes.Upload);
 // Route via this as Path to Conference
 app.use("/", Routes.Conference);
 app.use("/", Routes.Fdp);

@@ -36,8 +36,15 @@ export class """ + clsName + """ extends Model<""" + clsName + """> {
 
     @BeforeCreate
     public static CheckFileExistence(File: """ + clsName + """): void {
-    if (!existsSync(File.Location))
-        throw "File Not Exists at " + File.Location;
+        const locations = JSON.parse(File.Location) as string[];
+        locations.forEach(location => {
+            if (!existsSync(location))
+                throw "File Not Exists at " + File.Location;
+        });
+    }
+
+    public FileLocationsAsArray(): string[]{
+        return JSON.parse(this.Location) as string[];
     }
 }
     """
@@ -52,6 +59,8 @@ def GenerateRoutes(items, route, upload_file):
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
+import * as Archiver from "archiver";
+import * as Path from "path";
 """
 
     routes_str += "export const " + clsName + " = Router();\n\n"
@@ -91,14 +100,14 @@ RoutesCommon.upload.array('""" + upload_file + """'), async (req, res) => {
         routes_str += """const """ + item + """ = String(params.""" + item + """);
     """
     routes_str += """
-        let file = null;
+        let pathToFiles = null;
         // ID Nullish is Used for First time Upload
         if (files != null && files.length !== 0)
-            file = files[0]
-        if (id === "nullish"){
+            pathToFiles = RoutesCommon.FilesToPathString(files);
+        if (id === "nullish" && pathToFiles != null){
             await Models.""" + clsName + """.create({
                 UserID: userId,
-                Location: file.path,
+                Location: pathToFiles,
 """
     for item in items:
         routes_str += """                    """ + item + """:""" + item + """,
@@ -116,9 +125,9 @@ RoutesCommon.upload.array('""" + upload_file + """'), async (req, res) => {
                 },
                 { where: { id: id, UserID: userId } }
             );
-            if (file != null)
+            if (pathToFiles != null)
                     await Models.Conference.update({
-                        Location: file.path
+                        Location: pathToFiles
                     },
                     { where: { id: id, UserID: userId } }
                     );
@@ -177,13 +186,42 @@ catch (error) {
         });
         if (!file)
             return res.sendStatus(404);
-        const path = file.Location;
-        return res.download(path);
+        const filesToDownload : string[] = file.FileLocationsAsArray();
+
+        if (filesToDownload.length === 0)
+            return res.sendStatus(404);
+
+        res.setHeader('Content-Disposition', 'attachment');
+
+        if (filesToDownload.length === 1)
+            return res.sendFile(filesToDownload[0]);
+
+        const archive = Archiver.create("zip");
+
+        archive.on('error', function (err) {
+            res.status(500).send({ error: err.message });
+        });
+
+        //on stream closed we can end the request
+        archive.on('end', function () {
+        });
+        
+        //set the archive name
+        res.attachment('details.zip');
+
+        //this is the streaming magic
+        archive.pipe(res);
+
+        for (const file in filesToDownload) {
+            archive.file(file, { name: Path.basename(file) });
+        }
+
+        archive.finalize();
     }
     catch (err) { }
     return res.sendStatus(404);
 });
-""" + clsName + """.get("/""" + route+ """/delete/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
+""" + clsName + """.delete("/""" + route+ """/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);
@@ -204,29 +242,44 @@ catch (error) {
     with open(fname, "w") as text_file:
         text_file.write(routes_str)
 
-'''
-items = ["jdate","jt","jrpt","jissn","ji","jma","jdui"]
-route = "journal"
-upload_file = "jcerti"
-items = ["mrgcat","mrgt","mrgauth","mrgya","mrgga"]
-route = "mrg"
-upload_file = "mrgcerti"
-items = ["fdpdate","fdpt","fdpcol","fdpnd","fdptype"]
-route = "fdp"
-upload_file = "fdpcerti"
-items = ["sttpdate","sttpt","sttpcol","sttpnw","sttptype"]
-route = "sttp"
-upload_file = "sttpcerti"
-items = ["swdate","swt","swcol","swnd","swtype"]Before
-route = "semwork"
-upload_file = "swcerti"
-items = ["patdate","patype","pat","patcol","patspon","patnd"]
-route = "progatt"
-upload_file = "patcerti"
-'''
-items = ["ci","cma","cissn","cdate","ct","crpt", "cdui"]
-route = "conference"
-upload_file = "ccerti"
+mrg_items = ["mrgcat","mrgt","mrgauth","mrgya","mrgga"]
+mrg_route = "mrg"
+mrg_upload_file = "mrgcerti"
+GenerateModel(mrg_items, mrg_route, mrg_upload_file)
+GenerateRoutes(mrg_items, mrg_route, mrg_upload_file)
 
-GenerateModel(items, route, upload_file)
-GenerateRoutes(items, route, upload_file)
+j_items = ["jdate","jt","jrpt","jissn","ji","jma","jdui"]
+j_route = "journal"
+j_upload_file = "jcerti"
+GenerateModel(j_items, j_route, j_upload_file)
+GenerateRoutes(j_items, j_route, j_upload_file)
+
+sttp_items = ["sttpdate","sttpt","sttpcol","sttpnw","sttptype"]
+sttp_route = "sttp"
+sttp_upload_file = "sttpcerti"
+GenerateModel(sttp_items, sttp_route, sttp_upload_file)
+GenerateRoutes(sttp_items, sttp_route, sttp_upload_file)
+
+sw_items = ["swdate","swt","swcol","swnd","swtype"]
+sw_route = "semwork"
+sw_upload_file = "swcerti"
+GenerateModel(sw_items, sw_route, sw_upload_file)
+GenerateRoutes(sw_items, sw_route, sw_upload_file)
+
+citems = ["ci","cma","cissn","cdate","ct","crpt", "cdui"]
+croute = "conference"
+cupload_file = "ccerti"
+GenerateModel(citems, croute, cupload_file)
+GenerateRoutes(citems, croute, cupload_file)
+
+pat_items = ["patdate","patype","pat","patcol","patspon","patnd"]
+pat_route = "progatt"
+pat_upload_file = "patcerti"
+GenerateModel(pat_items, pat_route, pat_upload_file)
+GenerateRoutes(pat_items, pat_route, pat_upload_file)
+
+fdp_items = ["fdpdate","fdpt","fdpcol","fdpnd","fdptype"]
+fdp_route = "fdp"
+fdp_upload_file = "fdpcerti"
+GenerateModel(fdp_items, fdp_route, fdp_upload_file)
+GenerateRoutes(fdp_items, fdp_route, fdp_upload_file)

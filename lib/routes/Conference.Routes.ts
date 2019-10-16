@@ -2,6 +2,8 @@
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
+import * as Archiver from "archiver";
+import * as Path from "path";
 export const Conference = Router();
 
 function GetUploadJson(file: any) {
@@ -29,7 +31,7 @@ function GetUploadJson(file: any) {
 }
 
 
-Conference.post("/conference", RoutesCommon.IsAuthenticated,
+Conference.post("/conference", RoutesCommon.IsNotAdmin,
 RoutesCommon.upload.array('ccerti'), async (req, res) => {
     try {
         const params = RoutesCommon.GetParameters(req);
@@ -49,14 +51,14 @@ RoutesCommon.upload.array('ccerti'), async (req, res) => {
     const crpt = String(params.crpt);
     const cdui = String(params.cdui);
     
-        let file = null;
+        let pathToFiles = null;
         // ID Nullish is Used for First time Upload
         if (files != null && files.length !== 0)
-            file = files[0]
-        if (id === "nullish"){
+            pathToFiles = RoutesCommon.FilesToPathString(files);
+        if (id === "nullish" && pathToFiles != null){
             await Models.Conference.create({
                 UserID: userId,
-                Location: file.path,
+                Location: pathToFiles,
                     ci:ci,
                         cma:cma,
                         cissn:cissn,
@@ -80,9 +82,9 @@ RoutesCommon.upload.array('ccerti'), async (req, res) => {
                 },
                 { where: { id: id, UserID: userId } }
             );
-            if (file != null)
+            if (pathToFiles != null)
                     await Models.Conference.update({
-                        Location: file.path
+                        Location: pathToFiles
                     },
                     { where: { id: id, UserID: userId } }
                     );
@@ -94,10 +96,10 @@ catch (error) {
     return res.status(422).send("Upload Failed");
 }
 });
-Conference.get("/conference", RoutesCommon.IsAuthenticated, (req, res) => {
+Conference.get("/conference", RoutesCommon.IsNotAdmin, (req, res) => {
     return res.render('conference.ejs', GetUploadJson(null));
 });
-Conference.get("/conference/files", RoutesCommon.IsAuthenticated, async (req, res) => {
+Conference.get("/conference/files", RoutesCommon.IsNotAdmin, async (req, res) => {
     const userId = Number(req.user!.id);
     const files = await Models.Conference.findAll({
         where: { UserID: userId }
@@ -122,7 +124,7 @@ Conference.get("/conference/files/:userId", RoutesCommon.IsAdmin, async (req, re
     });
     return res.json(files_json);
 });
-Conference.get("/conference/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+Conference.get("/conference/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     const userId = Number(req.user!.id);
     const params = RoutesCommon.GetParameters(req);
     const id = params.id;
@@ -131,7 +133,7 @@ Conference.get("/conference/:id", RoutesCommon.IsAuthenticated, async (req, res)
     });
     return res.render('conference.ejs', GetUploadJson(file));
 });
-Conference.get("/conference/file-viewer/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+Conference.get("/conference/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);
@@ -141,13 +143,42 @@ Conference.get("/conference/file-viewer/:id", RoutesCommon.IsAuthenticated, asyn
         });
         if (!file)
             return res.sendStatus(404);
-        const path = file.Location;
-        return res.download(path);
+        const filesToDownload : string[] = file.FileLocationsAsArray();
+
+        if (filesToDownload.length === 0)
+            return res.sendStatus(404);
+
+        res.setHeader('Content-Disposition', 'attachment');
+
+        if (filesToDownload.length === 1)
+            return res.sendFile(filesToDownload[0]);
+
+        const archive = Archiver.create("zip");
+
+        archive.on('error', function (err) {
+            res.status(500).send({ error: err.message });
+        });
+
+        //on stream closed we can end the request
+        archive.on('end', function () {
+        });
+        
+        //set the archive name
+        res.attachment('details.zip');
+
+        //this is the streaming magic
+        archive.pipe(res);
+
+        for (const file in filesToDownload) {
+            archive.file(file, { name: Path.basename(file) });
+        }
+
+        archive.finalize();
     }
     catch (err) { }
     return res.sendStatus(404);
 });
-Conference.get("/conference/delete/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+Conference.delete("/conference/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);

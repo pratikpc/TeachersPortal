@@ -79,6 +79,21 @@ Users.get("/", RoutesCommon.IsAdmin, async (req, res) => {
     return res.json([]);
   }
 });
+Users.delete("/:id", RoutesCommon.IsAdmin, async (req, res) => {
+  try {
+    const params = RoutesCommon.GetParameters(req);
+    const id = Number(params.id);
+    const count = await Model.Users.destroy({
+      where: { id: id, Authority: "NORMAL" }
+    });
+    if (count !== 0)
+      return res.json({ success: true });
+  } catch (error) {
+  }
+  return res.json({
+    success: false
+  });
+});
 Users.get("/:id", RoutesCommon.IsAdmin, async (req, res) => {
   try {
     const params = RoutesCommon.GetParameters(req);

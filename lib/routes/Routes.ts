@@ -9,4 +9,3 @@ export {Sttp} from "./Sttp.Routes";
 export {Mrg} from "./Mrg.Routes";
 export {Progatt} from "./Progatt.Routes";
 export {Semwork} from "./Semwork.Routes";
-export {Upload} from "./Upload.Routes";

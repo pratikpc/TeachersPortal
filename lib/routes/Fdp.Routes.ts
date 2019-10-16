@@ -2,82 +2,94 @@
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
+import * as Archiver from "archiver";
+import * as Path from "path";
 export const Fdp = Router();
 
 function GetUploadJson(file: any) {
-if (file==null)
+	if (file==null)
+		return {
+			id:"nullish",
+			fdpdate: "",
+			fdpt: "",
+			fdpcol: "",
+			fdpnd: "",
+			fdptype: ""
+		};
 	return {
-		id:"nullish",
-		fdpdate: "",
-		fdpt: "",
-		fdpcol: "",
-		fdpnd: "",
-		fdptype: ""
-	};
-return {
-	id:file.id,
-	fdpdate: file.fdpdate,
-	fdpt: file.fdpt,
-	fdpcol: file.fdpcol,
-	fdpnd: file.fdpnd,
-	fdptype: file.fdptype
-	};
+			id:file.id,
+			fdpdate: file.fdpdate,
+			fdpt: file.fdpt,
+			fdpcol: file.fdpcol,
+			fdpnd: file.fdpnd,
+			fdptype: file.fdptype
+		};
 }
 
 
-Fdp.post("/fdp", RoutesCommon.IsAuthenticated,
- RoutesCommon.upload.array('fdpcerti'), async (req, res) => {
+Fdp.post("/fdp", RoutesCommon.IsNotAdmin,
+RoutesCommon.upload.array('fdpcerti'), async (req, res) => {
     try {
-        const files = req.files as any[];
-        if (files == null || files.length === 0)
-            return res.status(422).send("Upload Failed");
         const params = RoutesCommon.GetParameters(req);
         if (params == null)
             return res.status(422).send("Upload Failed");
         const userId = Number(req.user!.id);
-        const id = String(params.id);const fdpdate = String(params.fdpdate);
-	const fdpt = String(params.fdpt);
-	const fdpcol = String(params.fdpcol);
-	const fdpnd = String(params.fdpnd);
-	const fdptype = String(params.fdptype);
-	
-        // Iterate over all the files
-        files.forEach(async (file) => {
-            if (id === "nullish")
-                await Models.Fdp.create({
-                    UserID: userId,
-                    Location: file.path,
+        const id = String(params.id);
+        const files = req.files as any[];
+        // ID Nullish is Used for First time Upload
+        if (id === "nullish" && (files == null || files.length === 0))
+            return res.status(422).send("Upload Failed");
+        const fdpdate = String(params.fdpdate);
+    const fdpt = String(params.fdpt);
+    const fdpcol = String(params.fdpcol);
+    const fdpnd = String(params.fdpnd);
+    const fdptype = String(params.fdptype);
+    
+        let pathToFiles = null;
+        // ID Nullish is Used for First time Upload
+        if (files != null && files.length !== 0)
+            pathToFiles = RoutesCommon.FilesToPathString(files);
+        if (id === "nullish" && pathToFiles != null){
+            await Models.Fdp.create({
+                UserID: userId,
+                Location: pathToFiles,
                     fdpdate:fdpdate,
-                    fdpt:fdpt,
-                    fdpcol:fdpcol,
-                    fdpnd:fdpnd,
-                    fdptype:fdptype,
-
+                        fdpt:fdpt,
+                        fdpcol:fdpcol,
+                        fdpnd:fdpnd,
+                        fdptype:fdptype,
+    
             });
-            else
-                await Models.Fdp.update({
-                    fdpdate:fdpdate,
+        }
+        else{
+            await Models.Fdp.update({
+                fdpdate:fdpdate,
                     fdpt:fdpt,
                     fdpcol:fdpcol,
                     fdpnd:fdpnd,
                     fdptype:fdptype,
-
+    
+                },
+                { where: { id: id, UserID: userId } }
+            );
+            if (pathToFiles != null)
+                    await Models.Conference.update({
+                        Location: pathToFiles
                     },
                     { where: { id: id, UserID: userId } }
-                );
-
-        });
-        return res.status(200).redirect('/fdp');
-    }
-    catch (error) {
-        console.error(error);
-        return res.status(422).send("Upload Failed");
-    }
+                    );
+            }
+    return res.status(200).redirect('/fdp');
+}
+catch (error) {
+    console.error(error);
+    return res.status(422).send("Upload Failed");
+}
 });
-Fdp.get("/fdp", RoutesCommon.IsAuthenticated, (req, res) => {
+Fdp.get("/fdp", RoutesCommon.IsNotAdmin, (req, res) => {
     return res.render('fdp.ejs', GetUploadJson(null));
 });
-Fdp.get("/fdp/files", RoutesCommon.IsAuthenticated, async (req, res) => {
+Fdp.get("/fdp/files", RoutesCommon.IsNotAdmin, async (req, res) => {
     const userId = Number(req.user!.id);
     const files = await Models.Fdp.findAll({
         where: { UserID: userId }
@@ -88,7 +100,21 @@ Fdp.get("/fdp/files", RoutesCommon.IsAuthenticated, async (req, res) => {
     });
     return res.json(files_json);
 });
-Fdp.get("/fdp/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+Fdp.get("/fdp/files/:userId", RoutesCommon.IsAdmin, async (req, res) => {
+    const params = RoutesCommon.GetParameters(req);
+    if (params == null)
+        return res.json([]);
+    const userId = params.userId;
+    const files = await Models.Fdp.findAll({
+        where: { UserID: userId }
+    });
+    const files_json: any[] = [];
+    files.forEach(file => {
+        files_json.push(GetUploadJson(file));
+    });
+    return res.json(files_json);
+});
+Fdp.get("/fdp/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     const userId = Number(req.user!.id);
     const params = RoutesCommon.GetParameters(req);
     const id = params.id;
@@ -97,7 +123,7 @@ Fdp.get("/fdp/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
     });
     return res.render('fdp.ejs', GetUploadJson(file));
 });
-Fdp.get("/fdp/file-viewer/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+Fdp.get("/fdp/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);
@@ -107,9 +133,53 @@ Fdp.get("/fdp/file-viewer/:id", RoutesCommon.IsAuthenticated, async (req, res) =
         });
         if (!file)
             return res.sendStatus(404);
-        const path = file.Location;
-        return res.download(path);
+        const filesToDownload : string[] = file.FileLocationsAsArray();
+
+        if (filesToDownload.length === 0)
+            return res.sendStatus(404);
+
+        res.setHeader('Content-Disposition', 'attachment');
+
+        if (filesToDownload.length === 1)
+            return res.sendFile(filesToDownload[0]);
+
+        const archive = Archiver.create("zip");
+
+        archive.on('error', function (err) {
+            res.status(500).send({ error: err.message });
+        });
+
+        //on stream closed we can end the request
+        archive.on('end', function () {
+        });
+        
+        //set the archive name
+        res.attachment('details.zip');
+
+        //this is the streaming magic
+        archive.pipe(res);
+
+        for (const file in filesToDownload) {
+            archive.file(file, { name: Path.basename(file) });
+        }
+
+        archive.finalize();
     }
     catch (err) { }
     return res.sendStatus(404);
 });
+Fdp.delete("/fdp/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
+    try {
+        const userId = Number(req.user!.id);
+        const params = RoutesCommon.GetParameters(req);
+        const id = params.id;
+        const file = await Models.Conference.destroy({
+            where: { UserID: userId, id: id }
+        });
+        const success = (file !== 0);
+        return res.json({ success: success });
+    }
+    catch (err) { 
+        return res.json({ success: false });
+    }
+    });

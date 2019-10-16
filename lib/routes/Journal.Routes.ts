@@ -2,92 +2,104 @@
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
+import * as Archiver from "archiver";
+import * as Path from "path";
 export const Journal = Router();
 
 function GetUploadJson(file: any) {
-if (file==null)
+	if (file==null)
+		return {
+			id:"nullish",
+			jdate: "",
+			jt: "",
+			jrpt: "",
+			jissn: "",
+			ji: "",
+			jma: "",
+			jdui: ""
+		};
 	return {
-		id:"nullish",
-		jdate: "",
-		jt: "",
-		jrpt: "",
-		jissn: "",
-		ji: "",
-		jma: "",
-		jdui: ""
-	};
-return {
-	id:file.id,
-	jdate: file.jdate,
-	jt: file.jt,
-	jrpt: file.jrpt,
-	jissn: file.jissn,
-	ji: file.ji,
-	jma: file.jma,
-	jdui: file.jdui
-	};
+			id:file.id,
+			jdate: file.jdate,
+			jt: file.jt,
+			jrpt: file.jrpt,
+			jissn: file.jissn,
+			ji: file.ji,
+			jma: file.jma,
+			jdui: file.jdui
+		};
 }
 
 
-Journal.post("/journal", RoutesCommon.IsAuthenticated,
- RoutesCommon.upload.array('jcerti'), async (req, res) => {
+Journal.post("/journal", RoutesCommon.IsNotAdmin,
+RoutesCommon.upload.array('jcerti'), async (req, res) => {
     try {
-        const files = req.files as any[];
-        if (files == null || files.length === 0)
-            return res.status(422).send("Upload Failed");
         const params = RoutesCommon.GetParameters(req);
         if (params == null)
             return res.status(422).send("Upload Failed");
         const userId = Number(req.user!.id);
-        const id = String(params.id);const jdate = String(params.jdate);
-	const jt = String(params.jt);
-	const jrpt = String(params.jrpt);
-	const jissn = String(params.jissn);
-	const ji = String(params.ji);
-	const jma = String(params.jma);
-	const jdui = String(params.jdui);
-	
-        // Iterate over all the files
-        files.forEach(async (file) => {
-            if (id === "nullish")
-                await Models.Journal.create({
-                    UserID: userId,
-                    Location: file.path,
+        const id = String(params.id);
+        const files = req.files as any[];
+        // ID Nullish is Used for First time Upload
+        if (id === "nullish" && (files == null || files.length === 0))
+            return res.status(422).send("Upload Failed");
+        const jdate = String(params.jdate);
+    const jt = String(params.jt);
+    const jrpt = String(params.jrpt);
+    const jissn = String(params.jissn);
+    const ji = String(params.ji);
+    const jma = String(params.jma);
+    const jdui = String(params.jdui);
+    
+        let pathToFiles = null;
+        // ID Nullish is Used for First time Upload
+        if (files != null && files.length !== 0)
+            pathToFiles = RoutesCommon.FilesToPathString(files);
+        if (id === "nullish" && pathToFiles != null){
+            await Models.Journal.create({
+                UserID: userId,
+                Location: pathToFiles,
                     jdate:jdate,
-                    jt:jt,
-                    jrpt:jrpt,
-                    jissn:jissn,
-                    ji:ji,
-                    jma:jma,
-                    jdui:jdui,
-
+                        jt:jt,
+                        jrpt:jrpt,
+                        jissn:jissn,
+                        ji:ji,
+                        jma:jma,
+                        jdui:jdui,
+    
             });
-            else
-                await Models.Journal.update({
-                    jdate:jdate,
+        }
+        else{
+            await Models.Journal.update({
+                jdate:jdate,
                     jt:jt,
                     jrpt:jrpt,
                     jissn:jissn,
                     ji:ji,
                     jma:jma,
                     jdui:jdui,
-
+    
+                },
+                { where: { id: id, UserID: userId } }
+            );
+            if (pathToFiles != null)
+                    await Models.Conference.update({
+                        Location: pathToFiles
                     },
                     { where: { id: id, UserID: userId } }
-                );
-
-        });
-        return res.status(200).redirect('/journal');
-    }
-    catch (error) {
-        console.error(error);
-        return res.status(422).send("Upload Failed");
-    }
+                    );
+            }
+    return res.status(200).redirect('/journal');
+}
+catch (error) {
+    console.error(error);
+    return res.status(422).send("Upload Failed");
+}
 });
-Journal.get("/journal", RoutesCommon.IsAuthenticated, (req, res) => {
+Journal.get("/journal", RoutesCommon.IsNotAdmin, (req, res) => {
     return res.render('journal.ejs', GetUploadJson(null));
 });
-Journal.get("/journal/files", RoutesCommon.IsAuthenticated, async (req, res) => {
+Journal.get("/journal/files", RoutesCommon.IsNotAdmin, async (req, res) => {
     const userId = Number(req.user!.id);
     const files = await Models.Journal.findAll({
         where: { UserID: userId }
@@ -98,7 +110,21 @@ Journal.get("/journal/files", RoutesCommon.IsAuthenticated, async (req, res) => 
     });
     return res.json(files_json);
 });
-Journal.get("/journal/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+Journal.get("/journal/files/:userId", RoutesCommon.IsAdmin, async (req, res) => {
+    const params = RoutesCommon.GetParameters(req);
+    if (params == null)
+        return res.json([]);
+    const userId = params.userId;
+    const files = await Models.Journal.findAll({
+        where: { UserID: userId }
+    });
+    const files_json: any[] = [];
+    files.forEach(file => {
+        files_json.push(GetUploadJson(file));
+    });
+    return res.json(files_json);
+});
+Journal.get("/journal/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     const userId = Number(req.user!.id);
     const params = RoutesCommon.GetParameters(req);
     const id = params.id;
@@ -107,7 +133,7 @@ Journal.get("/journal/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
     });
     return res.render('journal.ejs', GetUploadJson(file));
 });
-Journal.get("/journal/file-viewer/:id", RoutesCommon.IsAuthenticated, async (req, res) => {
+Journal.get("/journal/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);
@@ -117,9 +143,53 @@ Journal.get("/journal/file-viewer/:id", RoutesCommon.IsAuthenticated, async (req
         });
         if (!file)
             return res.sendStatus(404);
-        const path = file.Location;
-        return res.download(path);
+        const filesToDownload : string[] = file.FileLocationsAsArray();
+
+        if (filesToDownload.length === 0)
+            return res.sendStatus(404);
+
+        res.setHeader('Content-Disposition', 'attachment');
+
+        if (filesToDownload.length === 1)
+            return res.sendFile(filesToDownload[0]);
+
+        const archive = Archiver.create("zip");
+
+        archive.on('error', function (err) {
+            res.status(500).send({ error: err.message });
+        });
+
+        //on stream closed we can end the request
+        archive.on('end', function () {
+        });
+        
+        //set the archive name
+        res.attachment('details.zip');
+
+        //this is the streaming magic
+        archive.pipe(res);
+
+        for (const file in filesToDownload) {
+            archive.file(file, { name: Path.basename(file) });
+        }
+
+        archive.finalize();
     }
     catch (err) { }
     return res.sendStatus(404);
 });
+Journal.delete("/journal/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
+    try {
+        const userId = Number(req.user!.id);
+        const params = RoutesCommon.GetParameters(req);
+        const id = params.id;
+        const file = await Models.Conference.destroy({
+            where: { UserID: userId, id: id }
+        });
+        const success = (file !== 0);
+        return res.json({ success: success });
+    }
+    catch (err) { 
+        return res.json({ success: false });
+    }
+    });

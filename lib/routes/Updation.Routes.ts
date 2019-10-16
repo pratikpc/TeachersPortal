@@ -6,6 +6,9 @@ export const Updation = Router();
 Updation.get("/newpassword", RoutesCommon.IsAuthenticated, (req, res) => {
     return res.render("changepassword.html");
 });
+Updation.get("/upload", RoutesCommon.IsNotAdmin, (req, res) => {
+    return res.render("documents.ejs");
+});
 Updation.post("/newpassword", RoutesCommon.IsAuthenticated, async (req, res) => {
     try {
         const id = Number(req.user!.id);
@@ -33,6 +36,41 @@ Updation.post("/newpassword", RoutesCommon.IsAuthenticated, async (req, res) => 
         return res.json({ success: false });
     }
 });
+
+
+function EmptyUndef(key: any) {
+    if (key == null || key === "undefined")
+        return "";
+    return key;
+}
+
+async function GetUserDetails(userId: any) {
+    const user = await Models.Users.findOne({
+        where: { id: userId }
+    }
+    );
+
+    if (user == null)
+        return {};
+
+    return {
+        data: {
+            title: EmptyUndef(user.title),
+            firstname: EmptyUndef(user.firstname), middlename: EmptyUndef(user.middlename), lastname: EmptyUndef(user.lastname),
+            fname: EmptyUndef(user.fname), mname: EmptyUndef(user.mname),
+            gender: EmptyUndef(user.gender), bdate: EmptyUndef(user.bdate), address: EmptyUndef(user.address), phone: EmptyUndef(user.phone), email: EmptyUndef(user.email),
+            dept: EmptyUndef(user.dept), aos: EmptyUndef(user.aos),
+            upgyear: EmptyUndef(user.ugpyear), uggrade: EmptyUndef(user.uggrade), ugu: EmptyUndef(user.ugu), ugi: EmptyUndef(user.ugi), ugr: EmptyUndef(user.ugr),
+            pgyear: EmptyUndef(user.pgyear), pggrade: EmptyUndef(user.pggrade), pgu: EmptyUndef(user.pgu), pgi: EmptyUndef(user.pgi), pgr: EmptyUndef(user.pgr),
+            spyear: EmptyUndef(user.spyear), spgrade: EmptyUndef(user.spgrade), spu: EmptyUndef(user.spu), spi: EmptyUndef(user.spi), spr: EmptyUndef(user.spr),
+            tduration: RoutesCommon.ToArrayFromJsonString<string>(EmptyUndef(user.tduration)), tinstitute: RoutesCommon.ToArrayFromJsonString<string>(EmptyUndef(user.tinstitute)), tpost: RoutesCommon.ToArrayFromJsonString<string>(EmptyUndef(user.tpost)),
+            iduration: RoutesCommon.ToArrayFromJsonString<string>(EmptyUndef(user.iduration)), iinstitute: RoutesCommon.ToArrayFromJsonString<string>(EmptyUndef(user.iinstitute)), ipost: RoutesCommon.ToArrayFromJsonString<string>(EmptyUndef(user.ipost)),
+            oduration: RoutesCommon.ToArrayFromJsonString<string>(EmptyUndef(user.oduration)), oinstitute: RoutesCommon.ToArrayFromJsonString<string>(EmptyUndef(user.oinstitute)), opost: RoutesCommon.ToArrayFromJsonString<string>(EmptyUndef(user.opost))
+        }
+    };
+}
+
+
 Updation.get("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const userId = Number(req.user!.id);
     const details = await GetUserDetails(userId);
@@ -41,8 +79,21 @@ Updation.get("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
 Updation.get("/index", RoutesCommon.IsAuthenticated, async (req, res) => {
     const userId = Number(req.user!.id);
     const details = await GetUserDetails(userId);
-    console.log(details);
     return res.render("index.ejs", details);
+});
+Updation.get("/details", RoutesCommon.IsAuthenticated, async (req, res) => {
+    const userId = Number(req.user!.id);
+    const details = await GetUserDetails(userId);
+    return res.json(details);
+});
+
+Updation.get("/details/:id", RoutesCommon.IsAdmin, async (req, res) => {
+    const params = RoutesCommon.GetParameters(req);
+    if (params == null) return res.status(404);
+
+    const userId = Number(params.id);
+    const details = await GetUserDetails(userId);
+    return res.json(details);
 });
 
 Updation.get("/display", RoutesCommon.IsAuthenticated, async (req, res) => {
@@ -101,17 +152,17 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const spi = String(params.spi);
     const spr = String(params.spr);
 
-    const tduration = String(params.tduration);
-    const tinstitute = String(params.tinstitute);
-    const tpost = String(params.tpost);
+    const tduration = RoutesCommon.ToArray(params.tduration);
+    const tinstitute = RoutesCommon.ToArray(params.tinstitute);
+    const tpost = RoutesCommon.ToArray(params.tpost);
 
-    const iduration = String(params.iduration);
-    const iinstitute = String(params.iinstitute);
-    const ipost = String(params.ipost);
+    const iduration = RoutesCommon.ToArray(params.iduration);
+    const iinstitute = RoutesCommon.ToArray(params.iinstitute);
+    const ipost = RoutesCommon.ToArray(params.ipost);
 
-    const oduration = String(params.oduration);
-    const oinstitute = String(params.oinstitute);
-    const opost = String(params.opost);
+    const oduration = RoutesCommon.ToArray(params.oduration);
+    const oinstitute = RoutesCommon.ToArray(params.oinstitute);
+    const opost = RoutesCommon.ToArray(params.opost);
 
     const userId = Number(req.user!.id);
 
@@ -125,46 +176,12 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
             ugpyear: upgyear, uggrade: uggrade, ugu: ugu, ugi: ugi, ugr: ugr,
             pgyear: pgyear, pggrade: pggrade, pgu: pgu, pgi: pgi, pgr: pgr,
             spyear: spyear, spgrade: spgrade, spu: spu, spi: spi, spr: spr,
-            tduration: tduration, tinstitute: tinstitute, tpost: tpost,
-            iduration: iduration, iinstitute: iinstitute, ipost: ipost,
-            oduration: oduration, oinstitute: oinstitute, opost: opost
+            tduration: String(tduration), tinstitute: String(tinstitute), tpost: String(tpost),
+            iduration: String(iduration), iinstitute: String(iinstitute), ipost: String(ipost),
+            oduration: String(oduration), oinstitute: String(oinstitute), opost: String(opost)
         },
         { where: { id: userId } }
     );
 
     return res.redirect("/");
 });
-
-function EmptyUndef(key: any) {
-    if (key == null || key === "undefined")
-        return "";
-    return key;
-}
-
-async function GetUserDetails(userId: any) {
-    const user = await Models.Users.findOne({
-        where: { id: userId }
-    }
-    );
-
-    if (user == null)
-        return {};
-
-    return {
-        data: {
-            title: EmptyUndef(user.title),
-            firstname: EmptyUndef(user.firstname), middlename: EmptyUndef(user.middlename), lastname: EmptyUndef(user.lastname),
-            fname: EmptyUndef(user.fname), mname: EmptyUndef(user.mname),
-            gender: EmptyUndef(user.gender), bdate: EmptyUndef(user.bdate), address: EmptyUndef(user.address), phone: EmptyUndef(user.phone), email: EmptyUndef(user.email),
-            dept: EmptyUndef(user.dept), aos: EmptyUndef(user.aos),
-            upgyear: EmptyUndef(user.ugpyear), uggrade: EmptyUndef(user.uggrade), ugu: EmptyUndef(user.ugu), ugi: EmptyUndef(user.ugi), ugr: EmptyUndef(user.ugr),
-            pgyear: EmptyUndef(user.pgyear), pggrade: EmptyUndef(user.pggrade), pgu: EmptyUndef(user.pgu), pgi: EmptyUndef(user.pgi), pgr: EmptyUndef(user.pgr),
-            spyear: EmptyUndef(user.spyear), spgrade: EmptyUndef(user.spgrade), spu: EmptyUndef(user.spu), spi: EmptyUndef(user.spi), spr: EmptyUndef(user.spr),
-            tduration: EmptyUndef(user.tduration), tinstitute: EmptyUndef(user.tinstitute), tpost: EmptyUndef(user.tpost),
-            iduration: EmptyUndef(user.iduration), iinstitute: EmptyUndef(user.iinstitute), ipost: EmptyUndef(user.ipost),
-            oduration: EmptyUndef(user.oduration), oinstitute: EmptyUndef(user.oinstitute), opost: EmptyUndef(user.opost)
-        }
-    };
-}
-
-

@@ -60,6 +60,16 @@ export namespace RoutesCommon {
     await FsPromises.unlink(location);
   }
 
+  export function FilesToPathString(Files: any[]) {
+    const paths: string[] = [];
+
+    Files.forEach(file => {
+      paths.push(file.path);
+    });
+
+    return paths;
+  }
+
   export function RemoveFilesAsync(locations: string[]) {
     const removalAsyncs: Promise<void>[] = [];
     for (const location of locations) {
@@ -113,4 +123,27 @@ export namespace RoutesCommon {
     if (IsNotEmptyAny(req.params)) return req.params;
     return null;
   }
+
+  export function ToArrayFromJsonString<T>(data: string): T[] {
+    if (!data.includes("["))
+      data = "[\"" + data + "\"]";
+    return JSON.parse(data) as T[];
+  }
+
+  // Convert Given Data as Array of Type
+  export function ToArray(data: any): string[] {
+    // If Null, Return Empty Array
+    if (data == null) {
+      return [];
+    }
+    // If it's already an array perform type conversion
+    else if (Array.isArray(data)) {
+      return data.map(String);
+    } else {
+      // If it's Element, send as first value
+      const value = String(data);
+      return [value];
+    }
+  }
+
 }
