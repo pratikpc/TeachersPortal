@@ -11,3 +11,6 @@ Admin.get("/createuser" , RoutesCommon.IsAdmin, (req, res) => {
 Admin.get("/newpassword", RoutesCommon.IsAdmin, (req, res) => {
     return res.render("adminpassword.ejs");
 });
+Admin.get("/report", RoutesCommon.IsAdmin, (req, res) => {
+    return res.render("report.ejs");
+});
