@@ -67,7 +67,7 @@ export namespace RoutesCommon {
       paths.push(file.path);
     });
 
-    return paths;
+    return JSON.stringify(paths);
   }
 
   export function RemoveFilesAsync(locations: string[]) {

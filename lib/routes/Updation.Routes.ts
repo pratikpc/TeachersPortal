@@ -179,6 +179,9 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
             tduration: String(tduration), tinstitute: String(tinstitute), tpost: String(tpost),
             iduration: String(iduration), iinstitute: String(iinstitute), ipost: String(ipost),
             oduration: String(oduration), oinstitute: String(oinstitute), opost: String(opost)
+            tduration: JSON.stringify(tduration), tinstitute: JSON.stringify(tinstitute), tpost: JSON.stringify(tpost),
+            iduration: JSON.stringify(iduration), iinstitute: JSON.stringify(iinstitute), ipost: JSON.stringify(ipost),
+            oduration: JSON.stringify(oduration), oinstitute: JSON.stringify(oinstitute), opost: JSON.stringify(opost)
         },
         { where: { id: userId } }
     );
