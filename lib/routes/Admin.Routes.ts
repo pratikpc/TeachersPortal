@@ -8,3 +8,6 @@ Admin.get("/" , RoutesCommon.IsAdmin, (req, res) => {
 Admin.get("/createuser" , RoutesCommon.IsAdmin, (req, res) => {
     res.render("createuser.ejs");
 });
+Admin.get("/newpassword", RoutesCommon.IsAuthenticated, (req, res) => {
+    return res.render("adminpassword.ejs");
+});
