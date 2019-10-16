@@ -76,7 +76,7 @@ Updation.get("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const details = await GetUserDetails(userId);
     return res.render("update.ejs", details);
 });
-Updation.get("/index", RoutesCommon.IsAuthenticated, async (req, res) => {
+Updation.get("/index", RoutesCommon.IsNotAdmin, async (req, res) => {
     const userId = Number(req.user!.id);
     const details = await GetUserDetails(userId);
     return res.render("index.ejs", details);
@@ -96,7 +96,7 @@ Updation.get("/details/:id", RoutesCommon.IsAdmin, async (req, res) => {
     return res.json(details);
 });
 
-Updation.get("/display", RoutesCommon.IsAuthenticated, async (req, res) => {
+Updation.get("/profileupdate", RoutesCommon.IsAuthenticated, async (req, res) => {
     try {
         const userId = Number(req.user!.id);
 
@@ -105,11 +105,27 @@ Updation.get("/display", RoutesCommon.IsAuthenticated, async (req, res) => {
         });
         if (!file) return res.sendStatus(404);
 
-        const path = file.ImagePath;
-        return res.download(path);
-    } catch (err) { }
+        const image = file.ImagePath;
+        return res.download(image);
+    } catch (err) { console.log(err); }
     return res.sendStatus(404);
 });
+Updation.post("/profileupdate", RoutesCommon.IsAuthenticated,
+    RoutesCommon.upload.array('profile'),
+    async (req, res) => {
+        try {
+            const userId = Number(req.user!.id);
+
+            const imagePath = req.file.path;
+            await Models.Users.update(
+                {
+                    ImagePath: imagePath
+                },
+                { where: { id: userId } }
+            );
+        } catch (err) { console.log(err); }
+        return res.sendStatus(404);
+    });
 
 Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const params = RoutesCommon.GetParameters(req);
@@ -176,9 +192,9 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
             ugpyear: upgyear, uggrade: uggrade, ugu: ugu, ugi: ugi, ugr: ugr,
             pgyear: pgyear, pggrade: pggrade, pgu: pgu, pgi: pgi, pgr: pgr,
             spyear: spyear, spgrade: spgrade, spu: spu, spi: spi, spr: spr,
-            tduration: String(tduration), tinstitute: String(tinstitute), tpost: String(tpost),
-            iduration: String(iduration), iinstitute: String(iinstitute), ipost: String(ipost),
-            oduration: String(oduration), oinstitute: String(oinstitute), opost: String(opost)
+            tduration: JSON.stringify(tduration), tinstitute: JSON.stringify(tinstitute), tpost: JSON.stringify(tpost),
+            iduration: JSON.stringify(iduration), iinstitute: JSON.stringify(iinstitute), ipost: JSON.stringify(ipost),
+            oduration: JSON.stringify(oduration), oinstitute: JSON.stringify(oinstitute), opost: JSON.stringify(opost)
         },
         { where: { id: userId } }
     );

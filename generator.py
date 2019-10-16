@@ -59,8 +59,6 @@ def GenerateRoutes(items, route, upload_file):
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
-import * as Archiver from "archiver";
-import * as Path from "path";
 """
 
     routes_str += "export const " + clsName + " = Router();\n\n"
@@ -181,45 +179,23 @@ catch (error) {
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
-        const file = await Models.""" + clsName + """.findOne({
+        const file = await Models.Conference.findOne({
             where: { UserID: userId, id: id }
         });
         if (!file)
             return res.sendStatus(404);
-        const filesToDownload : string[] = file.FileLocationsAsArray();
+        const filesToDownload: string[] = file.FileLocationsAsArray();
 
         if (filesToDownload.length === 0)
             return res.sendStatus(404);
 
-        res.setHeader('Content-Disposition', 'attachment');
-
         if (filesToDownload.length === 1)
-            return res.sendFile(filesToDownload[0]);
+            return res.download(filesToDownload[0]);
 
-        const archive = Archiver.create("zip");
-
-        archive.on('error', function (err) {
-            res.status(500).send({ error: err.message });
-        });
-
-        //on stream closed we can end the request
-        archive.on('end', function () {
-        });
-        
-        //set the archive name
-        res.attachment('details.zip');
-
-        //this is the streaming magic
-        archive.pipe(res);
-
-        for (const file in filesToDownload) {
-            archive.file(file, { name: Path.basename(file) });
-        }
-
-        archive.finalize();
+        await RoutesCommon.ZipFileGenerator(res, filesToDownload);
     }
-    catch (err) { }
-    return res.sendStatus(404);
+    catch (err) { console.log(err); }
+    return res.status(404);
 });
 """ + clsName + """.delete("/""" + route+ """/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
@@ -235,7 +211,7 @@ catch (error) {
     catch (err) { 
         return res.json({ success: false });
     }
-    });
+});
 """
     print(routes_str)
     fname = "./lib/routes/" + clsName + ".Routes.ts"
