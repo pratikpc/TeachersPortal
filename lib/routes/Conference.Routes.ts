@@ -143,40 +143,36 @@ Conference.get("/conference/file-viewer/:id", RoutesCommon.IsNotAdmin, async (re
         });
         if (!file)
             return res.sendStatus(404);
-        const filesToDownload : string[] = file.FileLocationsAsArray();
+        const filesToDownload: string[] = file.FileLocationsAsArray();
 
         if (filesToDownload.length === 0)
             return res.sendStatus(404);
 
-        res.setHeader('Content-Disposition', 'attachment');
-
         if (filesToDownload.length === 1)
-            return res.sendFile(filesToDownload[0]);
+            return res.download(filesToDownload[0]);
+        else {
+            const archive = Archiver.create("zip");
 
-        const archive = Archiver.create("zip");
+            archive.on('error', function (err) {
+                archive.abort(); //not always useful but might save trouble
+                throw err;
+            });
 
-        archive.on('error', function (err) {
-            res.status(500).send({ error: err.message });
-        });
+            //set the archive name
+            res.attachment('details.zip').type('zip');
 
-        //on stream closed we can end the request
-        archive.on('end', function () {
-        });
-        
-        //set the archive name
-        res.attachment('details.zip');
+            //this is the streaming magic
+            archive.pipe(res);
 
-        //this is the streaming magic
-        archive.pipe(res);
+            filesToDownload.forEach(file => {
+                archive.file(file, { name: Path.basename(file) });
+            });
 
-        for (const file in filesToDownload) {
-            archive.file(file, { name: Path.basename(file) });
+            await archive.finalize();
         }
-
-        archive.finalize();
     }
-    catch (err) { }
-    return res.sendStatus(404);
+    catch (err) { console.log(err); }
+    return res.status(404);
 });
 Conference.delete("/conference/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
