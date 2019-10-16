@@ -183,26 +183,13 @@
                                             <p><%= data.aos %></p>
                                         </div>
                                     </div></br>
-                                    <%   var start = 0; %>
-                                    <%  if (parseInt(data.tduration.substring(0,4)) < parseInt(data.iduration.substring(0,4))){ %>
-                                        <%   start = parseInt(data.tduration.substring(0,4));  %>
-                                    <%  }else{ %>
-                                        <%   start = parseInt(data.iduration.substring(0,4)); %>
-                                    <% } %>
-                                    <% var end = data.tduration.substring(6); %>
-                                    <%   var exp = 0; %>
-                                    <%  if (end = "Present"){ %>
-                                        <%    var year = new Date().getFullYear(); %>
-                                        <%    exp = year - start; %>
-                                    <%  }else{ %>
-                                        <%   exp = parseInt(end) - start; %>
-                                    <% } %>
+                                
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Experience</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <p><%= exp %> years</p>
+                                            <p>18 years</p>
                                         </div>
                                     </div></br>
                                    
@@ -333,6 +320,7 @@
                             }
                         }
                     }
+                    console.log(col);
                     var table = document.createElement("table");
                     table.setAttribute("class", "table table-striped table-primary");
                     var tr = table.insertRow(-1); 
