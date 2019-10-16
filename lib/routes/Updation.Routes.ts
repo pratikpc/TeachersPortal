@@ -76,7 +76,7 @@ Updation.get("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const details = await GetUserDetails(userId);
     return res.render("update.ejs", details);
 });
-Updation.get("/index", RoutesCommon.IsAuthenticated, async (req, res) => {
+Updation.get("/index", RoutesCommon.IsNotAdmin, async (req, res) => {
     const userId = Number(req.user!.id);
     const details = await GetUserDetails(userId);
     return res.render("index.ejs", details);
