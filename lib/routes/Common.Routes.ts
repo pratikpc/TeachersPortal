@@ -6,6 +6,8 @@ import { extname } from "path";
 import * as multer from "multer";
 import * as Path from "path";
 import * as process from "process";
+import * as Archiver from "archiver";
+
 
 export namespace RoutesCommon {
   export function EmptyUndef(key: any) {
@@ -91,6 +93,29 @@ export namespace RoutesCommon {
       })
     });
   }
+
+  // Downloads Files from Given URL
+  export async function ZipFileGenerator(res: Response, filesToDownload: string[]) {
+    const archive = Archiver.create("zip");
+
+    archive.on('error', function (err) {
+      archive.abort(); //not always useful but might save trouble
+      throw err;
+    });
+
+    //set the archive name
+    res.attachment('details.zip').type('zip');
+
+    //this is the streaming magic
+    archive.pipe(res);
+
+    filesToDownload.forEach(file => {
+      archive.file(file, { name: Path.basename(file) });
+    });
+
+    await archive.finalize();
+  }
+
 
   // Check if Authentication is Correct
   export function IsAuthenticated(

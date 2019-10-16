@@ -2,8 +2,6 @@
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
-import * as Archiver from "archiver";
-import * as Path from "path";
 export const Mrg = Router();
 
 function GetUploadJson(file: any) {
@@ -140,26 +138,8 @@ Mrg.get("/mrg/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
 
         if (filesToDownload.length === 1)
             return res.download(filesToDownload[0]);
-        else {
-            const archive = Archiver.create("zip");
 
-            archive.on('error', function (err) {
-                archive.abort(); //not always useful but might save trouble
-                throw err;
-            });
-
-            //set the archive name
-            res.attachment('details.zip').type('zip');
-
-            //this is the streaming magic
-            archive.pipe(res);
-
-            filesToDownload.forEach(file => {
-                archive.file(file, { name: Path.basename(file) });
-            });
-
-            await archive.finalize();
-        }
+        await RoutesCommon.ZipFileGenerator(res, filesToDownload);
     }
     catch (err) { console.log(err); }
     return res.status(404);
@@ -178,4 +158,4 @@ Mrg.delete("/mrg/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     catch (err) { 
         return res.json({ success: false });
     }
-    });
+});
