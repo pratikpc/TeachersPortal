@@ -4,9 +4,6 @@
 <head>
   <!-- views/partials/head.ejs-->
 
-
-
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
@@ -31,40 +28,13 @@
 <!-- Custom styles for this template -->
 <link href="/css/resume.css" rel="stylesheet">
 
-  <link href="css/custom.css" rel="stylesheet">
+  <link href="/css/custom.css" rel="stylesheet">
 </head>
 
 <body id="page-top" >
-
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-      <!-- view/partial/navbar.ejs-->
-<a class="navbar-brand js-scroll-trigger" href="#page-top">
-    
-</a>
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-</button>
-
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav">
-        <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="/index">HOME</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="/updated">UPDATE PROFILE</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="/upload">UPLOAD DOCUMENTS</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="/newpassword">CHANGE PASSWORD</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="/user/logout">LOGOUT</a>
-        </li>
-    </ul>
-  </div>
-
+    <% include ./partials/navbaradmin %>
+  </nav>
   </nav>
   <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
     <br class=" p-lg-4 " id="report">
@@ -75,14 +45,14 @@
         </br>
 
         <label > Year </label></br>
-        <select id="ryear" type="text" name="ryear" value="<%- ryear %>" style="width: 24%;padding:5px;"></select></br>
+        <select id="ryear" type="text" name="ryear"  style="width: 24%;padding:5px;"></select></br>
 
         <label > Faculty Name </label></br>
-        <input id="rfn" type="text" name="rfn" value="<%- rfn %>" style="width:24%;padding:5px;"/></br>
+        <input id="rfn" type="text" name="rfn" style="width:24%;padding:5px;"/></br>
 
         <label>Depatment</label></br>
         <select id="rdept" name="rdept" style="width: 24%;padding:5px;">
-        <option value="<%- rdept %>" selected="selected" >Select One</option>
+        <option  selected="selected" >Select One</option>
         <option value="CS">Computer Science</option>
         <option value="IT">IT</option>
         <option value="ELEX">Electronics</option>
@@ -92,7 +62,7 @@
 
         <label>International/National</label></br>
         <select id="ri" name="ri" style="width: 24%;padding:5px;">
-        <option value="<%- ri %>" selected="selected" >Select One</option>
+        <option  selected="selected" >Select One</option>
         <option value="International" > International </option>
         <option value="National" > National </option>
         </select>
@@ -100,7 +70,7 @@
 
         <label>Category</label></br>
         <select id="rcat" name="rcat" style="width: 24%;padding:5px;">
-        <option value="<%- rcat %>" selected="selected" >Select One</option>
+        <option  selected="selected" >Select One</option>
         <option value="fdp" > Faculty Development Program </option>
         <option value="sttp" > Short Term Training Programs </option>
         <option value="mrg" > MRG </option>
@@ -116,7 +86,7 @@
 
         <label> Sponsorship </label></br>
         <select id="rspon" name="rspon" style="width: 24%;padding:5px;">
-        <option value="<%- rspon %>" selected="selected" >Select One</option>
+        <option  selected="selected" >Select One</option>
         <option value="College Sponsored" > College Sponsored </option>
         <option value="Self Sponsored" > Self Sponsored </option>
         </select></br>
