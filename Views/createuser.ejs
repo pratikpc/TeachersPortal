@@ -3,6 +3,7 @@
 
   <head>
     <% include ./partials/head %>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   </head>
 
   <body id="page-top">
@@ -18,8 +19,8 @@
             <h4><label for="username" style="color:black;font-size:24px;">Username</label></h4>
             <input id="name" type="text" name="name" style="width: 30%;padding:5px;" required />
 
-            <!-- <h4><label for="username" style="color:black;font-size:24px;"> Password </label></h4>
-            <input id="name" type="text" name="name" style="width: 30%;padding:5px;" required /> -->
+            <h4><label for="username" style="color:black;font-size:24px;"> Password </label></h4>
+            <input id="name1" type="text" name="name1" style="width: 30%;padding:5px;"  />
             </br>
           </br>
             <button class="btn btn--radius-2 btn--red" onclick="myFunction()" type="submit"> CREATE </button>
@@ -38,8 +39,8 @@
        var txt;
          if (confirm("Are you sure you want to create this user ?"))
            {
-              create();
-             
+                
+                
            } 
          else 
            {

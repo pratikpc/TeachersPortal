@@ -108,13 +108,13 @@
     <div class="container emp-profile col-lg-10"  style="margin-left:10%;margin-top:4%;">
             <div class="row">
                 <div class="col-md-4">
-                <form method="POST" action="/profileupdate" >
+                <form method="POST" action="/profileupdate" id="myform">
                     <div class="profile-img">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />  
                             <div class="file btn btn-lg btn-primary">
                             Change Photo
-                            <input type="file" name="profile"/>
-                        </div>                                                       
+                            <input type="file"  id="myinput" name="profile" />
+                        </div>                                                      
                     </div>
                 </form>  
                 </div>
@@ -402,6 +402,21 @@
                 $('#'+rel).slideToggle('fast');
             });
 
+    </script>
+    <script>
+        var form = document.getElementById('myform');
+        var input = document.getElementById('myinput');
+
+    var change_running = false;    
+    input.addEventListener('change', function(){
+    if(!change_running){
+        setTimeout(function(){
+            change_running = true;
+            form.submit();
+            change_running = false;     
+        }, 300);
+    }
+});
     </script>
 
     <% include ./partials/bootjs %>
