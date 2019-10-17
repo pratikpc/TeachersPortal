@@ -59,12 +59,26 @@
                           success: function (response) {
                             name = response["data"]["firstname"] + " " + response["data"]["lastname"];
                             tabCell = tr.insertCell(-1);
-                            tabCell.innerHTML = name;
+                            if (name != null)
+                            {
+                              tabCell.innerHTML = name;
+                            }
+                            else{
+                              tabCell.innerHTML = "yet to fill";
+                            }
+                            tabCell = tr.insertCell(-1);
+                            dept = response["data"]["dept"];
+                            if (dept != null)
+                            {
+                              tabCell.innerHTML = dept;
+                            }
+                            else{
+                              tabCell.innerHTML = "yet to fill";
+                            }
+                            
 
                           }
                         });
-                        tabCell = tr.insertCell(-1);
-                        tabCell.innerHTML = "dept";
                         tabCell = tr.insertCell(-1);
                         tabCell.innerHTML = "<a class=\"btn btn-danger btn-xs\" href=\" /user/" + id + "\"><i class=\"fa fa-trash\"></i></a>";
                         
