@@ -2,7 +2,9 @@
 <html lang="en">
 
   <head>
-    <% include ./partials/head %>
+    <% include ./partials/head.ejs %>
+    <link href="/css/custom.css" rel="stylesheet">
+    <link href="/css/resume.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   </head>
 
@@ -11,19 +13,16 @@
         <% include ./partials/navbaradmin %>
     </nav>
 
-    <div class="container-fluid p-0" style="width:69%;margin-right:20%;">
+    <div class="container-fluid p-0" style="margin-right:10%;margin-top:5%;">
       <section class=" p-lg-4 " id="update">
         <form method="POST" action="/user/add">
           <div class="my-auto item" id="personal">
 
-            <h4><label for="username" style="color:black;font-size:24px;">Username</label></h4>
-            <input id="name" type="text" name="name" style="width: 30%;padding:5px;" required />
+            <h6><label for="username" style="color:black;font-size:35px;margin-left:45%;">Username</label></h6>
+            <input id="name" type="text" name="name" style="width: 30%;padding:5px;margin-left:35%;" required />
 
-            <h4><label for="username" style="color:black;font-size:24px;"> Password </label></h4>
-            <input id="name1" type="text" name="name1" style="width: 30%;padding:5px;"  />
-            </br>
-          </br>
-            <button class="btn btn--radius-2 btn--red" onclick="myFunction()" type="submit"> CREATE </button>
+          </br></br>
+            <button class="btn btn--radius-2 btn--red" onclick="myFunction()" type="submit" style="margin-left: 46.5%;"> CREATE </button>
           </div>
         </form>
       </section>

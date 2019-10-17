@@ -2,33 +2,10 @@
 <html lang="en">
 
 <head>
-  <!-- views/partials/head.ejs-->
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<title>Fr.CRCE</title>
-
-<!-- Bootstrap core CSS -->
-<link href="/vendorresume/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
-<link href="/resources/demos/style.css" rel="stylesheet">
-
-
-<!-- Custom fonts for this template -->
-<link href="//fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
-<link href="/vendorresume/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<link href="/vendorresume/devicons/css/devicons.css" rel="stylesheet">
-<link href="/vendorresume/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
-
-
+<% include ./partials/head.ejs %>
 <!-- Custom styles for this template -->
 <link href="/css/resume.css" rel="stylesheet">
-
-  <link href="/css/custom.css" rel="stylesheet">
+<link href="/css/custom.css" rel="stylesheet">
 </head>
 
 <body id="page-top" >
@@ -37,12 +14,11 @@
   </nav>
   </nav>
   <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
-    <br class=" p-lg-4 " id="report">
-      <br method="POST" action="/admin/report">
+    <section class=" p-lg-4 " id="report">
+      <form method="POST" action="/admin/report" enctype="multipart/form-data">
         <div class="my-auto item" id="documents">
           
-        </br><h4> Report Generation </h4>
-        </br>
+        <h4> Report Generation </h4>
 
         <label > Year </label></br>
         <select id="ryear" type="text" name="ryear"  style="width: 24%;padding:5px;"></select></br>
