@@ -13,42 +13,49 @@
         <% include ./partials/navbaradmin %>
     </nav>
 
-    <div class="container-fluid p-0" style="margin-right:10%;margin-top:5%;">
+    <div class="container-fluid p-0" style="width:69%;margin-right:20%;">
       <section class=" p-lg-4 " id="update">
-        <form method="POST" action="/user/add">
+        <form action="/user/add" id="myform">
           <div class="my-auto item" id="personal">
 
-            <h6><label for="username" style="color:black;font-size:35px;margin-left:45%;">Username</label></h6>
-            <input id="name" type="text" name="name" style="width: 30%;padding:5px;margin-left:35%;" required />
-
-          </br></br>
-            <button class="btn btn--radius-2 btn--red" onclick="myFunction()" type="submit" style="margin-left: 46.5%;"> CREATE </button>
+            <h4><label for="username" style="color:black;font-size:24px;">Username</label></h4>
+            <input id="name" type="text" name="name" style="width: 30%;padding:5px;" required />
+            <!-- <h4><label for="username" style="color:black;font-size:24px;"> Password </label></h4>
+            <input id="name" type="text" name="name" style="width: 30%;padding:5px;" required /> -->
+            </br>
+          </br>
+            <button class="btn btn--radius-2 btn--red"  type="submit"> CREATE </button>
           </div>
         </form>
+        <div id="display"></div>
       </section>
     </div>  
     <% include ./partials/bootjs %>
     <script>
-       const request = new XMLHttpRequest();
-       request.open('POST', '/user/add');
-       data = JSON.parse(request.response);
-       console.log(data);
-      function myFunction() 
-      {
-       var txt;
-         if (confirm("Are you sure you want to create this user ?"))
-           {
-                
-                
-           } 
-         else 
-           {
-             alert("User could not be created");
-           }
-     }   
-      
+      $( "#myform" ).submit(function( event ) {
+ 
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        // Get some values from elements on the page:
+        var $form = $( this ),
+          term = $form.find( "input[name='name']" ).val(),
+          url = $form.attr( "action" );
+
+
+        // Send the data using post
+        var posting = $.post( url, { name: term } );
+
+
+        // Put the results in a div
+        posting.done(function( data ) {
+          console.log(data["password"]);
+          password = data["password"];
           
-      </script>
+          $( "#display" ).empty().append( password);
+        });
+        });
+    </script>
 
   </body>
 
