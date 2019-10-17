@@ -28,7 +28,10 @@
     </div>  
     <% include ./partials/bootjs %>
     <script>
-
+       const request = new XMLHttpRequest();
+       request.open('POST', '/user/add');
+       data = JSON.parse(request.response);
+       console.log(data);
       function myFunction() 
       {
        var txt;
@@ -43,23 +46,7 @@
            }
      }   
       
-      function create()
-            {
-                const request = new XMLHttpRequest();
-                request.open('GET', '/user/add');
-                request.send(); 
-                
-                request.onload = function() {
-                if (request.status === 200) {
-                    console.log("Success"); 
-                    data = JSON.parse(request.response);
-                }   
-                };
-                
-                request.onerror = () => {
-                console.log("error")
-                };
-            }     
+          
       </script>
 
   </body>
