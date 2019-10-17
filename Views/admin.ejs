@@ -80,7 +80,7 @@
                           }
                         });
                         tabCell = tr.insertCell(-1);
-                        tabCell.innerHTML = "<a class=\"btn btn-danger btn-xs\" href=\" /user/" + id + "\"><i class=\"fa fa-trash\"></i></a>";
+                        tabCell.innerHTML = "<a class=\"btn btn-danger btn-xs\"  href=\" /user/" + id + "\"><i class=\"fa fa-trash\"></i></a>";
                         
                     }
                     var divContainer = document.getElementById("adminviewer");
@@ -92,6 +92,12 @@
                 request.onerror = () => {
                 console.log("error")
                 };
+            }
+            function deleteData(item, url) {
+              return fetch(url + '/' + item, {
+              method: 'delete'
+            })
+            .then(response => response.json());
             }
             create();
       
