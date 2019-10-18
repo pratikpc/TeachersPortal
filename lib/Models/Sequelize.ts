@@ -14,6 +14,13 @@ import { Progatt } from "./Progatt.Models";
 import { Semwork } from "./Semwork.Models";
 import { Sttp } from "./Sttp.Models";
 
+const Op = Sequelize.Op;
+const operatorsAliases = {
+  $eq: Op.eq,
+  $like: Op.like,
+  $ilike: Op.iLike
+};
+
 // Create the Connection
 export const SequelizeSql = new Sequelize({
   host: Config.DB.Host,
@@ -22,9 +29,9 @@ export const SequelizeSql = new Sequelize({
   port: Config.DB.Port,
   database: Config.DB.ProjectName,
   dialect: Config.DB.Dialect,
-  operatorsAliases: Config.DB.operatorsAliases,
   // Set logging to False to disable logging
-  logging: true
+  logging: true,
+  operatorsAliases : operatorsAliases
 });
 
 async function CreateDatabaseIfNotExists(db_name: string) {
@@ -66,14 +73,14 @@ export async function RunSynchronisation() {
   await Users.sync({ force: false });
   // Insert the Default Value for User if not already present
   await Users.InsertIfNotExists(Users.DefaultUser);
-  
+
   await Files.sync({ force: false });
 
-  await Conference.sync({force : false});
-  await Fdp.sync({force : false});
-  await Journal.sync({force : false});
-  await Mrg.sync({force : false});
-  await Sttp.sync({force : false});
-  await Progatt.sync({force : false});
-  await Semwork.sync({force : false});
+  await Conference.sync({ force: false });
+  await Fdp.sync({ force: false });
+  await Journal.sync({ force: false });
+  await Mrg.sync({ force: false });
+  await Sttp.sync({ force: false });
+  await Progatt.sync({ force: false });
+  await Semwork.sync({ force: false });
 }

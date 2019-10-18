@@ -71,7 +71,7 @@ RoutesCommon.upload.array('swcerti'), async (req, res) => {
                 { where: { id: id, UserID: userId } }
             );
             if (pathToFiles != null)
-                    await Models.Conference.update({
+                    await Models.Semwork.update({
                         Location: pathToFiles
                     },
                     { where: { id: id, UserID: userId } }
@@ -126,7 +126,7 @@ Semwork.get("/semwork/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
-        const file = await Models.Conference.findOne({
+        const file = await Models.Semwork.findOne({
             where: { UserID: userId, id: id }
         });
         if (!file)
@@ -149,7 +149,7 @@ Semwork.delete("/semwork/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
-        const file = await Models.Conference.destroy({
+        const file = await Models.Semwork.destroy({
             where: { UserID: userId, id: id }
         });
         const success = (file !== 0);

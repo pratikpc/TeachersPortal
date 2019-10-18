@@ -100,6 +100,7 @@ export namespace RoutesCommon {
 
     archive.on('error', function (err) {
       archive.abort(); //not always useful but might save trouble
+      console.log(err);
       throw err;
     });
 

@@ -23,15 +23,16 @@
     .profile-img .file {
         position: relative;
         overflow: hidden;
-        margin-top: -15%;
+        margin-top: -10%;
         width: 100%;
+        height: 3%;
         border: none;
         border-radius: 3px;
         font-size: 18px;
         background: #212529b8;
     }
     .profile-img .file input {
-        position: absolute;
+        position: relative;
         opacity: 0;
         right: 0;
         top: 0;
@@ -108,13 +109,13 @@
     <div class="container emp-profile col-lg-10"  style="margin-left:10%;margin-top:4%;">
             <div class="row">
                 <div class="col-md-4">
-                <form method="POST" action="/profileupdate" id="myform">
+                <form action="/profileupdate" id="file-form" method="POST" enctype="multipart/form-data" >
                     <div class="profile-img">
-                        <img src="http://192.168.150.1:8000/profileupdate" alt="" />  
-                            <div class="file btn btn-lg btn-primary">
-                            Change Photo
-                            <input type="file" id="myinput" name="profile" />
-                        </div>                                                      
+                        <img src="/profileupdate"  id="profilepic" name="profilepic" />  
+                        <div class="file   btn-primary">
+                        <input type="file" id="profile-upload" name="profile" /> 
+                        </div>
+                        <div><button class="btn btn--radius-2 btn--red" id="profile-submit" name="profile-submit"  type="submit"> ChangePhoto </button></div>                                                      
                     </div>
                 </form>  
                 </div>
@@ -235,7 +236,7 @@
                                     <label>Faculty Development Program</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <a id="fdpa" name="fdpa" href=""></a>
+                                    <a id="fdpa" rel="view" href="#view" class="link"></a>
                                 </div>
                             </div></br>
                             <div class="row">
@@ -243,7 +244,7 @@
                                     <label>Short Term Training Program</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <a id="sttpa" name="sttpa" href=""></a>
+                                    <a id="sttpa" rel="view" href="#view" class="link"></a>
                                 </div>
                             </div></br>
                             <div class="row">
@@ -259,7 +260,7 @@
                                     <label>Journals</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <a id="ja" name="ja" href=""></a>
+                                    <a id="ja" rel="view" href="#view" class="link"></a>
                                 </div>
                             </div></br>
                             <div class="row">
@@ -267,7 +268,7 @@
                                     <label>Seminars/Workshops Attended</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <a id="swaa" name="swaa" href=""></a>
+                                    <a id="swaa" rel="view" href="#view" class="link"></a>
                                 </div>
                             </div></br>
                             <div class="row">
@@ -275,7 +276,7 @@
                                     <label>RnD/Consultancy</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <a id="rca" name="rca" href=""></a>
+                                    <a id="rca" rel="view" href="#view" class="link"></a>
                                 </div>
                             </div></br>
                             <div class="row">
@@ -283,7 +284,7 @@
                                     <label>Programs Attended</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <a id="paa" name="paa" href=""></a>
+                                    <a id="paa" rel="view" href="#view" class="link"></a>
                                 </div>
                             </div></br>
                             
@@ -341,7 +342,7 @@
                             tabCell.innerHTML = data[i][col[j]];
                         }
                         id = data[i][col[0]];
-                        tabCell.innerHTML = "<a class=\"btn btn-primary btn-xs\" href=\"" + url1 + id + "\"><i class=\"fa fa-edit\"></i></a> <a class=\"btn btn-danger btn-xs\" href=\"" +url1 + "delete/" + id + "\"><i class=\"fa fa-trash\"></i></a> <a class=\"btn btn-primary btn-xs\" href=\"" +url1 + "file-viewer/" + id + "\"><i class=\"fa fa-download\"></i></a>";
+                        tabCell.innerHTML = "<a class=\"btn btn-primary btn-xs\" href=\"" + url1 + id + "\"><i class=\"fa fa-edit\"></i></a> <a class=\"btn btn-primary btn-xs\" href=\"" +url1 + "file-viewer/" + id + "\"><i class=\"fa fa-download\"></i></a>";
                         
 
                         
@@ -402,22 +403,52 @@
                 $('#'+rel).slideToggle('fast');
             });
 
-    </script>
-    <script>
-    var form = document.getElementById('myform');
-    var input = document.getElementById('myinput');
+            // var form = document.getElementById('file-form');
+            // var fileSelect = document.getElementById('profile-upload');
+            // var uploadButton = document.getElementById('profile-submit');
+            // form.onsubmit = function(event) {
+            //     event.preventDefault();
 
-    var change_running = false;    
-    input.addEventListener('change', function(){
-    if(!change_running){
-        setTimeout(function(){
-            change_running = true;
-            form.submit();
-            change_running = false;     
-        }, 300);
-    }
-});
+            //     // Update button text.
+            //     uploadButton.innerHTML = 'Uploading...';
+
+            //     var files = fileSelect.files;
+            //     console.log(files);
+            //     var formData = new FormData();
+            //     for (var i = 0; i < files.length; i++) {
+            //     var file = files[i];
+
+            //     // Check the file type.
+            //     if (!file.type.match('image.*')) {
+            //         continue;
+            //     }
+            //     console.log(file, file.name);
+            //     // Add the file to the request.
+            //     formData.append('profile-upload[]', file, file.name);
+            //     }
+            //     console.log(formData);
+
+            //     // Set up the request.
+            //     var xhr = new XMLHttpRequest();
+            //     // Open the connection.
+            //     xhr.open('POST', '/profileupdate', true);
+            //     // Set up a handler for when the request finishes.
+            //     xhr.onload = function () {
+            //     if (xhr.status === 200) {
+            //         // File(s) uploaded.
+            //         uploadButton.innerHTML = 'Upload';
+            //     } else {
+            //         alert('An error occurred!');
+            //     }
+            //     };
+            //     // Send the Data.
+            //     xhr.send(formData);            
+            // }
+            
+        
+
     </script>
+    
 
     <% include ./partials/bootjs %>
 

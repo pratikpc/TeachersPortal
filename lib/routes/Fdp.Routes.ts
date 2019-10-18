@@ -71,7 +71,7 @@ RoutesCommon.upload.array('fdpcerti'), async (req, res) => {
                 { where: { id: id, UserID: userId } }
             );
             if (pathToFiles != null)
-                    await Models.Conference.update({
+                    await Models.Fdp.update({
                         Location: pathToFiles
                     },
                     { where: { id: id, UserID: userId } }
@@ -126,7 +126,7 @@ Fdp.get("/fdp/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
-        const file = await Models.Conference.findOne({
+        const file = await Models.Fdp.findOne({
             where: { UserID: userId, id: id }
         });
         if (!file)
@@ -149,7 +149,7 @@ Fdp.delete("/fdp/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
         const userId = Number(req.user!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
-        const file = await Models.Conference.destroy({
+        const file = await Models.Fdp.destroy({
             where: { UserID: userId, id: id }
         });
         const success = (file !== 0);

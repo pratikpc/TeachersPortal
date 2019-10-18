@@ -108,10 +108,10 @@ Updation.get("/profileupdate", RoutesCommon.IsAuthenticated, async (req, res) =>
         const image = file.ImagePath;
         return res.download(image);
     } catch (err) { console.log(err); }
-    return res.sendStatus(404);
+    return res.redirect("/images/doraemon.png");
 });
 Updation.post("/profileupdate", RoutesCommon.IsAuthenticated,
-    RoutesCommon.upload.array('profile'),
+    RoutesCommon.upload.single('profile'),
     async (req, res) => {
         try {
             const userId = Number(req.user!.id);
@@ -124,7 +124,7 @@ Updation.post("/profileupdate", RoutesCommon.IsAuthenticated,
                 { where: { id: userId } }
             );
         } catch (err) { console.log(err); }
-        return res.sendStatus(404);
+        return res.redirect("/");
     });
 
 Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
