@@ -1,5 +1,5 @@
 import { RoutesCommon } from "./Common.Routes";
-import { Router } from "express";
+import { Router, Request } from "express";
 import * as Model from "../Models/Models";
 import { Op } from "sequelize";
 
@@ -27,7 +27,17 @@ function DeleteLocation(arr: any) {
     }
     return ret;
 }
-async function ExtractInformation(fname: any, lname: any, dept: any, ri: any, rtype: any, rspon: any) {
+async function ExtractInformation(req: Request) {
+    const params = RoutesCommon.GetParameters(req);
+    if (params == null) return null;
+
+    const fname = String(params.fname);
+    const lname = String(params.lname);
+    const dept = String(params.dept);
+    const ri = String(params.ri);
+    const rtype = String(params.rcat);
+    const rspon = String(params.rspon);
+
     const users = await Model.Users.findAll({
         where: {
             Authority: "NORMAL",
@@ -124,27 +134,20 @@ async function ExtractInformation(fname: any, lname: any, dept: any, ri: any, rt
     }
     return { mrg, conference, journal, semwork, fdp, sttp, progatt };
 }
-function ExtractPaths(input:any) {
+function ExtractPaths(input: any) {
     const value: string[] = [];
-    input.forEach((element: { Location: any; }) => {
-        value.push(String(element.Location));
+    input.forEach((element: any) => {
+        value.push(...element.FileLocationsAsArray());
     });
     return value;
 }
 Admin.post("/report/files", RoutesCommon.IsAdmin, async (req, res) => {
-    const params = RoutesCommon.GetParameters(req);
-    if (params == null) return res.status(422).send("Upload Failed");
+    const x = await ExtractInformation(req);
+    if (x == null)
+        return res.status(404);
+    const { mrg, conference, journal, semwork, fdp, sttp, progatt } = x;
+    const locations: string[] = [];
 
-    const fname = String(params.fname);
-    const lname = String(params.lname);
-    const dept = String(params.dept);
-    const ri = String(params.ri);
-    const rtype = String(params.rcat);
-    const rspon = String(params.rspon);
-
-    const { mrg, conference, journal, semwork, fdp, sttp, progatt } = await ExtractInformation(fname, lname, dept, ri, rtype, rspon);
-
-    const locations : string[] = [];
     locations.push(...ExtractPaths(mrg));
     locations.push(...ExtractPaths(conference));
     locations.push(...ExtractPaths(journal));
@@ -158,18 +161,14 @@ Admin.post("/report/files", RoutesCommon.IsAdmin, async (req, res) => {
     await RoutesCommon.ZipFileGenerator(res, locations);
 });
 Admin.post("/report", RoutesCommon.IsAdmin, async (req, res) => {
-    const params = RoutesCommon.GetParameters(req);
-    if (params == null) return res.status(422).send("Upload Failed");
+    const x = await ExtractInformation(req);
 
-    const fname = String(params.fname);
-    const lname = String(params.lname);
-    const dept = String(params.dept);
-    const ri = String(params.ri);
-    const rtype = String(params.rcat);
-    const rspon = String(params.rspon);
+    if (x == null)
+        return res.status(404);
 
-    const { mrg, conference, journal, semwork, fdp, sttp, progatt } = await ExtractInformation(fname, lname, dept, ri, rtype, rspon);
+    const { mrg, conference, journal, semwork, fdp, sttp, progatt } = x;
 
+    // Remove Location Parameter as it is local to our computer
     if (journal != null)
         journal.forEach(value => delete value.dataValues.Location);
     if (fdp != null)
