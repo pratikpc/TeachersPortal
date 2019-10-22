@@ -82,7 +82,7 @@ RoutesCommon.upload.array('patcerti'), async (req, res) => {
                     { where: { id: id, UserID: userId } }
                     );
             }
-    return res.status(200).redirect('/progatt');
+    return res.status(200).redirect('/');
 }
 catch (error) {
     console.error(error);

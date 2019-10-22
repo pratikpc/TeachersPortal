@@ -77,7 +77,7 @@ RoutesCommon.upload.array('mrgcerti'), async (req, res) => {
                     { where: { id: id, UserID: userId } }
                     );
             }
-    return res.status(200).redirect('/mrg');
+    return res.status(200).redirect('/');
 }
 catch (error) {
     console.error(error);

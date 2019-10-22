@@ -87,7 +87,7 @@ RoutesCommon.upload.array('jcerti'), async (req, res) => {
                     { where: { id: id, UserID: userId } }
                     );
             }
-    return res.status(200).redirect('/journal');
+    return res.status(200).redirect('/');
 }
 catch (error) {
     console.error(error);

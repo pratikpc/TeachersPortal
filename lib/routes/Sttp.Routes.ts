@@ -77,7 +77,7 @@ RoutesCommon.upload.array('sttpcerti'), async (req, res) => {
                     { where: { id: id, UserID: userId } }
                     );
             }
-    return res.status(200).redirect('/sttp');
+    return res.status(200).redirect('/');
 }
 catch (error) {
     console.error(error);

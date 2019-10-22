@@ -130,7 +130,7 @@ RoutesCommon.upload.array('""" + upload_file + """'), async (req, res) => {
                     { where: { id: id, UserID: userId } }
                     );
             }
-    return res.status(200).redirect('/""" + route + """');
+    return res.status(200).redirect('/');
 }
 catch (error) {
     console.error(error);

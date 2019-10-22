@@ -87,7 +87,7 @@ RoutesCommon.upload.array('ccerti'), async (req, res) => {
                     { where: { id: id, UserID: userId } }
                     );
             }
-    return res.status(200).redirect('/conference');
+    return res.status(200).redirect('/');
 }
 catch (error) {
     console.error(error);

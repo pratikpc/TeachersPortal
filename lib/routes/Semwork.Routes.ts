@@ -77,7 +77,7 @@ RoutesCommon.upload.array('swcerti'), async (req, res) => {
                     { where: { id: id, UserID: userId } }
                     );
             }
-    return res.status(200).redirect('/semwork');
+    return res.status(200).redirect('/');
 }
 catch (error) {
     console.error(error);
