@@ -21,22 +21,37 @@
           <h6><label for="username" style="color:black;font-size:35px;margin-left:36.5%;"> Report Generation</label>
           </h6>
 
-          <!-- <label > Year </label></br>
+        <label > Year </label></br>
         <select id="ryear" type="text" name="ryear"  style="width: 24%;padding:5px;"></select></br>
- -->
-          <label> Faculty Name </label></br>
-          <input id="rfn" type="text" name="fname" placeholder="first name" style="width:24%;padding:5px;" />
-          <input id="rln" type="text" name="lname" placeholder="last name" style="width:24%;padding:5px;" /></br>
+ 
+        <label>Department</label></br>
+        <select id="rdept" name="dept" style="width: 24%;padding:5px;">
+          <option value ="" selected="selected">All</option>
+          <option value="CS">Computer Science</option>
+          <option value="IT">IT</option>
+          <option value="ELEX">Electronics</option>
+          <option value="PROD">Production</option>
+        </select>
+        </br>
+        
+        <label> Faculty Name </label></br>
+        <select id="rfname" name="rfname" style="width: 24%;padding:5px;">
+        </select></br>
 
-          <label>Department</label></br>
-          <select id="rdept" name="dept" style="width: 24%;padding:5px;">
-            <option value ="" selected="selected">Select One</option>
-            <option value="CS">Computer Science</option>
-            <option value="IT">IT</option>
-            <option value="ELEX">Electronics</option>
-            <option value="PROD">Production</option>
-          </select>
-          </br>
+        
+        <label>Category</label></br>
+        <select id="rcat" name="rcat" style="width: 24%;padding:5px;">
+          <option value="" selected="selected">All</option>
+          <option value="fdp"> Faculty Development Program </option>
+          <option value="sttp"> Short Term Training Programs </option>
+          <option value="mrg"> Research & Development / Consultancy </option>
+          <option value="journal"> Journals </option>
+          <option value="conference"> Conference </option>
+          <option value="progatt"> Programs Attended </option>
+          <option value="semwork"> Seminar/Workshop </option>
+        </select>
+        </br>
+          
 
           <label>International/National</label></br>
           <select id="ri" name="ri" style="width: 24%;padding:5px;">
@@ -46,18 +61,7 @@
           </select>
           </br>
 
-          <label>Category</label></br>
-          <select id="rcat" name="rcat" style="width: 24%;padding:5px;">
-            <option value="" selected="selected">Select One</option>
-            <option value="fdp"> Faculty Development Program </option>
-            <option value="sttp"> Short Term Training Programs </option>
-            <option value="mrg"> MRG </option>
-            <option value="journal"> Journals </option>
-            <option value="conference"> Conference </option>
-            <option value="progatt"> Programs Attended </option>
-            <option value="semwork"> Seminar/Workshop </option>
-          </select>
-          </br>
+          
 
           <label> Sponsorship </label></br>
           <select id="rspon" name="rspon" style="width: 24%;padding:5px;">
@@ -72,7 +76,7 @@
       </form>
     </section>
   </div>
-4
+
   <!-- Bootstrap core JavaScript -->
   <script src="/vendorresume/jquery/jquery.js"></script>
   <script src="/vendorresume/bootstrap/js/bootstrap.bundle.js"></script>
@@ -95,32 +99,33 @@
     }
     document.getElementById("ryear").innerHTML = options;
 
-    $( "#admin" ).submit(function( event ) {
- 
- // Stop form from submitting normally
-      event.preventDefault();
+    function create(url)
+    {
+        const request = new XMLHttpRequest();
+        request.open('GET', '/user');
+        request.send(); 
 
-      // Get some values from elements on the page:
-      var $form = $( this ),
-        term1 = $form.find( "input[name='fname']" ).val(),
-        term2 = $form.find( "input[name='lname']" ).val(),
-        term3 = $form.find( "input[name='lname']" ).val(),
         
-        url = $form.attr( "action" );
-
-
-      // Send the data using post
-      var posting = $.post( url, { name: term } );
-
-
-      // Put the results in a div
-      posting.done(function( data ) {
-        console.log(data["password"]);
-        password = data["password"];
+        request.onload = function() {
+        if (request.status === 200) {
+            console.log("Success"); 
+            data = JSON.parse(request.response);
+            console.log(data);
+            var name = document.getElementById("rfname");
+            var option = "<option value=\"\" selected=\"selected\">All</option>";
+            for(i=0; i<data.length;i++)
+            {
+              option += "<option>" + data[i]["data"]["firstname"] + " " + data[i]["data"]["lastname"] + "</option>";
+            }
+            name.innerHTML = option;
+                    
+        };
         
-        $( "#display" ).empty().append("The Password Generated Is :"+password);
-      });
- });
+        
+    }
+  }
+    create();
+      
   </script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="//code.jquery.com/jquery-1.12.4.js"></script>

@@ -34,8 +34,6 @@
                     data = JSON.parse(request.response);
 
                     var titles = new Array("Username", "Name", "Department", "Action");
-                    
-                    
                     var table = document.createElement("table");
                     table.setAttribute("class", "table table-striped table-primary");
                     var tr = table.insertRow(-1); 
@@ -44,41 +42,33 @@
                         th.innerHTML = titles[i];
                         tr.appendChild(th);
                     }
+
                     for (var i = 0; i < data.length; i++) {
                         tr = table.insertRow(-1);
                         var tabCell = ""
-                        var id = data[i]["id"];
-                        var uname = data[i]["name"];
-                        var url = "/details/" + id;
+                        var id = data[i]["data"]["id"];
+                        var uname = data[i]["data"]["Name"];
+                        var name = data[i]["data"]["firstname"] + " " + data[i]["data"]["lastname"];
+                        var dept = data[i]["data"]["dept"];
                         tabCell = tr.insertCell(-1);
                         tabCell.innerHTML = uname;
-                        $.ajax({
-                          url: url,
-                          async: false,
-                          dataType: 'json',
-                          success: function (response) {
-                            name = response["data"]["firstname"] + " " + response["data"]["lastname"];
-                            tabCell = tr.insertCell(-1);
-                            if (name != null)
-                            {
-                              tabCell.innerHTML = name;
-                            }
-                            else{
-                              tabCell.innerHTML = "yet to fill";
-                            }
-                            tabCell = tr.insertCell(-1);
-                            dept = response["data"]["dept"];
-                            if (dept != null)
-                            {
-                              tabCell.innerHTML = dept;
-                            }
-                            else{
-                              tabCell.innerHTML = "yet to fill";
-                            }
-                            
-
-                          }
-                        });
+                        tabCell = tr.insertCell(-1);
+                        if (name != null)
+                        {
+                          tabCell.innerHTML = name;
+                        }
+                        else{
+                          tabCell.innerHTML = "yet to fill";
+                        }
+                        tabCell = tr.insertCell(-1);
+                        if (dept != null)
+                        {
+                          tabCell.innerHTML = dept;
+                        }
+                        else{
+                          tabCell.innerHTML = "yet to fill";
+                        }
+                        
                         tabCell = tr.insertCell(-1);
                         tabCell.innerHTML = "<a class=\"btn btn-danger btn-xs\"  href=\" /user/" + id + "\"><i class=\"fa fa-trash\"></i></a>";
                         
@@ -89,9 +79,6 @@
                     } 
                 };
                 
-                request.onerror = () => {
-                console.log("error")
-                };
             }
             function deleteData(item, url) {
               return fetch(url + '/' + item, {

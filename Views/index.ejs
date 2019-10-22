@@ -111,7 +111,7 @@
                 <div class="col-md-4">
                 <form action="/profileupdate" id="file-form" method="POST" enctype="multipart/form-data" >
                     <div class="profile-img">
-                        <img src="/profileupdate"  id="profilepic" name="profilepic" />  
+                        <img src="/profileupdate"  id="profilepic" name="profilepic" onerror="this.src='/images/profile.jpg';" />  
                         <div class="file   btn-primary">
                         <input type="file" id="profile-upload" name="profile" /> 
                         </div>
@@ -185,14 +185,7 @@
                                         </div>
                                     </div></br>
                                 
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Experience</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>18 years</p>
-                                        </div>
-                                    </div></br>
+                                   
                                    
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -296,10 +289,12 @@
     <div id="view" class="box">
     </div>
     <script>
+   
             function number(url, id)
             {
                 $.getJSON(url, function(data) {
                     var count = Object.keys(data).length;
+                    console.log(count);
                     $(id).text(count); 
                 });
             }
@@ -314,6 +309,9 @@
                     console.log("Success"); 
                     data = JSON.parse(request.response);
                     var col = [];
+                    var dict = {
+
+                    }
                     for (var i = 0; i < data.length; i++) {
                         for (var key in data[i]) {
                             if (col.indexOf(key) === -1) {
