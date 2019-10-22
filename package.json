@@ -1,10 +1,9 @@
 {
-  "name": "TeachersPortal",
+  "name": "teachers_portal",
   "version": "1.0.0",
   "description": "Teacher's Portal Application",
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node ./lib/server.ts",
     "start": "nodemon ./dist/server.js",
     "deploy": "node ./dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
