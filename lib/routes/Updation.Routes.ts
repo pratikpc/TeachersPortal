@@ -44,15 +44,7 @@ function EmptyUndef(key: any) {
     return key;
 }
 
-async function GetUserDetails(userId: any) {
-    const user = await Models.Users.findOne({
-        where: { id: userId }
-    }
-    );
-
-    if (user == null)
-        return {};
-
+export function GetUserJson(user: Models.Users) {
     return {
         data: {
             title: EmptyUndef(user.title),
@@ -68,6 +60,18 @@ async function GetUserDetails(userId: any) {
             oduration: RoutesCommon.ToArrayFromJsonString<string>(EmptyUndef(user.oduration)), oinstitute: RoutesCommon.ToArrayFromJsonString<string>(EmptyUndef(user.oinstitute)), opost: RoutesCommon.ToArrayFromJsonString<string>(EmptyUndef(user.opost))
         }
     };
+}
+
+async function GetUserDetails(userId: any) {
+    const user = await Models.Users.findOne({
+        where: { id: userId }
+    }
+    );
+
+    if (user == null)
+        return {};
+
+    return GetUserJson(user);
 }
 
 

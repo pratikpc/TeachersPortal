@@ -156,8 +156,6 @@ Admin.post("/report/files", RoutesCommon.IsAdmin, async (req, res) => {
     locations.push(...ExtractPaths(sttp));
     locations.push(...ExtractPaths(progatt));
 
-    console.log(locations);
-
     await RoutesCommon.ZipFileGenerator(res, locations);
 });
 Admin.post("/report", RoutesCommon.IsAdmin, async (req, res) => {

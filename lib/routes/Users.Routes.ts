@@ -3,6 +3,7 @@ import * as Model from "../Models/Users.Model";
 import { randomBytes } from "crypto";
 import passport from "passport";
 import { RoutesCommon } from "./Common.Routes";
+import { GetUserJson } from "./Updation.Routes";
 
 export const Users = Router();
 
@@ -67,12 +68,12 @@ Users.post("/add/", RoutesCommon.IsAdmin, async (req, res) => {
 Users.get("/", RoutesCommon.IsAdmin, async (req, res) => {
   try {
     const users = await Model.Users.findAll({
-      attributes: ["id", "Name"],
       where: { Authority: "NORMAL" }
     });
     const list: any[] = [];
     users.forEach(user => {
-      list.push({ id: user.id, name: user.Name, firstname: user.firstname, lastname: user.lastname });
+      const user_details = GetUserJson(user);
+      list.push(user_details);
     });
     return res.json(list);
   } catch (error) {
