@@ -72,7 +72,7 @@ Users.get("/", RoutesCommon.IsAdmin, async (req, res) => {
     });
     const list: any[] = [];
     users.forEach(user => {
-      list.push({ id: user.id, name: user.Name });
+      list.push({ id: user.id, name: user.Name, firstname: user.firstname, lastname: user.lastname });
     });
     return res.json(list);
   } catch (error) {
@@ -118,4 +118,3 @@ Users.get("/:id", RoutesCommon.IsAdmin, async (req, res) => {
     });
   }
 });
-
