@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <% include ./partials/head.ejs %>
+    <link href="/css/custom.css" rel="stylesheet">
+    <link href="/css/resume.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  </head>
+
+  <body id="page-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+        <% include ./partials/navbaradmin %>
+    </nav>
+
+    <div class="container-fluid p-0" style="width:69%;margin-right:20%;">
+      <section class=" p-lg-4 " id="update">
+        
+      </section>
+    </div>  
+    <% include ./partials/bootjs %>
+    <script>
+      $( "#myform" ).submit(function( event ) {
+ 
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        // Get some values from elements on the page:
+        var $form = $( this ),
+          term = $form.find( "input[name='name']" ).val(),
+          url = $form.attr( "action" );
+
+
+        // Send the data using post
+        var posting = $.post( url, { name: term } );
+
+
+        // Put the results in a div
+        posting.done(function( data ) {
+          console.log(data["password"]);
+          password = data["password"];
+          
+          $( "#display" ).empty().append("The Password Generated Is :"+password);
+        });
+        });
+    </script>
+
+  </body>
+
+</html>

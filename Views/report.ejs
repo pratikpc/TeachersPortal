@@ -6,6 +6,8 @@
   <!-- Custom styles for this template -->
   <link href="/css/resume.css" rel="stylesheet">
   <link href="/css/custom.css" rel="stylesheet">
+  
+  
 </head>
 
 <body id="page-top">
@@ -25,22 +27,23 @@
         <select id="ryear" type="text" name="ryear"  style="width: 24%;padding:5px;"></select></br>
  
         <label>Department</label></br>
-        <select id="rdept" name="dept" style="width: 24%;padding:5px;">
+        <select id="rdept" name="rdept"  style="width: 24%;padding:5px;" onchange="changename(this.value);">
           <option value ="" selected="selected">All</option>
-          <option value="CS">Computer Science</option>
-          <option value="IT">IT</option>
-          <option value="ELEX">Electronics</option>
-          <option value="PROD">Production</option>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Information Technology">IT</option>
+          <option value="Electronics and Computer Science">Electronics</option>
+          <option value="Production">Production</option>
         </select>
         </br>
         
         <label> Faculty Name </label></br>
         <select id="rfname" name="rfname" style="width: 24%;padding:5px;">
+          <option value="">All</option>
         </select></br>
 
         
         <label>Category</label></br>
-        <select id="rcat" name="rcat" style="width: 24%;padding:5px;">
+        <select id="rcat" name="rcat" style="width: 24%;padding:5px;" onchange="changecat(this.value);">
           <option value="" selected="selected">All</option>
           <option value="fdp"> Faculty Development Program </option>
           <option value="sttp"> Short Term Training Programs </option>
@@ -53,29 +56,35 @@
         </br>
           
 
+          <div id="int">
           <label>International/National</label></br>
           <select id="ri" name="ri" style="width: 24%;padding:5px;">
             <option value="" selected="selected">Select One</option>
             <option value="International"> International </option>
             <option value="National"> National </option>
           </select>
-          </br>
+          </div>
+          
 
           
 
-          <label> Sponsorship </label></br>
+          <div id="spon">
+            <label> Sponsorship </label></br>
           <select id="rspon" name="rspon" style="width: 24%;padding:5px;">
             <option value="" selected="selected">Select One</option>
             <option value="College Sponsored"> College Sponsored </option>
             <option value="Self Sponsored"> Self Sponsored </option>
-          </select></br>
-          </br>
+          </select>
+          </div>
+          
+
 
         </div>
         <button class="btn btn--radius-2 btn--red" type="submit" value="report"> Report</button></br>
       </form>
     </section>
   </div>
+  
 
   <!-- Bootstrap core JavaScript -->
   <script src="/vendorresume/jquery/jquery.js"></script>
@@ -98,24 +107,30 @@
       options += "<option>" + year + "</option>";
     }
     document.getElementById("ryear").innerHTML = options;
-
-    function create(url)
+    
+    function create(dept)
     {
         const request = new XMLHttpRequest();
         request.open('GET', '/user');
         request.send(); 
-
         
         request.onload = function() {
         if (request.status === 200) {
             console.log("Success"); 
             data = JSON.parse(request.response);
-            console.log(data);
+            
             var name = document.getElementById("rfname");
             var option = "<option value=\"\" selected=\"selected\">All</option>";
             for(i=0; i<data.length;i++)
             {
-              option += "<option>" + data[i]["data"]["firstname"] + " " + data[i]["data"]["lastname"] + "</option>";
+              if(dept=="")
+              {
+                option += "<option>" + data[i]["data"]["firstname"] + " " + data[i]["data"]["lastname"] + "</option>";
+              }
+              if(dept==data[i]["data"]["dept"])
+              {
+                option += "<option>" + data[i]["data"]["firstname"] + " " + data[i]["data"]["lastname"] + "</option>";
+              }
             }
             name.innerHTML = option;
                     
@@ -124,12 +139,51 @@
         
     }
   }
-    create();
+
+    function changecat(value){
+      var international = document.getElementById("ri");
+      var spon = document.getElementById("rspon");
+      var int = document.getElementById("int");
+      var sponso = document.getElementById("spon");
+      if(value=="journal" || value=="conference")
+      {
+        international.disabled = false;
+        int.style.display = "block";
+        spon.disabled=true;
+        sponso.style.display = "none";
+      } else if(value=="fdp" || value=="sttp" || value=="progatt")
+      {
+        international.disabled = true;
+        spon.disabled=false;
+        sponso.style.display = "block";
+        int.style.display = "none";
+      }
+      else if(value=="mrg" || value=="semwork")
+      {
+        international.disabled = true;
+        spon.disabled=true;
+        sponso.style.display = "none";
+        int.style.display = "none";
+      }
+      else{
+        international.disabled = false;
+        spon.disabled=false;
+        sponso.style.display = "block";
+        int.style.display = "block";
+      }
+
+    }
+
+    function changename(value){
+      create(value);
+    }
+  
       
   </script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="//code.jquery.com/jquery-1.12.4.js"></script>
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
 
 </body>
 
