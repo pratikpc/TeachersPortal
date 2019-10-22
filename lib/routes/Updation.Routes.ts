@@ -47,6 +47,8 @@ function EmptyUndef(key: any) {
 export function GetUserJson(user: Models.Users) {
     return {
         data: {
+            id: user.id,
+            Name: user.Name,
             title: EmptyUndef(user.title),
             firstname: EmptyUndef(user.firstname), middlename: EmptyUndef(user.middlename), lastname: EmptyUndef(user.lastname),
             fname: EmptyUndef(user.fname), mname: EmptyUndef(user.mname),
@@ -73,7 +75,6 @@ async function GetUserDetails(userId: any) {
 
     return GetUserJson(user);
 }
-
 
 Updation.get("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
     const userId = Number(req.user!.id);
