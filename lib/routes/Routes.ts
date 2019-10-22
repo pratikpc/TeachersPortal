@@ -1,5 +1,4 @@
 export { Users } from "./Users.Routes";
-export { Files } from "./Files.Routes";
 export { Admin } from "./Admin.Routes";
 export { Updation } from "./Updation.Routes";
 export {Conference} from "./Conference.Routes";
