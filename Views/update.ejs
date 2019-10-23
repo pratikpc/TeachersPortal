@@ -13,7 +13,7 @@
   </nav>
   <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
     <section class=" p-lg-4 " id="update">
-      <form method="POST" action="/updated">
+      <form method="POST" action="/updated" enctype="multipart/form-data">
 
         <div class="my-auto item" id="personal">
           <h4><label for="title" style="color:black;font-size:24px;">Title<span>*</span></label></h4>
@@ -64,6 +64,8 @@
           <h4><label for="aos" style="color:black;font-size:24px;">Area of Specialization<span>*</span></label></h4>
           <input id="aos" type="text" name="aos" value="<%- data.aos %> "/>
 
+          <h4><label for="name" style="color:black;font-size:24px;">Profile Picture<span></span></label></h4>
+          <input type="file" id="profile-upload" name="profile" />  
         </div>
 
         <div class="my-auto item" id="education">
