@@ -37,7 +37,7 @@
         </br>
         
         <label> Faculty Name </label></br>
-        <select id="rfname" name="rfname" style="width: 24%;padding:5px;">
+        <select id="rfaname" name="rfaname" style="width: 24%;padding:5px;">
           <option value="">All</option>
         </select></br>
 
@@ -103,6 +103,7 @@
     var end = 1900;
     var start = new Date().getFullYear();
     var options = "";
+    options += "<option>" + "None" + "</option>"
     for (var year = start; year >= end; year--) {
       options += "<option>" + year + "</option>";
     }
@@ -119,17 +120,19 @@
             console.log("Success"); 
             data = JSON.parse(request.response);
             
-            var name = document.getElementById("rfname");
+            var name = document.getElementById("rfaname");
             var option = "<option value=\"\" selected=\"selected\">All</option>";
             for(i=0; i<data.length;i++)
             {
+              var fullname = data[i]["data"]["firstname"] + " " + data[i]["data"]["lastname"];
+              console.log(fullname);
               if(dept=="")
               {
-                option += "<option>" + data[i]["data"]["firstname"] + " " + data[i]["data"]["lastname"] + "</option>";
+                option += "<option value=\""+ fullname + "\">" + fullname + "</option>";
               }
               if(dept==data[i]["data"]["dept"])
               {
-                option += "<option>" + data[i]["data"]["firstname"] + " " + data[i]["data"]["lastname"] + "</option>";
+                option += "<option value=\""+ fullname + "\">" + fullname + "</option>";
               }
             }
             name.innerHTML = option;
@@ -147,27 +150,27 @@
       var sponso = document.getElementById("spon");
       if(value=="journal" || value=="conference")
       {
-        international.disabled = false;
+        //international.disabled = false;
         int.style.display = "block";
-        spon.disabled=true;
+        //spon.disabled=true;
         sponso.style.display = "none";
       } else if(value=="fdp" || value=="sttp" || value=="progatt")
       {
-        international.disabled = true;
-        spon.disabled=false;
+        //international.disabled = true;
+        //spon.disabled=false;
         sponso.style.display = "block";
         int.style.display = "none";
       }
       else if(value=="mrg" || value=="semwork")
       {
-        international.disabled = true;
-        spon.disabled=true;
+        //international.disabled = true;
+        //spon.disabled=true;
         sponso.style.display = "none";
         int.style.display = "none";
       }
       else{
-        international.disabled = false;
-        spon.disabled=false;
+        //international.disabled = false;
+        //spon.disabled=false;
         sponso.style.display = "block";
         int.style.display = "block";
       }
@@ -178,6 +181,48 @@
       create(value);
     }
   
+  
+      $( "#admin" ).submit(function( event ) {
+ 
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        // Get some values from elements on the page:
+        var $form = $( this ),
+        year = $form.find( "input[name='ryear']" ).val(),
+        dept = $form.find( "input[name='rdept']" ).val(),
+        name = $form.find( "input[name='rfaname']" ).val(),
+        cat = $form.find( "input[name='rcat']" ).val(),
+        intern = $form.find( "input[name='ri']" ).val(),
+        sponsor = $form.find( "input[name='rspon']" ).val(),
+        url = $form.attr( "action" );
+        if(name=="")
+        {
+          fname="";
+          lname="";
+        }
+        else{
+          console.log(name);
+          array = name.split(" ");
+          fname= array[0];
+          lname=array[1];
+
+        }
+      // Send the data using post
+        var posting = $.post( url, { ryear: year, rdept: dept, rfname: fname, rlname: lname, rcat: cat, ri: intern, rspon: sponsor } );
+
+
+        // Put the results in a div
+        posting.done(function( data ) {
+          //console.log(data["password"]);
+          //password = data["password"];
+          console.log("Sucess");
+          console.log(year, dept, fname, lname, cat, intern, sponsor, url);
+          
+          //$( "#display" ).empty().append("The Password Generated Is :"+password);
+        });
+        });
+      
       
   </script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
