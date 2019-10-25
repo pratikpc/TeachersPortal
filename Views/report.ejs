@@ -4,7 +4,7 @@
 <head>
   <% include ./partials/head.ejs %>
   <!-- Custom styles for this template -->
-  <link href="/css/resume.css" rel="stylesheet">
+
   <link href="/css/custom.css" rel="stylesheet">
 
 
@@ -12,7 +12,7 @@
 
 <body id="page-top">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-    <% include ./partials/navbaradmin %>
+    <% include ./partials/navbaradmin.ejs %>
   </nav>
   </nav>
   <div class="container-fluid p-0" style="width:69%;margin-right:10%;">
@@ -85,8 +85,8 @@
       </form>
     </section>
   </div>
-  <div id="print"></div>
-  <div id="printarea"></div>
+  <div id="print"  style="margin-left:20%;margin-right:4%;" ></div>
+  <div id="printarea"  style="margin-left:14%;" ></div>
 
 
   <!-- Bootstrap core JavaScript -->
@@ -238,7 +238,7 @@
         divContainer.appendChild(table);
 
         var print = document.getElementById("printarea");
-        print.innerHTML = "<button class=\"btn btn--radius-2 btn--red\" id=\"printbutton\" onclick=\"printdiv()\"> Print</button>";
+        print.innerHTML = "<button class=\"btn btn--radius-2 btn--red\" id=\"printbutton\" onclick=\"printdiv()\" style=\"padding: 0px;\"> Download </button>";
     }
     function printdiv(){
       var content = document.getElementById("print").innerHTML;

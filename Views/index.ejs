@@ -16,12 +16,12 @@
         margin-right: 10%; 
     }
     .profile-img img{
+        position: static;
         display: block;
         max-width:50%;
         max-width: 50%;;
-        width: auto;
-        height: auto;;
-        border:1px solid pink;
+        width: 50%;
+        height: 50%;
     }
     .profile-head h5{
         color: #333;
@@ -83,7 +83,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top " id="sideNav" style="background-color: #007bff;width:15.02%">
       <% include ./partials/navbar %>
     </nav>
-    <div class="container emp-profile col-lg-10"  style="margin-left:10%;margin-top:4%;">
+    <div class="container emp-profile "  style="margin-left:4%;margin-top:4%;margin-right: 4%;">
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
@@ -257,7 +257,7 @@
                 </div>
             </div>          
     </div>
-    <div id="view" class="box">
+    <div id="view" class="box"  style="margin-right:4%;margin-left: 4%;">
     </div>
     <script>
           
@@ -269,23 +269,7 @@
                     console.log(count);
                     $(id).text(count); 
                 });
-            }
-            function deleteData(id,url, files) {
-                    console.log("Elvis");
-                    $.ajax(
-                     {
-                           url: "/" + url + "/" + files + "/" + id,
-                           type: 'DELETE',
-                           data: {
-                                 "id": id,
-                                },
-                          success: function (){
-                           console.log("it Works");
-                           location.reload(true);
-                     }
-                   });
-                }
-               
+            }  
            function create(rel, id, url, url1,url2, files)
             {
                 const request = new XMLHttpRequest();
@@ -307,8 +291,8 @@
                     for (var i = 0; i < data.length; i++) {
                         for (var key in data[i]) {
                             if (col.indexOf(key) === -1) {
-                                console.log(key, dict.key);
-                                col.push(dict.key);
+                                
+                                col.push(key);
                             }
                         }
                     }
@@ -333,7 +317,7 @@
                             tabCell.innerHTML = data[i][col[j]];
                         }
                         id = data[i][col[0]];
-                        tabCell.innerHTML = " <a class=\"btn btn-primary btn-xs\" href=\"" +url1 + "file-viewer/" + id + "\"><i class=\"fa fa-download\"></i></a> <a class=\"btn btn-primary btn-xs\" href=\"" + url1 + id + "\"><i class=\"fa fa-edit\"></i></a> <button class=\"btn btn-danger btn-xs\" onclick=\"deleteData("+ id + ","+ url2 + ","+ files + ")\" ><i class=\"fa fa-trash\"></i></button>";
+                        tabCell.innerHTML = " <a class=\"btn btn-primary btn-xs\" href=\"" +url1 + "file-viewer/" + id + "\"><i class=\"fa fa-download\"></i></a> <a class=\"btn btn-primary btn-xs\" href=\"" + url1 + id + "\"><i class=\"fa fa-edit\"></i></a> <button class=\"btn btn-danger btn-xs\" onclick=\"deleteData("+ id + ","+ url1 + ")\" ><i class=\"fa fa-trash\"></i></button>";
                         
                     }
                     var divContainer = document.getElementById("view");
@@ -341,7 +325,22 @@
                     divContainer.appendChild(table);
                     } 
                 };
-            }   
+            }  
+            function deleteData(id,url,files) {
+
+                    $.ajax(
+                     {
+                           url:  url  + id,
+                           type: 'DELETE',
+                           data: {
+                                 "id": id,
+                                },
+                          success: function (){
+                           console.log("it Works");
+                           location.reload(true);
+                     }
+                   });
+                } 
             number('/fdp/files', '#fdpa');
             number('/sttp/files', '#sttpa');
             number('/conference/files', '#ca');
