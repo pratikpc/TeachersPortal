@@ -59,7 +59,7 @@
           <div id="int">
           <label>International/National</label></br>
           <select id="ri" name="ri" style="width: 24%;padding:5px;">
-            <option value="" selected="selected">Select One</option>
+            <option value="" selected="selected">All</option>
             <option value="International"> International </option>
             <option value="National"> National </option>
           </select>
@@ -71,7 +71,7 @@
           <div id="spon">
             <label> Sponsorship </label></br>
           <select id="rspon" name="rspon" style="width: 24%;padding:5px;">
-            <option value="" selected="selected">Select One</option>
+            <option value="" selected="selected">All</option>
             <option value="College Sponsored"> College Sponsored </option>
             <option value="Self Sponsored"> Self Sponsored </option>
           </select>
@@ -103,9 +103,9 @@
     var end = 1900;
     var start = new Date().getFullYear();
     var options = "";
-    options += "<option>" + "None" + "</option>"
+    options += "<option value=\" \">" + "All" + "</option>"
     for (var year = start; year >= end; year--) {
-      options += "<option>" + year + "</option>";
+      options += "<option value=\""+ year + "\">" + year + "</option>";
     }
     document.getElementById("ryear").innerHTML = options;
     
