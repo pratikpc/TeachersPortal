@@ -103,6 +103,11 @@
   <script src="//code.jquery.com/jquery-1.12.4.js"></script>
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
+    var int = document.getElementById("int");
+    var sponso = document.getElementById("spon");
+    int.style.display = "none";
+    sponso.style.display = "none";
+
     var end = 1900;
     var start = new Date().getFullYear();
     var options = "";
@@ -145,8 +150,7 @@
     function changecat(value) {
       var international = document.getElementById("ri");
       var spon = document.getElementById("rspon");
-      var int = document.getElementById("int");
-      var sponso = document.getElementById("spon");
+      
       if (value == "journal" || value == "conference") {
         //international.disabled = false;
         int.style.display = "block";
