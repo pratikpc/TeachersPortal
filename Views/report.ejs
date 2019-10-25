@@ -6,8 +6,8 @@
   <!-- Custom styles for this template -->
   <link href="/css/resume.css" rel="stylesheet">
   <link href="/css/custom.css" rel="stylesheet">
-  
-  
+
+
 </head>
 
 <body id="page-top">
@@ -23,60 +23,61 @@
           <h6><label for="username" style="color:black;font-size:35px;margin-left:36.5%;"> Report Generation</label>
           </h6>
 
-        <label > Year </label></br>
-        <select id="ryear" type="text" name="ryear"  style="width: 24%;padding:5px;"></select></br>
- 
-        <label>Department</label></br>
-        <select id="rdept" name="rdept"  style="width: 24%;padding:5px;" onchange="changename(this.value);">
-          <option value ="" selected="selected">All</option>
-          <option value="Computer Science">Computer Science</option>
-          <option value="Information Technology">IT</option>
-          <option value="Electronics and Computer Science">Electronics</option>
-          <option value="Production">Production</option>
-        </select>
-        </br>
-        
-        <label> Faculty Name </label></br>
-        <select id="rfaname" name="rfaname" style="width: 24%;padding:5px;">
-          <option value="">All</option>
-        </select></br>
+          <label> Year </label></br>
+          <select id="ryear" type="text" name="ryear" style="width: 24%;padding:5px;"></select></br>
 
-        
-        <label>Category</label></br>
-        <select id="rcat" name="rcat" style="width: 24%;padding:5px;" onchange="changecat(this.value);">
-          <option value="" selected="selected">All</option>
-          <option value="fdp"> Faculty Development Program </option>
-          <option value="sttp"> Short Term Training Programs </option>
-          <option value="mrg"> Research & Development / Consultancy </option>
-          <option value="journal"> Journals </option>
-          <option value="conference"> Conference </option>
-          <option value="progatt"> Programs Attended </option>
-          <option value="semwork"> Seminar/Workshop </option>
-        </select>
-        </br>
-          
+
+          <label>Department</label></br>
+          <select id="rdept" name="rdept" style="width: 24%;padding:5px;" onchange="changename(this.value);">
+            <option value="" selected="selected">All</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Information Technology">IT</option>
+            <option value="Electronics and Computer Science">Electronics</option>
+            <option value="Production">Production</option>
+          </select>
+          </br>
+
+          <label> Faculty Name </label></br>
+          <select id="ruser" name="ruser" style="width: 24%;padding:5px;">
+            <option value="">All</option>
+          </select></br>
+
+
+          <label>Category</label></br>
+          <select id="rcat" name="rcat" style="width: 24%;padding:5px;" onchange="changecat(this.value);">
+            <option value="" selected="selected">All</option>
+            <option value="fdp"> Faculty Development Program </option>
+            <option value="sttp"> Short Term Training Programs </option>
+            <option value="mrg"> Research & Development / Consultancy </option>
+            <option value="journal"> Journals </option>
+            <option value="conference"> Conference </option>
+            <option value="progatt"> Programs Attended </option>
+            <option value="semwork"> Seminar/Workshop </option>
+          </select>
+          </br>
+
 
           <div id="int">
-          <label>International/National</label></br>
-          <select id="ri" name="ri" style="width: 24%;padding:5px;">
-            <option value="" selected="selected">All</option>
-            <option value="International"> International </option>
-            <option value="National"> National </option>
-          </select>
+            <label>International/National</label></br>
+            <select id="ri" name="ri" style="width: 24%;padding:5px;">
+              <option value="" selected="selected">All</option>
+              <option value="International"> International </option>
+              <option value="National"> National </option>
+            </select>
           </div>
-          
 
-          
+
+
 
           <div id="spon">
             <label> Sponsorship </label></br>
-          <select id="rspon" name="rspon" style="width: 24%;padding:5px;">
-            <option value="" selected="selected">All</option>
-            <option value="College Sponsored"> College Sponsored </option>
-            <option value="Self Sponsored"> Self Sponsored </option>
-          </select>
+            <select id="rspon" name="rspon" style="width: 24%;padding:5px;">
+              <option value="" selected="selected">All</option>
+              <option value="College Sponsored"> College Sponsored </option>
+              <option value="Self Sponsored"> Self Sponsored </option>
+            </select>
           </div>
-          
+
 
 
         </div>
@@ -84,7 +85,7 @@
       </form>
     </section>
   </div>
-  
+
 
   <!-- Bootstrap core JavaScript -->
   <script src="/vendorresume/jquery/jquery.js"></script>
@@ -103,72 +104,67 @@
     var end = 1900;
     var start = new Date().getFullYear();
     var options = "";
-    options += "<option value=\" \">" + "All" + "</option>"
+    options += "<option value=\"\">" + "All" + "</option>"
     for (var year = start; year >= end; year--) {
-      options += "<option value=\""+ year + "\">" + year + "</option>";
+      options += "<option value=\"" + year + "\">" + year + "</option>";
     }
     document.getElementById("ryear").innerHTML = options;
-    
-    function create(dept)
-    {
-        const request = new XMLHttpRequest();
-        request.open('GET', '/user');
-        request.send(); 
-        
-        request.onload = function() {
-        if (request.status === 200) {
-            console.log("Success"); 
-            data = JSON.parse(request.response);
-            
-            var name = document.getElementById("rfaname");
-            var option = "<option value=\"\" selected=\"selected\">All</option>";
-            for(i=0; i<data.length;i++)
-            {
-              var fullname = data[i]["data"]["firstname"] + " " + data[i]["data"]["lastname"];
-              console.log(fullname);
-              if(dept=="")
-              {
-                option += "<option value=\""+ fullname + "\">" + fullname + "</option>";
-              }
-              if(dept==data[i]["data"]["dept"])
-              {
-                option += "<option value=\""+ fullname + "\">" + fullname + "</option>";
-              }
-            }
-            name.innerHTML = option;
-                    
-        };
-        
-        
-    }
-  }
 
-    function changecat(value){
+    function create(dept) {
+      const request = new XMLHttpRequest();
+      request.open('GET', '/user');
+      request.send();
+
+      request.onload = function () {
+        if (request.status === 200) {
+          console.log("Success");
+          data = JSON.parse(request.response);
+
+          var option = "<option value=\"\" selected=\"selected\">All</option>";
+
+          for (var i = 0; i < data.length; i++) {
+            const firstname = data[i]["data"]["firstname"];
+            const lastname = data[i]["data"]["lastname"];
+            const id = data[i]["data"]["id"];
+            const fullname = firstname + " " + lastname;
+            console.log(data);
+            console.log(fullname);
+            if (dept === "") {
+              option += "<option value=\"" + id + "\">" + fullname + "</option>";
+            }
+            else if (dept === data[i]["data"]["dept"]) {
+              option += "<option value=\"" + id + "\">" + fullname + "</option>";
+            }
+          }
+          var name = document.getElementById("ruser");
+          name.innerHTML = option;
+        };
+      }
+    }
+
+    function changecat(value) {
       var international = document.getElementById("ri");
       var spon = document.getElementById("rspon");
       var int = document.getElementById("int");
       var sponso = document.getElementById("spon");
-      if(value=="journal" || value=="conference")
-      {
+      if (value == "journal" || value == "conference") {
         //international.disabled = false;
         int.style.display = "block";
         //spon.disabled=true;
         sponso.style.display = "none";
-      } else if(value=="fdp" || value=="sttp" || value=="progatt")
-      {
+      } else if (value == "fdp" || value == "sttp" || value == "progatt") {
         //international.disabled = true;
         //spon.disabled=false;
         sponso.style.display = "block";
         int.style.display = "none";
       }
-      else if(value=="mrg" || value=="semwork")
-      {
+      else if (value == "mrg" || value == "semwork") {
         //international.disabled = true;
         //spon.disabled=true;
         sponso.style.display = "none";
         int.style.display = "none";
       }
-      else{
+      else {
         //international.disabled = false;
         //spon.disabled=false;
         sponso.style.display = "block";
@@ -177,58 +173,37 @@
 
     }
 
-    function changename(value){
+    function changename(value) {
       create(value);
     }
-  
-  
-      $( "#admin" ).submit(function( event ) {
- 
-        // Stop form from submitting normally
-        event.preventDefault();
 
-        // Get some values from elements on the page:
-        var $form = $( this ),
-        year = $form.find( "input[name='ryear']" ).val(),
-        dept = $form.find( "input[name='rdept']" ).val(),
-        name = $form.find( "input[name='rfaname']" ).val(),
-        cat = $form.find( "input[name='rcat']" ).val(),
-        intern = $form.find( "input[name='ri']" ).val(),
-        sponsor = $form.find( "input[name='rspon']" ).val(),
-        url = $form.attr( "action" );
-        if(name=="")
-        {
-          fname="";
-          lname="";
-        }
-        else{
-          console.log(name);
-          array = name.split(" ");
-          fname= array[0];
-          lname=array[1];
+    create("");
+  </script>
+  <script>
+    $("#admin").submit(function (event) {
 
-        }
+      // Stop form from submitting normally
+      event.preventDefault();
+
+      // Get some values from elements on the page:
+      var form = $(this);
+      console.log("hey");
+
       // Send the data using post
-        var posting = $.post( url, { ryear: year, rdept: dept, rfn: fname, rln: lname, rcat: cat, ri: intern, rspon: sponsor } );
+      var posting = $.post("/admin/report", form.serialize(), function (data) {
+        //console.log(data["password"]);
+        //password = data["password"];
+        console.log("Sucess", data);
+
+        //$( "#display" ).empty().append("The Password Generated Is :"+password);
+      });
+    });
 
 
-        // Put the results in a div
-        posting.done(function( data ) {
-          //console.log(data["password"]);
-          //password = data["password"];
-          console.log("Sucess");
-          console.log(year, dept, fname, lname, cat, intern, sponsor, url);
-          
-          //$( "#display" ).empty().append("The Password Generated Is :"+password);
-        });
-        });
-      
-      
   </script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.12.4.js"></script>
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  
+
 
 </body>
 

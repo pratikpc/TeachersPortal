@@ -159,7 +159,7 @@ export namespace RoutesCommon {
   // Convert Given Data as Array of Type
   export function ToArray(data: any): string[] {
     // If Null, Return Empty Array
-    if (data == null) {
+    if (data == null || data == "") {
       return [];
     }
     // If it's already an array perform type conversion

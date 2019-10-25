@@ -31,28 +31,30 @@ async function ExtractInformation(req: Request) {
     const params = RoutesCommon.GetParameters(req);
     if (params == null) return null;
 
-    const fname = String(params.fname);
-    const lname = String(params.lname);
-    const dept = String(params.dept);
+    const userId = RoutesCommon.ToArray(params.ruser).map(Number);
+    const dept = String(params.rdept);
     const ri = String(params.ri);
     const rtype = String(params.rcat);
     const rspon = String(params.rspon);
+    const ryear = String(params.ryear);
 
     const users = await Model.Users.findAll({
         where: {
             Authority: "NORMAL",
-            firstname: {
-                $ilike: "%" + fname + "%"
-            },
-            lastname: {
-                $ilike: "%" + lname + "%"
-            },
             dept: {
                 $ilike: "%" + dept + "%"
             }
         }
     });
 
+    let userIds = users.map((val) => { return val.id; }).map(Number);
+
+    if (userId != null && userId.length !== 0) {
+        userIds.push(...userId);
+        userIds = userIds.filter(function (itm, i) {
+            return userIds.lastIndexOf(itm) == i && userIds.indexOf(itm) != i;
+        });
+    }
 
     let mrg = null;
     let conference = null;
@@ -64,17 +66,16 @@ async function ExtractInformation(req: Request) {
 
     if (users.length !== 0) {
 
-        const userIds = users.map((val) => { return val.id; });
-
-        console.log(userIds);
-
         if (rtype === "fdp" || rtype === "") {
             fdp = await Model.Fdp.findAll({
                 where: {
                     UserID: userIds,
                     fdptype: {
                         $ilike: "%" + rspon + "%"
-                    }
+                    },
+                    fdpdate: {
+                        $ilike: "%/" + ryear + "%"
+                    },
                 }
             });
         }
@@ -84,7 +85,10 @@ async function ExtractInformation(req: Request) {
                     UserID: userIds,
                     sttptype: {
                         $ilike: "%" + rspon + "%"
-                    }
+                    },
+                    sttpdate: {
+                        $ilike: "%/" + ryear + "%"
+                    },
                 }
             });
         }
@@ -94,7 +98,10 @@ async function ExtractInformation(req: Request) {
                     UserID: userIds,
                     patspon: {
                         $ilike: "%" + rspon + "%"
-                    }
+                    },
+                    patdate: {
+                        $ilike: "%/" + ryear + "%"
+                    },
                 }
             });
         }
@@ -104,7 +111,10 @@ async function ExtractInformation(req: Request) {
                     UserID: userIds,
                     ci: {
                         $ilike: "%" + ri + "%"
-                    }
+                    },
+                    cdate: {
+                        $ilike: "%/" + ryear + "%"
+                    },
                 }
             });
         }
@@ -114,7 +124,10 @@ async function ExtractInformation(req: Request) {
                     UserID: userIds,
                     ji: {
                         $ilike: "%" + ri + "%"
-                    }
+                    },
+                    jdate: {
+                        $ilike: "%/" + ryear + "%"
+                    },
                 }
             });
         }
@@ -122,12 +135,16 @@ async function ExtractInformation(req: Request) {
             semwork = await Model.Semwork.findAll({
                 where: {
                     UserID: userIds,
+                    swdate: {
+                        $ilike: "%/" + ryear + "%"
+                    },
                 }
             });
         } if (rtype === "mrg" || rtype === "") {
-            mrg = await Model.Semwork.findAll({
+            mrg = await Model.Mrg.findAll({
                 where: {
                     UserID: userIds,
+                    mrgya: ryear
                 }
             });
         }

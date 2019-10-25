@@ -108,19 +108,90 @@ Updation.get("/profileupdate", RoutesCommon.IsAuthenticated, async (req, res) =>
         const file = await Models.Users.findOne({
             where: { id: userId }
         });
-        if (!file) return res.sendStatus(404);
-
+        if (!file)
+            return res.redirect("/images/doraemon.png");
         const image = file.ImagePath;
+        if (image === "")
+            return res.redirect("/images/doraemon.png");
         return res.download(image);
     } catch (err) { console.log(err); }
     return res.redirect("/images/doraemon.png");
 });
-Updation.post("/profileupdate", RoutesCommon.IsAuthenticated,
+
+Updation.post("/updated", RoutesCommon.IsAuthenticated,
     RoutesCommon.upload.single('profile'),
     async (req, res) => {
-        try {
-            const userId = Number(req.user!.id);
+        const params = RoutesCommon.GetParameters(req);
+        if (params == null) return res.status(422).send("Upload Failed");
 
+        const title = String(params.title);
+
+        const firstname = String(params.firstname);
+        const middlename = String(params.middlename);
+        const lastname = String(params.lastname);
+
+        const fname = String(params.fname);
+        const mname = String(params.mname);
+
+        const gender = String(params.gender);
+        const bdate = String(params.bdate);
+
+        const address = String(params.address);
+        const phone = String(params.phone);
+        const email = String(params.email);
+
+        const dept = String(params.dept);
+        const aos = String(params.aos);
+
+        const upgyear = String(params.upgyear);
+        const uggrade = String(params.uggrade);
+        const ugu = String(params.ugu);
+        const ugi = String(params.ugi);
+        const ugr = String(params.ugr);
+
+        const pgyear = String(params.pgyear);
+        const pggrade = String(params.pggrade);
+        const pgu = String(params.pgu);
+        const pgi = String(params.pgi);
+        const pgr = String(params.pgr);
+
+        const spyear = String(params.spyear);
+        const spgrade = String(params.spgrade);
+        const spu = String(params.spu);
+        const spi = String(params.spi);
+        const spr = String(params.spr);
+
+        const tduration = RoutesCommon.ToArray(params.tduration);
+        const tinstitute = RoutesCommon.ToArray(params.tinstitute);
+        const tpost = RoutesCommon.ToArray(params.tpost);
+
+        const iduration = RoutesCommon.ToArray(params.iduration);
+        const iinstitute = RoutesCommon.ToArray(params.iinstitute);
+        const ipost = RoutesCommon.ToArray(params.ipost);
+
+        const oduration = RoutesCommon.ToArray(params.oduration);
+        const oinstitute = RoutesCommon.ToArray(params.oinstitute);
+        const opost = RoutesCommon.ToArray(params.opost);
+
+        const userId = Number(req.user!.id);
+
+        await Models.Users.update(
+            {
+                title: title,
+                firstname: firstname, middlename: middlename, lastname: lastname,
+                fname: fname, mname: mname,
+                dept: dept, aos: aos,
+                gender: gender, bdate: bdate, address: address, phone: phone, email: email,
+                ugpyear: upgyear, uggrade: uggrade, ugu: ugu, ugi: ugi, ugr: ugr,
+                pgyear: pgyear, pggrade: pggrade, pgu: pgu, pgi: pgi, pgr: pgr,
+                spyear: spyear, spgrade: spgrade, spu: spu, spi: spi, spr: spr,
+                tduration: JSON.stringify(tduration), tinstitute: JSON.stringify(tinstitute), tpost: JSON.stringify(tpost),
+                iduration: JSON.stringify(iduration), iinstitute: JSON.stringify(iinstitute), ipost: JSON.stringify(ipost),
+                oduration: JSON.stringify(oduration), oinstitute: JSON.stringify(oinstitute), opost: JSON.stringify(opost)
+            },
+            { where: { id: userId } }
+        );
+        if (req.file != null) {
             const imagePath = req.file.path;
             await Models.Users.update(
                 {
@@ -128,81 +199,7 @@ Updation.post("/profileupdate", RoutesCommon.IsAuthenticated,
                 },
                 { where: { id: userId } }
             );
-        } catch (err) { console.log(err); }
+        }
+
         return res.redirect("/");
     });
-
-Updation.post("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
-    const params = RoutesCommon.GetParameters(req);
-    if (params == null) return res.status(422).send("Upload Failed");
-
-    const title = String(params.title);
-
-    const firstname = String(params.firstname);
-    const middlename = String(params.middlename);
-    const lastname = String(params.lastname);
-
-    const fname = String(params.fname);
-    const mname = String(params.mname);
-
-    const gender = String(params.gender);
-    const bdate = String(params.bdate);
-
-    const address = String(params.address);
-    const phone = String(params.phone);
-    const email = String(params.email);
-
-    const dept = String(params.dept);
-    const aos = String(params.aos);
-
-    const upgyear = String(params.upgyear);
-    const uggrade = String(params.uggrade);
-    const ugu = String(params.ugu);
-    const ugi = String(params.ugi);
-    const ugr = String(params.ugr);
-
-    const pgyear = String(params.pgyear);
-    const pggrade = String(params.pggrade);
-    const pgu = String(params.pgu);
-    const pgi = String(params.pgi);
-    const pgr = String(params.pgr);
-
-    const spyear = String(params.spyear);
-    const spgrade = String(params.spgrade);
-    const spu = String(params.spu);
-    const spi = String(params.spi);
-    const spr = String(params.spr);
-
-    const tduration = RoutesCommon.ToArray(params.tduration);
-    const tinstitute = RoutesCommon.ToArray(params.tinstitute);
-    const tpost = RoutesCommon.ToArray(params.tpost);
-
-    const iduration = RoutesCommon.ToArray(params.iduration);
-    const iinstitute = RoutesCommon.ToArray(params.iinstitute);
-    const ipost = RoutesCommon.ToArray(params.ipost);
-
-    const oduration = RoutesCommon.ToArray(params.oduration);
-    const oinstitute = RoutesCommon.ToArray(params.oinstitute);
-    const opost = RoutesCommon.ToArray(params.opost);
-
-    const userId = Number(req.user!.id);
-
-    await Models.Users.update(
-        {
-            title: title,
-            firstname: firstname, middlename: middlename, lastname: lastname,
-            fname: fname, mname: mname,
-            dept: dept, aos: aos,
-            gender: gender, bdate: bdate, address: address, phone: phone, email: email,
-            ugpyear: upgyear, uggrade: uggrade, ugu: ugu, ugi: ugi, ugr: ugr,
-            pgyear: pgyear, pggrade: pggrade, pgu: pgu, pgi: pgi, pgr: pgr,
-            spyear: spyear, spgrade: spgrade, spu: spu, spi: spi, spr: spr,
-            tduration: JSON.stringify(tduration), tinstitute: JSON.stringify(tinstitute), tpost: JSON.stringify(tpost),
-            iduration: JSON.stringify(iduration), iinstitute: JSON.stringify(iinstitute), ipost: JSON.stringify(ipost),
-            oduration: JSON.stringify(oduration), oinstitute: JSON.stringify(oinstitute), opost: JSON.stringify(opost)
-        },
-        { where: { id: userId } }
-    );
-
-    return res.redirect("/");
-});
