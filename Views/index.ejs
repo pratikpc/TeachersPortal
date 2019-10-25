@@ -291,7 +291,11 @@
                 const request = new XMLHttpRequest();
                 request.open('GET', url);
                 request.send(); 
-                
+                var titlemrg = new Array("Title","Grant Approved","Year Approved","Certificate","Report","Category","Authority");
+                var titleprogatt = new Array("Type","Title"," College"," No of Days","Certificate","Sponsorship","Date");
+                var titlesemwork = new Array("Title"," College"," No of Days","Certificate","Date","Type");
+                var titlefdpsstp = new Array("Title"," College"," No of Days","Certificate","Sponsorship","Date");
+                var titlesconjor = new Array("International/National","Title","Research Title","Author"," ISSN ","Date","DUI","Certificate");
                 request.onload = function() {
                 if (request.status === 200) {
                     console.log("Success"); 
