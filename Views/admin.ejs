@@ -70,7 +70,7 @@
                         }
                         
                         tabCell = tr.insertCell(-1);
-                        tabCell.innerHTML = "<a class=\"btn btn-danger btn-xs\"  href=\" /user/" + id + "\"><i class=\"fa fa-trash\"></i></a>";
+                        tabCell.innerHTML = "<button class=\"btn btn-danger btn-xs\" onclick=\"deleteData("+ id + ")\" ><i class=\"fa fa-trash\"></i></button>";
                         
                     }
                     var divContainer = document.getElementById("adminviewer");
@@ -80,18 +80,21 @@
                 };
                 
             }
-            function deleteData(item, url) {
-              return fetch(url + '/' + item, {
-              method: 'delete'
-            })
-            .then(response => response.json());
+           function deleteData(id) {
+             $.ajax(
+              {
+                    url: "user/"+id,
+                    type: 'DELETE',
+                    data: {
+                          "id": id,
+                         },
+                   success: function (){
+                    console.log("it Works");
+                    location.reload(true);
+              }
+            });
             }
             create();
-      
-
-</script>
-
-   
+</script>   
   </body>
-
 </html>

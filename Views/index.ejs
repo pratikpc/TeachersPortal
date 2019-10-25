@@ -311,9 +311,7 @@
                             tabCell.innerHTML = data[i][col[j]];
                         }
                         id = data[i][col[0]];
-                        tabCell.innerHTML = "<a class=\"btn btn-primary btn-xs\" href=\"" + url1 + id + "\"><i class=\"fa fa-edit\"></i></a> <a class=\"btn btn-primary btn-xs\" href=\"" +url1 + "file-viewer/" + id + "\"><i class=\"fa fa-download\"></i></a>";
-                        
-
+                        tabCell.innerHTML = " <a class=\"btn btn-primary btn-xs\" href=\"" +url1 + "file-viewer/" + id + "\"><i class=\"fa fa-download\"></i></a> <a class=\"btn btn-primary btn-xs\" href=\"" + url1 + id + "\"><i class=\"fa fa-edit\"></i></a> <button class=\"btn btn-danger btn-xs\" onclick=\"deleteData("+ id + ","+ url1 + ")\" ><i class=\"fa fa-trash\"></i></button>";
                         
                     }
                     var divContainer = document.getElementById("view");
@@ -321,7 +319,20 @@
                     divContainer.appendChild(table);
                     } 
                 };
-                
+                function deleteData(id,url1) {
+                    $.ajax(
+                     {
+                           url: url1 + id,
+                           type: 'DELETE',
+                           data: {
+                                 "id": id,
+                                },
+                          success: function (){
+                           console.log("it Works");
+                           location.reload(true);
+                     }
+                   });
+                }
                 request.onerror = () => {
                 console.log("error")
                 };
