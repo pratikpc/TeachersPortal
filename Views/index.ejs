@@ -269,7 +269,7 @@
                     $(id).text(count); 
                 });
             }
-           function create(rel, id, url, url1)
+           function create(rel, id, url, url1,url2, files)
             {
                 const request = new XMLHttpRequest();
                 request.open('GET', url);
@@ -311,7 +311,7 @@
                             tabCell.innerHTML = data[i][col[j]];
                         }
                         id = data[i][col[0]];
-                        tabCell.innerHTML = " <a class=\"btn btn-primary btn-xs\" href=\"" +url1 + "file-viewer/" + id + "\"><i class=\"fa fa-download\"></i></a> <a class=\"btn btn-primary btn-xs\" href=\"" + url1 + id + "\"><i class=\"fa fa-edit\"></i></a> <button class=\"btn btn-danger btn-xs\" onclick='deleteData("+ id + ","+ "\"" +  url + "\")' ><i class=\"fa fa-trash\"></i></button>";
+                        tabCell.innerHTML = " <a class=\"btn btn-primary btn-xs\" href=\"" +url1 + "file-viewer/" + id + "\"><i class=\"fa fa-download\"></i></a> <a class=\"btn btn-primary btn-xs\" href=\"" + url1 + id + "\"><i class=\"fa fa-edit\"></i></a> <button class=\"btn btn-danger btn-xs\" onclick=\"deleteData("+ id + ","+ url2 + ","+ files + ")\" ><i class=\"fa fa-trash\"></i></button>";
                         
                     }
                     var divContainer = document.getElementById("view");
@@ -319,11 +319,11 @@
                     divContainer.appendChild(table);
                     } 
                 };
-                function deleteData(id,url1) {
-                    console.log(url1);
+                function deleteData(id,url, files) {
+                    console.log("Elvis");
                     $.ajax(
                      {
-                           url: url1 + id,
+                           url: "/" + url + "/" + files + "/" + id,
                            type: 'DELETE',
                            data: {
                                  "id": id,
@@ -349,38 +349,46 @@
                 var id = $(this).attr("id");
                 var rel = $(this).attr("rel");
                 url = "";
+                var files= "files";
                 switch (id) {
                     case 'fdpa':
-                        url = "/fdp/files/";
+                        url = "/fdp/files";
+                        url2 = "fdp";
                         url1 = "/fdp/";
                         break;
                     case 'sttpa':
-                        url = "/sttp/files/";
+                    url = "/sttp/files";
+                        url2 = "sttp";
                         url1 = "/sttp/";
                         break;
                     case 'ca':
-                        url = "/conference/files/";
+                    url = "/conference/files";
+                        url2 = "conference";
                         url1 = "/conference/";
                         break;
                     case 'ja':
-                        url = "/journal/files/";
+                    url = "/journal/files";
+                        url2 = "journal";
                         url1 = "/journal/";
                         break;
                     case 'swaa':
-                        url = "/semwork/files/";
+                    url = "/semwork/files";
+                        url2 = "semwork";
                         url1 = "/semwork/";
                         break;
                     case 'rca':
-                        url = "/mrg/files/";
+                    url = "/mrg/files";
+                        url2 = "mrg";
                         url1 = "/mrg/";
                         break;
                     case 'paa':
-                        url = "/progatt/files/";
+                    url = "/progatt/files";
+                        url2 = "progatt";
                         url1 = "/progatt/";
                         break;
                    
                 }
-                create(rel, id, url, url1);
+                create(rel, id, url, url1,url2, files);
                 $('#'+rel).slideToggle('fast');
             });
     </script>    
