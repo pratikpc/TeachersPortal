@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
@@ -37,12 +38,12 @@ RoutesCommon.upload.array('fdpcerti'), async (req, res) => {
         // ID Nullish is Used for First time Upload
         if (id === "nullish" && (files == null || files.length === 0))
             return res.status(422).send("Upload Failed");
-        const fdpdate = String(params.fdpdate);
-    const fdpt = String(params.fdpt);
-    const fdpcol = String(params.fdpcol);
-    const fdpnd = String(params.fdpnd);
-    const fdptype = String(params.fdptype);
-    
+         const fdpdate = String(params.fdpdate);
+         const fdpt = String(params.fdpt);
+         const fdpcol = String(params.fdpcol);
+         const fdpnd = String(params.fdpnd);
+         const fdptype = String(params.fdptype);
+
         let pathToFiles = null;
         // ID Nullish is Used for First time Upload
         if (files != null && files.length !== 0)
@@ -51,22 +52,20 @@ RoutesCommon.upload.array('fdpcerti'), async (req, res) => {
             await Models.Fdp.create({
                 UserID: userId,
                 Location: pathToFiles,
-                    fdpdate:fdpdate,
-                        fdpt:fdpt,
-                        fdpcol:fdpcol,
-                        fdpnd:fdpnd,
-                        fdptype:fdptype,
-    
+                fdpdate:fdpdate,
+                fdpt:fdpt,
+                fdpcol:fdpcol,
+                fdpnd:fdpnd,
+                fdptype:fdptype,
             });
         }
         else{
             await Models.Fdp.update({
-                fdpdate:fdpdate,
+                    fdpdate:fdpdate,
                     fdpt:fdpt,
                     fdpcol:fdpcol,
                     fdpnd:fdpnd,
                     fdptype:fdptype,
-    
                 },
                 { where: { id: id, UserID: userId } }
             );

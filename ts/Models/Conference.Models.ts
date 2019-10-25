@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import {
     Table,
     AllowNull,
@@ -21,35 +22,33 @@ export class Conference extends Model<Conference> {
     @Column
     UserID!: number;
 
-
     @AllowNull(false)
     @Column(DataType.TEXT)
     ci!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     cma!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     cissn!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     cdate!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     ct!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     crpt!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     cdui!: string;
-    
 
     @BeforeCreate
     public static CheckFileExistence(File: Conference): void {
@@ -64,4 +63,3 @@ export class Conference extends Model<Conference> {
         return JSON.parse(this.Location) as string[];
     }
 }
-    

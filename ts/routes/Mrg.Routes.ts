@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
@@ -37,12 +38,12 @@ RoutesCommon.upload.array('mrgcerti'), async (req, res) => {
         // ID Nullish is Used for First time Upload
         if (id === "nullish" && (files == null || files.length === 0))
             return res.status(422).send("Upload Failed");
-        const mrgcat = String(params.mrgcat);
-    const mrgt = String(params.mrgt);
-    const mrgauth = String(params.mrgauth);
-    const mrgya = String(params.mrgya);
-    const mrgga = String(params.mrgga);
-    
+         const mrgcat = String(params.mrgcat);
+         const mrgt = String(params.mrgt);
+         const mrgauth = String(params.mrgauth);
+         const mrgya = String(params.mrgya);
+         const mrgga = String(params.mrgga);
+
         let pathToFiles = null;
         // ID Nullish is Used for First time Upload
         if (files != null && files.length !== 0)
@@ -51,22 +52,20 @@ RoutesCommon.upload.array('mrgcerti'), async (req, res) => {
             await Models.Mrg.create({
                 UserID: userId,
                 Location: pathToFiles,
-                    mrgcat:mrgcat,
-                        mrgt:mrgt,
-                        mrgauth:mrgauth,
-                        mrgya:mrgya,
-                        mrgga:mrgga,
-    
+                mrgcat:mrgcat,
+                mrgt:mrgt,
+                mrgauth:mrgauth,
+                mrgya:mrgya,
+                mrgga:mrgga,
             });
         }
         else{
             await Models.Mrg.update({
-                mrgcat:mrgcat,
+                    mrgcat:mrgcat,
                     mrgt:mrgt,
                     mrgauth:mrgauth,
                     mrgya:mrgya,
                     mrgga:mrgga,
-    
                 },
                 { where: { id: id, UserID: userId } }
             );

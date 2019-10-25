@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import {
     Table,
     AllowNull,
@@ -21,31 +22,29 @@ export class Progatt extends Model<Progatt> {
     @Column
     UserID!: number;
 
-
     @AllowNull(false)
     @Column(DataType.TEXT)
     patdate!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     patype!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     pat!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     patcol!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     patspon!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     patnd!: string;
-    
 
     @BeforeCreate
     public static CheckFileExistence(File: Progatt): void {
@@ -60,4 +59,3 @@ export class Progatt extends Model<Progatt> {
         return JSON.parse(this.Location) as string[];
     }
 }
-    

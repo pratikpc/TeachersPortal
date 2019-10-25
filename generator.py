@@ -2,6 +2,7 @@ def GenerateModel(items, route, upload_file):
     clsName = route.title()
     models_str = ""
     models_str += """
+// Generated using generate.py
 import {
     Table,
     AllowNull,
@@ -23,7 +24,6 @@ export class """ + clsName + """ extends Model<""" + clsName + """> {
     @ForeignKey(() => Users)
     @Column
     UserID!: number;
-
 """
 
     for item in items:
@@ -31,9 +31,8 @@ export class """ + clsName + """ extends Model<""" + clsName + """> {
     @AllowNull(false)
     @Column(DataType.TEXT)
     """ + item + """!: string;
-    """
+"""
     models_str += """
-
     @BeforeCreate
     public static CheckFileExistence(File: """ + clsName + """): void {
         const locations = JSON.parse(File.Location) as string[];
@@ -47,15 +46,16 @@ export class """ + clsName + """ extends Model<""" + clsName + """> {
         return JSON.parse(this.Location) as string[];
     }
 }
-    """
+"""
     print(models_str)
-    fname = "./lib/Models/" + clsName + ".Models.ts"
+    fname = "./ts/Models/" + clsName + ".Models.ts"
     with open(fname, "w") as text_file:
         text_file.write(models_str)
 def GenerateRoutes(items, route, upload_file):
     clsName = route.title()
     routes_str = ""
     routes_str += """
+// Generated using generate.py
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
@@ -93,10 +93,11 @@ RoutesCommon.upload.array('""" + upload_file + """'), async (req, res) => {
         // ID Nullish is Used for First time Upload
         if (id === "nullish" && (files == null || files.length === 0))
             return res.status(422).send("Upload Failed");
-        """
+"""
     for item in items:
-        routes_str += """const """ + item + """ = String(params.""" + item + """);
-    """
+        routes_str += \
+"""         const """ + item + """ = String(params.""" + item + """);
+"""
     routes_str += """
         let pathToFiles = null;
         // ID Nullish is Used for First time Upload
@@ -105,20 +106,18 @@ RoutesCommon.upload.array('""" + upload_file + """'), async (req, res) => {
         if (id === "nullish" && pathToFiles != null){
             await Models.""" + clsName + """.create({
                 UserID: userId,
-                Location: pathToFiles,
-"""
+                Location: pathToFiles,"""
     for item in items:
-        routes_str += """                    """ + item + """:""" + item + """,
-    """
+        routes_str += """
+                """ + item + """:""" + item + ""","""
     routes_str += """
             });
         }
         else{
-            await Models.""" + clsName + """.update({
-"""
+            await Models.""" + clsName + """.update({"""
     for item in items:
-        routes_str += """                """ + item + """:""" + item + """,
-    """
+        routes_str += """
+                    """ + item + """:""" + item + ""","""
     routes_str += """
                 },
                 { where: { id: id, UserID: userId } }
@@ -214,7 +213,7 @@ catch (error) {
 });
 """
     print(routes_str)
-    fname = "./lib/routes/" + clsName + ".Routes.ts"
+    fname = "./ts/routes/" + clsName + ".Routes.ts"
     with open(fname, "w") as text_file:
         text_file.write(routes_str)
 

@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import {
     Table,
     AllowNull,
@@ -21,27 +22,25 @@ export class Fdp extends Model<Fdp> {
     @Column
     UserID!: number;
 
-
     @AllowNull(false)
     @Column(DataType.TEXT)
     fdpdate!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     fdpt!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     fdpcol!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     fdpnd!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     fdptype!: string;
-    
 
     @BeforeCreate
     public static CheckFileExistence(File: Fdp): void {
@@ -56,4 +55,3 @@ export class Fdp extends Model<Fdp> {
         return JSON.parse(this.Location) as string[];
     }
 }
-    

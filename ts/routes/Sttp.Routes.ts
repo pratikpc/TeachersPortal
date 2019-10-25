@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
@@ -37,12 +38,12 @@ RoutesCommon.upload.array('sttpcerti'), async (req, res) => {
         // ID Nullish is Used for First time Upload
         if (id === "nullish" && (files == null || files.length === 0))
             return res.status(422).send("Upload Failed");
-        const sttpdate = String(params.sttpdate);
-    const sttpt = String(params.sttpt);
-    const sttpcol = String(params.sttpcol);
-    const sttpnw = String(params.sttpnw);
-    const sttptype = String(params.sttptype);
-    
+         const sttpdate = String(params.sttpdate);
+         const sttpt = String(params.sttpt);
+         const sttpcol = String(params.sttpcol);
+         const sttpnw = String(params.sttpnw);
+         const sttptype = String(params.sttptype);
+
         let pathToFiles = null;
         // ID Nullish is Used for First time Upload
         if (files != null && files.length !== 0)
@@ -51,22 +52,20 @@ RoutesCommon.upload.array('sttpcerti'), async (req, res) => {
             await Models.Sttp.create({
                 UserID: userId,
                 Location: pathToFiles,
-                    sttpdate:sttpdate,
-                        sttpt:sttpt,
-                        sttpcol:sttpcol,
-                        sttpnw:sttpnw,
-                        sttptype:sttptype,
-    
+                sttpdate:sttpdate,
+                sttpt:sttpt,
+                sttpcol:sttpcol,
+                sttpnw:sttpnw,
+                sttptype:sttptype,
             });
         }
         else{
             await Models.Sttp.update({
-                sttpdate:sttpdate,
+                    sttpdate:sttpdate,
                     sttpt:sttpt,
                     sttpcol:sttpcol,
                     sttpnw:sttpnw,
                     sttptype:sttptype,
-    
                 },
                 { where: { id: id, UserID: userId } }
             );

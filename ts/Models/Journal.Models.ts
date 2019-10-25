@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import {
     Table,
     AllowNull,
@@ -21,35 +22,33 @@ export class Journal extends Model<Journal> {
     @Column
     UserID!: number;
 
-
     @AllowNull(false)
     @Column(DataType.TEXT)
     jdate!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     jt!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     jrpt!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     jissn!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     ji!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     jma!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     jdui!: string;
-    
 
     @BeforeCreate
     public static CheckFileExistence(File: Journal): void {
@@ -64,4 +63,3 @@ export class Journal extends Model<Journal> {
         return JSON.parse(this.Location) as string[];
     }
 }
-    

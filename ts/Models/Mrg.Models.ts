@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import {
     Table,
     AllowNull,
@@ -21,27 +22,25 @@ export class Mrg extends Model<Mrg> {
     @Column
     UserID!: number;
 
-
     @AllowNull(false)
     @Column(DataType.TEXT)
     mrgcat!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     mrgt!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     mrgauth!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     mrgya!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     mrgga!: string;
-    
 
     @BeforeCreate
     public static CheckFileExistence(File: Mrg): void {
@@ -56,4 +55,3 @@ export class Mrg extends Model<Mrg> {
         return JSON.parse(this.Location) as string[];
     }
 }
-    

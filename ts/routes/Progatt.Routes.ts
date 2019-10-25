@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
@@ -39,13 +40,13 @@ RoutesCommon.upload.array('patcerti'), async (req, res) => {
         // ID Nullish is Used for First time Upload
         if (id === "nullish" && (files == null || files.length === 0))
             return res.status(422).send("Upload Failed");
-        const patdate = String(params.patdate);
-    const patype = String(params.patype);
-    const pat = String(params.pat);
-    const patcol = String(params.patcol);
-    const patspon = String(params.patspon);
-    const patnd = String(params.patnd);
-    
+         const patdate = String(params.patdate);
+         const patype = String(params.patype);
+         const pat = String(params.pat);
+         const patcol = String(params.patcol);
+         const patspon = String(params.patspon);
+         const patnd = String(params.patnd);
+
         let pathToFiles = null;
         // ID Nullish is Used for First time Upload
         if (files != null && files.length !== 0)
@@ -54,24 +55,22 @@ RoutesCommon.upload.array('patcerti'), async (req, res) => {
             await Models.Progatt.create({
                 UserID: userId,
                 Location: pathToFiles,
-                    patdate:patdate,
-                        patype:patype,
-                        pat:pat,
-                        patcol:patcol,
-                        patspon:patspon,
-                        patnd:patnd,
-    
+                patdate:patdate,
+                patype:patype,
+                pat:pat,
+                patcol:patcol,
+                patspon:patspon,
+                patnd:patnd,
             });
         }
         else{
             await Models.Progatt.update({
-                patdate:patdate,
+                    patdate:patdate,
                     patype:patype,
                     pat:pat,
                     patcol:patcol,
                     patspon:patspon,
                     patnd:patnd,
-    
                 },
                 { where: { id: id, UserID: userId } }
             );

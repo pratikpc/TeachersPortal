@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
@@ -41,14 +42,14 @@ RoutesCommon.upload.array('jcerti'), async (req, res) => {
         // ID Nullish is Used for First time Upload
         if (id === "nullish" && (files == null || files.length === 0))
             return res.status(422).send("Upload Failed");
-        const jdate = String(params.jdate);
-    const jt = String(params.jt);
-    const jrpt = String(params.jrpt);
-    const jissn = String(params.jissn);
-    const ji = String(params.ji);
-    const jma = String(params.jma);
-    const jdui = String(params.jdui);
-    
+         const jdate = String(params.jdate);
+         const jt = String(params.jt);
+         const jrpt = String(params.jrpt);
+         const jissn = String(params.jissn);
+         const ji = String(params.ji);
+         const jma = String(params.jma);
+         const jdui = String(params.jdui);
+
         let pathToFiles = null;
         // ID Nullish is Used for First time Upload
         if (files != null && files.length !== 0)
@@ -57,26 +58,24 @@ RoutesCommon.upload.array('jcerti'), async (req, res) => {
             await Models.Journal.create({
                 UserID: userId,
                 Location: pathToFiles,
-                    jdate:jdate,
-                        jt:jt,
-                        jrpt:jrpt,
-                        jissn:jissn,
-                        ji:ji,
-                        jma:jma,
-                        jdui:jdui,
-    
+                jdate:jdate,
+                jt:jt,
+                jrpt:jrpt,
+                jissn:jissn,
+                ji:ji,
+                jma:jma,
+                jdui:jdui,
             });
         }
         else{
             await Models.Journal.update({
-                jdate:jdate,
+                    jdate:jdate,
                     jt:jt,
                     jrpt:jrpt,
                     jissn:jissn,
                     ji:ji,
                     jma:jma,
                     jdui:jdui,
-    
                 },
                 { where: { id: id, UserID: userId } }
             );

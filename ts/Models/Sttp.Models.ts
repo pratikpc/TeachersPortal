@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import {
     Table,
     AllowNull,
@@ -21,27 +22,25 @@ export class Sttp extends Model<Sttp> {
     @Column
     UserID!: number;
 
-
     @AllowNull(false)
     @Column(DataType.TEXT)
     sttpdate!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     sttpt!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     sttpcol!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     sttpnw!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     sttptype!: string;
-    
 
     @BeforeCreate
     public static CheckFileExistence(File: Sttp): void {
@@ -56,4 +55,3 @@ export class Sttp extends Model<Sttp> {
         return JSON.parse(this.Location) as string[];
     }
 }
-    

@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
@@ -37,12 +38,12 @@ RoutesCommon.upload.array('swcerti'), async (req, res) => {
         // ID Nullish is Used for First time Upload
         if (id === "nullish" && (files == null || files.length === 0))
             return res.status(422).send("Upload Failed");
-        const swdate = String(params.swdate);
-    const swt = String(params.swt);
-    const swcol = String(params.swcol);
-    const swnd = String(params.swnd);
-    const swtype = String(params.swtype);
-    
+         const swdate = String(params.swdate);
+         const swt = String(params.swt);
+         const swcol = String(params.swcol);
+         const swnd = String(params.swnd);
+         const swtype = String(params.swtype);
+
         let pathToFiles = null;
         // ID Nullish is Used for First time Upload
         if (files != null && files.length !== 0)
@@ -51,22 +52,20 @@ RoutesCommon.upload.array('swcerti'), async (req, res) => {
             await Models.Semwork.create({
                 UserID: userId,
                 Location: pathToFiles,
-                    swdate:swdate,
-                        swt:swt,
-                        swcol:swcol,
-                        swnd:swnd,
-                        swtype:swtype,
-    
+                swdate:swdate,
+                swt:swt,
+                swcol:swcol,
+                swnd:swnd,
+                swtype:swtype,
             });
         }
         else{
             await Models.Semwork.update({
-                swdate:swdate,
+                    swdate:swdate,
                     swt:swt,
                     swcol:swcol,
                     swnd:swnd,
                     swtype:swtype,
-    
                 },
                 { where: { id: id, UserID: userId } }
             );

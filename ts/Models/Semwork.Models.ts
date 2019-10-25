@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import {
     Table,
     AllowNull,
@@ -21,27 +22,25 @@ export class Semwork extends Model<Semwork> {
     @Column
     UserID!: number;
 
-
     @AllowNull(false)
     @Column(DataType.TEXT)
     swdate!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     swt!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     swcol!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     swnd!: string;
-    
+
     @AllowNull(false)
     @Column(DataType.TEXT)
     swtype!: string;
-    
 
     @BeforeCreate
     public static CheckFileExistence(File: Semwork): void {
@@ -56,4 +55,3 @@ export class Semwork extends Model<Semwork> {
         return JSON.parse(this.Location) as string[];
     }
 }
-    

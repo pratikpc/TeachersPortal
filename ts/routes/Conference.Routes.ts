@@ -1,4 +1,5 @@
 
+// Generated using generate.py
 import { RoutesCommon } from "./Common.Routes";
 import { Router } from "express";
 import * as Models from "../Models/Models";
@@ -41,14 +42,14 @@ RoutesCommon.upload.array('ccerti'), async (req, res) => {
         // ID Nullish is Used for First time Upload
         if (id === "nullish" && (files == null || files.length === 0))
             return res.status(422).send("Upload Failed");
-        const ci = String(params.ci);
-    const cma = String(params.cma);
-    const cissn = String(params.cissn);
-    const cdate = String(params.cdate);
-    const ct = String(params.ct);
-    const crpt = String(params.crpt);
-    const cdui = String(params.cdui);
-    
+         const ci = String(params.ci);
+         const cma = String(params.cma);
+         const cissn = String(params.cissn);
+         const cdate = String(params.cdate);
+         const ct = String(params.ct);
+         const crpt = String(params.crpt);
+         const cdui = String(params.cdui);
+
         let pathToFiles = null;
         // ID Nullish is Used for First time Upload
         if (files != null && files.length !== 0)
@@ -57,26 +58,24 @@ RoutesCommon.upload.array('ccerti'), async (req, res) => {
             await Models.Conference.create({
                 UserID: userId,
                 Location: pathToFiles,
-                    ci:ci,
-                        cma:cma,
-                        cissn:cissn,
-                        cdate:cdate,
-                        ct:ct,
-                        crpt:crpt,
-                        cdui:cdui,
-    
+                ci:ci,
+                cma:cma,
+                cissn:cissn,
+                cdate:cdate,
+                ct:ct,
+                crpt:crpt,
+                cdui:cdui,
             });
         }
         else{
             await Models.Conference.update({
-                ci:ci,
+                    ci:ci,
                     cma:cma,
                     cissn:cissn,
                     cdate:cdate,
                     ct:ct,
                     crpt:crpt,
                     cdui:cdui,
-    
                 },
                 { where: { id: id, UserID: userId } }
             );
