@@ -48,7 +48,7 @@
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.1",
     "@types/jsonwebtoken": "^8.3.5",
-    "@types/node": "^11.13.22",
+    "@types/node": "^11.15.0",
     "@types/sequelize": "^4.28.6",
     "typescript": "^3.6.4"
   }
