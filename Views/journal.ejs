@@ -30,17 +30,15 @@
 
         <label> International / National </label></br>
         <select id="ji" name="ji" style="width: 25%;padding:5px;">
-        <option value="" selected="selected" >Select One</option>
-        <option value="International" > International </option>
-        <option value="National" > National </option>
+          <option value="Inter" <%= ji == 'Inter' ? 'selected' : '' %> > International </option>
+          <option value="Nat" <%= ji == 'Nat' ? 'selected' : '' %> > National </option>
         </select>
         </br>
 
         <label> Main Author </label></br>
         <select id="jma" name="jma" style="width: 25%;padding:5px;">
-        <option value="" selected="selected" >Select One</option>
-        <option value="yes" > Yes </option>
-        <option value="no" > No </option>
+          <option value="Yes" <%= jma == 'Yes' ? 'selected' : '' %> > Yes </option>
+          <option value="No" <%= jma == 'No' ? 'selected' : '' %> > No </option>
         </select>
         </br>
 

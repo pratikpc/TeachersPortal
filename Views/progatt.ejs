@@ -21,11 +21,10 @@
         <input id="id" name="id" type="hidden" value="<%- id %>" />
         <label> Program Type </label></br>
         <select id="patype" name="patype" style="width: 24%;padding:5px;">
-        <option value="" selected="selected" >Select One</option>
-        <option value=" fdp" > Faculty Development Program </option>
-        <option value=" sttp " > Short Term Training Program  </option>
-        <option value=" seminar " > Seminars  </option>
-        <option value=" workshop " > Workshops  </option>
+        <option value="Faculty Development Program" <%= patype == 'Faculty Development Program' ? 'selected' : '' %> > Faculty Development Program </option>
+        <option value="Short Term Training Program" <%= patype == 'Short Term Training Program' ? 'selected' : '' %> > Short Term Training Program </option>
+        <option value="Seminars " <%= patype == 'Seminars ' ? 'selected' : '' %> > Seminars  </option>
+        <option value="Workshops" <%= patype == 'Workshops' ? 'selected' : '' %> > Workshops </option>
         </select>
         </br>
 
@@ -34,9 +33,8 @@
 
         <label> Sponsorship </label></br>
         <select id="patspon" name="patspon" style="width: 24%;padding:5px;">
-        <option value="" selected= "selected" >Select One</option>
-        <option value="College Sponsored" > College Sponsored </option>
-        <option value="Self Sponsored" > Self Sponsored </option>
+          <option value="College Sponsored" <%= patspon == 'College Sponsored' ? 'selected' : '' %> > College Sponsored </option>
+          <option value="Self Sponsored" <%= patspon == 'Self Sponsored' ? 'selected' : '' %> > Self Sponsored </option>
         </select>
         </br>
         

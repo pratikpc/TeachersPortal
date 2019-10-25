@@ -21,9 +21,8 @@
         <input id="id" name="id" type="hidden" value="<%- id %>">
         <label> Category </label></br>
         <select id="swtype" name="swtype" style="width: 25%;padding:5px;">
-        <option value="" selected="selected" >Select One</option>
-        <option value="seminar" > Seminar </option>
-        <option value="workshop" > Workshop </option>
+        <option value="Workshop" <%= swtype == 'Workshop' ? 'selected' : '' %> > Workshop </option>
+        <option value="Seminar" <%= swtype == 'Seminar' ? 'selected' : '' %> > Seminar </option>
         </select>
         </br>
 

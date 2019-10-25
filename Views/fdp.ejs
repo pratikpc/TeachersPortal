@@ -24,9 +24,9 @@
 
         <label> Sponsorship </label></br>
         <select id="fdptype" name="fdptype" style="width: 24%;padding:5px;">
-        <option value="" selected="selected" >Select One</option>
-        <option value="College Sponsored" > College Sponsored </option>
-        <option value="Self Sponsored" > Self Sponsored </option>
+       
+        <option value="College Sponsored" <%= fdptype == 'College Sponsored' ? 'selected' : '' %> > College Sponsored </option>
+        <option value="Self Sponsored" <%= fdptype == 'Self Sponsored' ? 'selected' : '' %> > Self Sponsored </option>
         </select>
         </br>
         

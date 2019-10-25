@@ -85,9 +85,8 @@
       </form>
     </section>
   </div>
-  <div id="print">
-
-  </div>
+  <div id="print"></div>
+  <div id="printarea"></div>
 
 
   <!-- Bootstrap core JavaScript -->
@@ -189,18 +188,76 @@
       // Get some values from elements on the page:
       var form = $(this);
       console.log("hey");
-
       // Send the data using post
       var posting = $.post("/admin/report", form.serialize(), function (data) {
-       console.log("Sucess", data);
-       for(key in data)
+      console.log("Sucess", data);
+      for(key in data)
+      {
+        if(data[key]!=null)
+        {
+          createTable(data[key]);
+        }
+      }
+      /* if(category=="conference")
        {
-         console.log("key",key);
-       }
+         createTable(data["conference"]);
+       }*/
+       
 
       });
     });
 
+    function createTable(data)
+    {
+      var col = [];
+      var dict = {};
+      for (var i = 0; i < data.length; i++) {
+          for (var key in data[i]) {
+              if (col.indexOf(key) === -1) {
+                  col.push(key);
+              }
+          }
+      }
+        console.log(col);
+        var table = document.createElement("table");
+        table.setAttribute("class", "table table-striped table-primary");
+        var tr = table.insertRow(-1); 
+        for (var i = 1; i < col.length; i++) {
+            var th = document.createElement("th");
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+        for (var i = 0; i < data.length; i++) {
+            tr = table.insertRow(-1);
+            var tabCell = ""
+            var id = 0;
+            for (var j = 1; j < col.length; j++) {
+                tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = data[i][col[j]];
+            }
+            
+        }
+        var divContainer = document.getElementById("print");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+
+        var print = document.getElementById("printarea");
+        print.innerHTML = "<button class=\"btn btn--radius-2 btn--red\" id=\"printbutton\" onclick=\"printdiv()\"> Print</button>";
+    }
+    function printdiv(){
+      var content = document.getElementById("print").innerHTML;
+      var mywindow = window.open('', 'Print', 'height=600,width=800');
+      mywindow.document.write('<html><head><title>Report</title>');
+    mywindow.document.write('</head><body ></br></br>');
+    mywindow.document.write(content);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close();
+    mywindow.focus()
+    mywindow.print();
+    mywindow.close();
+    return true;
+    }
 
   </script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

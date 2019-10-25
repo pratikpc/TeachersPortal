@@ -49,10 +49,9 @@
        
         <label> Category </label></br>
         <select id="mrgcat" name="mrgcat" style="width: 24%;padding:5px;">
-        <option value="" selected= "selected" >Select One</option>
-        <option value="TQEP" > TQEP </option>
-        <option value="MRG" > MRG </option>
-        <option value="IDC" > IDC </option>
+        <option value="TQEP" <%= mrgcat == 'TQEP' ? 'selected' : '' %> > TQEP </option>
+        <option value="MRG" <%= mrgcat == 'MRG' ? 'selected' : '' %> > MRG </option>
+        <option value="IDC" <%= mrgcat == 'IDC' ? 'selected' : '' %> > IDC </option>
         </select>
         </br>
 
