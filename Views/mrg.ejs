@@ -104,9 +104,11 @@
     var start = new Date().getFullYear();
     var options = "";
     for(var year = start ; year >=end; year--){
-          options += "<option>"+ year +"</option>";
+      options += "<option value=\"" + year + "\">" + year + "</option>";
       }
     document.getElementById("mrgya").innerHTML = options;
+
+    
    </script>
 </body>
 

@@ -61,8 +61,8 @@
             <label>International/National</label></br>
             <select id="ri" name="ri" style="width: 24%;padding:5px;">
               <option value="" selected="selected">All</option>
-              <option value="International"> International </option>
-              <option value="National"> National </option>
+              <option value="Inter"> International </option>
+              <option value="Nat"> National </option>
             </select>
           </div>
 
@@ -84,6 +84,9 @@
         <button class="btn btn--radius-2 btn--red" type="submit" value="report"> Report</button></br>
       </form>
     </section>
+  </div>
+  <div id="print">
+
   </div>
 
 
@@ -127,8 +130,6 @@
             const lastname = data[i]["data"]["lastname"];
             const id = data[i]["data"]["id"];
             const fullname = firstname + " " + lastname;
-            console.log(data);
-            console.log(fullname);
             if (dept === "") {
               option += "<option value=\"" + id + "\">" + fullname + "</option>";
             }
@@ -191,11 +192,12 @@
 
       // Send the data using post
       var posting = $.post("/admin/report", form.serialize(), function (data) {
-        //console.log(data["password"]);
-        //password = data["password"];
-        console.log("Sucess", data);
+       console.log("Sucess", data);
+       for(key in data)
+       {
+         console.log("key",key);
+       }
 
-        //$( "#display" ).empty().append("The Password Generated Is :"+password);
       });
     });
 

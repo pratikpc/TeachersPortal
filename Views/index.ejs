@@ -311,7 +311,7 @@
                             tabCell.innerHTML = data[i][col[j]];
                         }
                         id = data[i][col[0]];
-                        tabCell.innerHTML = " <a class=\"btn btn-primary btn-xs\" href=\"" +url1 + "file-viewer/" + id + "\"><i class=\"fa fa-download\"></i></a> <a class=\"btn btn-primary btn-xs\" href=\"" + url1 + id + "\"><i class=\"fa fa-edit\"></i></a> <button class=\"btn btn-danger btn-xs\" onclick=\"deleteData("+ id + ","+ url1 + ")\" ><i class=\"fa fa-trash\"></i></button>";
+                        tabCell.innerHTML = " <a class=\"btn btn-primary btn-xs\" href=\"" +url1 + "file-viewer/" + id + "\"><i class=\"fa fa-download\"></i></a> <a class=\"btn btn-primary btn-xs\" href=\"" + url1 + id + "\"><i class=\"fa fa-edit\"></i></a> <button class=\"btn btn-danger btn-xs\" onclick='deleteData("+ id + ","+ "\"" +  url + "\")' ><i class=\"fa fa-trash\"></i></button>";
                         
                     }
                     var divContainer = document.getElementById("view");
@@ -320,6 +320,7 @@
                     } 
                 };
                 function deleteData(id,url1) {
+                    console.log(url1);
                     $.ajax(
                      {
                            url: url1 + id,
@@ -350,31 +351,31 @@
                 url = "";
                 switch (id) {
                     case 'fdpa':
-                        url = "/fdp/files";
+                        url = "/fdp/files/";
                         url1 = "/fdp/";
                         break;
                     case 'sttpa':
-                        url = "/sttp/files";
+                        url = "/sttp/files/";
                         url1 = "/sttp/";
                         break;
                     case 'ca':
-                        url = "/conference/files";
+                        url = "/conference/files/";
                         url1 = "/conference/";
                         break;
                     case 'ja':
-                        url = "/journal/files";
+                        url = "/journal/files/";
                         url1 = "/journal/";
                         break;
                     case 'swaa':
-                        url = "/semwork/files";
+                        url = "/semwork/files/";
                         url1 = "/semwork/";
                         break;
                     case 'rca':
-                        url = "/mrg/files";
+                        url = "/mrg/files/";
                         url1 = "/mrg/";
                         break;
                     case 'paa':
-                        url = "/progatt/files";
+                        url = "/progatt/files/";
                         url1 = "/progatt/";
                         break;
                    
