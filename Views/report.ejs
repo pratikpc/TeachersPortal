@@ -210,28 +210,82 @@
     function createTable(data)
     {
       var col = [];
-      var dict = {};
+      var titlemrg = new Array("Title","Grant Approved","Year Approved","Category","Authority");
+      var titleprogatt = new Array("Type","Title"," College"," No of Days","Sponsorship","Date");
+      var titlesemwork = new Array("Title"," College"," No of Days","Date","Type");
+      var titlefdpsstp = new Array("Title"," College"," No of Days","Sponsorship","Date");
+      var titlesconjor = new Array("International/National","Title","Research Title","Author"," ISSN ","Date","DUI");
+      var key = Object.keys(data[0])[2];
+      console.log(key);
       for (var i = 0; i < data.length; i++) {
-          for (var key in data[i]) {
-              if (col.indexOf(key) === -1) {
-                  col.push(key);
+          for (var keys in data[i]) {
+              if (col.indexOf(keys) === -1) {
+                  col.push(keys);
               }
           }
       }
-
+      console.log(col);
         var table = document.createElement("table");
         table.setAttribute("class", "table table-striped table-primary");
         var tr = table.insertRow(-1); 
-        for (var i = 1; i < col.length; i++) {
-            var th = document.createElement("th");
-            th.innerHTML = col[i];
-            tr.appendChild(th);
-        }
+        if(key=="ci" || key=="ji")
+                    {
+                        for(keys in titlesconjor)
+                        {
+                            
+                            
+                            var th = document.createElement("th");
+                            th.innerHTML = titlesconjor[keys];
+                            tr.appendChild(th);
+                        }
+                
+                    } 
+                    else if(key=="fdpt" || key=="sttpt")
+                    {
+                        for(keys in titlefdpsstp)
+                        {
+                          
+                            var th = document.createElement("th");
+                            th.innerHTML = titlefdpsstp[keys];
+                            tr.appendChild(th);
+                        }
+                    }
+                    else if(key=="swt")
+                    {
+                        for(keys in titlesemwork)
+                        {
+                        
+                            var th = document.createElement("th");
+                            th.innerHTML = titlesemwork[keys];
+                            tr.appendChild(th);
+                        }
+                    } 
+                    else if(key=="patype")
+                    {
+                        for(keys in titleprogatt)
+                        {
+                            
+                            var th = document.createElement("th");
+                            th.innerHTML = titleprogatt[keys];
+                            tr.appendChild(th);
+                        }
+                    }
+                    else
+                    {
+                        for(keys in titlemrg)
+                        {
+                           
+                            var th = document.createElement("th");
+                            th.innerHTML = titlemrg[keys];
+                            tr.appendChild(th);
+                        }
+                    }  
+
         for (var i = 0; i < data.length; i++) {
             tr = table.insertRow(-1);
             var tabCell = ""
             var id = 0;
-            for (var j = 1; j < col.length; j++) {
+            for (var j = 2; j < col.length; j++) {
                 tabCell = tr.insertCell(-1);
                 tabCell.innerHTML = data[i][col[j]];
             }
