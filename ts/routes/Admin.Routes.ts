@@ -18,135 +18,128 @@ Admin.get("/report", RoutesCommon.IsAdmin, (req, res) => {
     return res.render("report.ejs");
 });
 
-function DeleteLocation(arr: any) {
-    const ret = [];
-    for (let index = 0; index < arr.length; index++) {
-        const element = arr[index];
-        delete element.Location;
-        ret.push(element);
-    }
-    return ret;
-}
 async function ExtractInformation(req: Request) {
+
+    let mrg: Model.Mrg[] = [];
+    let conference: Model.Conference[] = [];
+    let journal: Model.Journal[] = [];
+    let semwork: Model.Semwork[] = [];
+    let fdp: Model.Fdp[] = [];
+    let sttp: Model.Sttp[] = [];
+    let progatt: Model.Progatt[] = [];
+
     const params = RoutesCommon.GetParameters(req);
-    if (params == null) return null;
+    if (params != null) {
 
-    const userId = RoutesCommon.ToArray(params.ruser).map(Number);
-    const dept = String(params.rdept);
-    const ri = String(params.ri);
-    const rtype = String(params.rcat);
-    const rspon = String(params.rspon);
-    const ryear = String(params.ryear);
+        const ruser = RoutesCommon.ToArray(params.ruser).map(Number);
+        const dept = String(params.rdept);
+        const ri = String(params.ri);
+        const rtype = String(params.rcat);
+        const rspon = String(params.rspon);
+        const ryear = String(params.ryear);
 
-    const users = await Model.Users.findAll({
-        where: {
-            Authority: "NORMAL",
-            dept: {
-                $ilike: "%" + dept + "%"
+        const users = await Model.Users.findAll({
+            where: {
+                Authority: "NORMAL",
+                dept: {
+                    $ilike: "%" + dept + "%"
+                }
             }
-        }
-    });
-
-    let userIds = users.map((val) => { return val.id; }).map(Number);
-
-    if (userId != null && userId.length !== 0) {
-        userIds.push(...userId);
-        userIds = userIds.filter(function (itm, i) {
-            return userIds.lastIndexOf(itm) == i && userIds.indexOf(itm) != i;
         });
-    }
 
-    let mrg = null;
-    let conference = null;
-    let journal = null;
-    let semwork = null;
-    let fdp = null;
-    let sttp = null;
-    let progatt = null;
+        let userIds = users.map((val) => { return val.id; }).map(Number);
 
-    if (users.length !== 0) {
+        if (ruser != null && ruser.length !== 0) {
+            userIds.push(...ruser);
+            userIds = userIds.filter(function (itm, i) {
+                return userIds.lastIndexOf(itm) == i && userIds.indexOf(itm) != i;
+            });
+        }
 
-        if (rtype === "fdp" || rtype === "") {
-            fdp = await Model.Fdp.findAll({
-                where: {
-                    UserID: userIds,
-                    fdptype: {
-                        $ilike: "%" + rspon + "%"
-                    },
-                    fdpdate: {
-                        $ilike: "%/" + ryear + "%"
-                    },
-                }
-            });
-        }
-        if (rtype === "sttp" || rtype === "") {
-            sttp = await Model.Sttp.findAll({
-                where: {
-                    UserID: userIds,
-                    sttptype: {
-                        $ilike: "%" + rspon + "%"
-                    },
-                    sttpdate: {
-                        $ilike: "%/" + ryear + "%"
-                    },
-                }
-            });
-        }
-        if (rtype === "progatt" || rtype === "") {
-            progatt = await Model.Progatt.findAll({
-                where: {
-                    UserID: userIds,
-                    patspon: {
-                        $ilike: "%" + rspon + "%"
-                    },
-                    patdate: {
-                        $ilike: "%/" + ryear + "%"
-                    },
-                }
-            });
-        }
-        if (rtype === "conference" || rtype === "") {
-            conference = await Model.Conference.findAll({
-                where: {
-                    UserID: userIds,
-                    ci: {
-                        $ilike: "%" + ri + "%"
-                    },
-                    cdate: {
-                        $ilike: "%/" + ryear + "%"
-                    },
-                }
-            });
-        }
-        if (rtype === "journal" || rtype === "") {
-            journal = await Model.Journal.findAll({
-                where: {
-                    UserID: userIds,
-                    ji: {
-                        $ilike: "%" + ri + "%"
-                    },
-                    jdate: {
-                        $ilike: "%/" + ryear + "%"
-                    },
-                }
-            });
-        }
-        if (rtype === "semwork" || rtype === "") {
-            semwork = await Model.Semwork.findAll({
-                where: {
-                    UserID: userIds,
-                    swdate: {
-                        $ilike: "%/" + ryear + "%"
-                    },
-                }
-            });
-        } if (rtype === "mrg" || rtype === "") {
-            mrg = await Model.Mrg.findAll({
-                where: {
-                    UserID: userIds,
-                    mrgya: ryear
-                }
-            });
+        if (users.length !== 0) {
+            if (rtype === "fdp" || rtype === "") {
+                fdp = await Model.Fdp.findAll({
+                    where: {
+                        UserID: userIds,
+                        fdptype: {
+                            $ilike: "%" + rspon + "%"
+                        },
+                        fdpdate: {
+                            $ilike: "%/" + ryear + "%"
+                        },
+                    }
+                });
+            }
+            if (rtype === "sttp" || rtype === "") {
+                sttp = await Model.Sttp.findAll({
+                    where: {
+                        UserID: userIds,
+                        sttptype: {
+                            $ilike: "%" + rspon + "%"
+                        },
+                        sttpdate: {
+                            $ilike: "%/" + ryear + "%"
+                        },
+                    }
+                });
+            }
+            if (rtype === "progatt" || rtype === "") {
+                progatt = await Model.Progatt.findAll({
+                    where: {
+                        UserID: userIds,
+                        patspon: {
+                            $ilike: "%" + rspon + "%"
+                        },
+                        patdate: {
+                            $ilike: "%/" + ryear + "%"
+                        },
+                    }
+                });
+            }
+            if (rtype === "conference" || rtype === "") {
+                conference = await Model.Conference.findAll({
+                    where: {
+                        UserID: userIds,
+                        ci: {
+                            $ilike: "%" + ri + "%"
+                        },
+                        cdate: {
+                            $ilike: "%/" + ryear + "%"
+                        },
+                    }
+                });
+            }
+            if (rtype === "journal" || rtype === "") {
+                journal = await Model.Journal.findAll({
+                    where: {
+                        UserID: userIds,
+                        ji: {
+                            $ilike: "%" + ri + "%"
+                        },
+                        jdate: {
+                            $ilike: "%/" + ryear + "%"
+                        },
+                    }
+                });
+            }
+            if (rtype === "semwork" || rtype === "") {
+                semwork = await Model.Semwork.findAll({
+                    where: {
+                        UserID: userIds,
+                        swdate: {
+                            $ilike: "%/" + ryear + "%"
+                        },
+                    }
+                });
+            }
+            if (rtype === "mrg" || rtype === "") {
+                mrg = await Model.Mrg.findAll({
+                    where: {
+                        UserID: userIds,
+                        mrgya: ryear
+                    }
+                });
+            }
         }
     }
     return { mrg, conference, journal, semwork, fdp, sttp, progatt };
@@ -159,10 +152,7 @@ function ExtractPaths(input: any) {
     return value;
 }
 Admin.post("/report/files", RoutesCommon.IsAdmin, async (req, res) => {
-    const x = await ExtractInformation(req);
-    if (x == null)
-        return res.status(404);
-    const { mrg, conference, journal, semwork, fdp, sttp, progatt } = x;
+    const { mrg, conference, journal, semwork, fdp, sttp, progatt } = await ExtractInformation(req);
     const locations: string[] = [];
 
     locations.push(...ExtractPaths(mrg));
@@ -173,33 +163,22 @@ Admin.post("/report/files", RoutesCommon.IsAdmin, async (req, res) => {
     locations.push(...ExtractPaths(sttp));
     locations.push(...ExtractPaths(progatt));
 
+    if (locations.length === 0)
+        return res.status(404);
+
     await RoutesCommon.ZipFileGenerator(res, locations);
 });
 Admin.post("/report", RoutesCommon.IsAdmin, async (req, res) => {
-    const x = await ExtractInformation(req);
-
-    if (x == null)
-        return res.status(404);
-
-    const { mrg, conference, journal, semwork, fdp, sttp, progatt } = x;
+    const { mrg, conference, journal, semwork, fdp, sttp, progatt } = await ExtractInformation(req);;
 
     // Remove Location Parameter as it is local to our computer
-    if (journal != null)
-        journal.forEach(value => delete value.dataValues.Location);
-    if (fdp != null)
-        fdp.forEach(value => delete value.dataValues.Location);
-    if (sttp != null)
-        sttp.forEach(value => {
-            return delete value.dataValues.Location;
-        });
-    if (progatt != null)
-        progatt.forEach(value => delete value.dataValues.Location);
-    if (conference != null)
-        conference.forEach(value => delete value.dataValues.Location);
-    if (semwork != null)
-        semwork.forEach((value: { Location: any; }) => { delete value.Location; });
-    if (mrg != null)
-        mrg.forEach(value => delete value.dataValues.Location);
+    journal.forEach(value => delete value.dataValues.Location);
+    fdp.forEach(value => delete value.dataValues.Location);
+    sttp.forEach(value => delete value.dataValues.Location);
+    progatt.forEach(value => delete value.dataValues.Location);
+    conference.forEach(value => delete value.dataValues.Location);
+    semwork.forEach((value: { Location: any; }) => { delete value.Location; });
+    mrg.forEach(value => delete value.dataValues.Location);
 
     const json = {
         "mrg": mrg,

@@ -9,34 +9,6 @@ Updation.get("/newpassword", RoutesCommon.IsAuthenticated, (req, res) => {
 Updation.get("/upload", RoutesCommon.IsNotAdmin, (req, res) => {
     return res.render("documents.ejs");
 });
-Updation.post("/newpassword", RoutesCommon.IsNotAdmin, async (req, res) => {
-    try {
-        const id = Number(req.user!.id);
-
-        const params = RoutesCommon.GetParameters(req);
-        const old_pass = String(params.OldPassword);
-        const new_pass = String(params.NewPassword);
-
-        const user = await Models.Users.findOne({ where: { id: id } });
-
-        // Check if User Exists
-        if (!user) return res.json({ success: false });
-        // Check if Password Entered is Correct
-        const match = await user!.ComparePassword(old_pass);
-        if (!match) return res.json({ success: false });
-
-        const [count] = await Models.Users.update(
-            { Password: new_pass },
-            { where: { id: id } }
-        );
-
-        if (count !== 1) return res.json({ success: false });
-        return res.json({ success: true });
-    } catch (error) {
-        return res.json({ success: false });
-    }
-});
-
 
 function EmptyUndef(key: any) {
     if (key == null || key === "undefined")
@@ -64,7 +36,7 @@ export function GetUserJson(user: Models.Users) {
     };
 }
 
-async function GetUserDetails(userId: any) {
+export async function GetUserDetails(userId: any) {
     const user = await Models.Users.findOne({
         where: { id: userId }
     }
@@ -203,3 +175,13 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated,
 
         return res.redirect("/");
     });
+
+Updation.get("/", (req, res) => {
+    if (req.isAuthenticated()) {
+        if (req.user.Authority === "ADMIN")
+            return res.redirect("/admin");
+        if (req.user.Authority === "NORMAL")
+            return res.redirect("/index");
+    }
+    return res.render("login.html");
+});

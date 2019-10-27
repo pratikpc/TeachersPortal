@@ -44,11 +44,3 @@ app.use("/", Routes.Journal);
 app.use("/", Routes.Progatt);
 app.use("/", Routes.Semwork);
 app.use("/", Routes.Mrg);
-
-app.get("/", (req, res) => {
-  if (req.isUnauthenticated()) return res.render("login.html");
-  if (req.user.Authority === "ADMIN")
-    return res.redirect("/admin");
-  else if (req.user.Authority === "NORMAL")
-    return res.redirect("/index");
-});

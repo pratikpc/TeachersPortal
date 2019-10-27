@@ -19,7 +19,10 @@ Users.post(
   "/login/",
   passport.authenticate("app", { failureRedirect: "/" }),
   (req, res) => {
-    return res.redirect("/");
+    if (req.user.Authority === "ADMIN")
+      return res.redirect("/admin");
+    else if (req.user.Authority === "NORMAL")
+      return res.redirect("/index");
   }
 );
 
@@ -61,6 +64,34 @@ Users.post("/add/", RoutesCommon.IsAdmin, async (req, res) => {
     return res.json({ success: true, password: pass_key });
   } catch (error) {
     return res.json({ success: false, password: null });
+  }
+});
+
+Users.post("/newpassword", RoutesCommon.IsAuthenticated, async (req, res) => {
+  try {
+      const id = Number(req.user!.id);
+
+      const params = RoutesCommon.GetParameters(req);
+      const old_pass = String(params.OldPassword);
+      const new_pass = String(params.NewPassword);
+
+      const user = await Model.Users.findOne({ where: { id: id } });
+
+      // Check if User Exists
+      if (!user) return res.json({ success: false });
+      // Check if Password Entered is Correct
+      const match = await user!.ComparePassword(old_pass);
+      if (!match) return res.json({ success: false });
+
+      const [count] = await Model.Users.update(
+          { Password: new_pass },
+          { where: { id: id } }
+      );
+
+      if (count !== 1) return res.json({ success: false });
+      return res.json({ success: true });
+  } catch (error) {
+      return res.json({ success: false });
   }
 });
 
