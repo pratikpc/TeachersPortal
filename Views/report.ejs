@@ -184,6 +184,67 @@
     create("");
   </script>
   <script>
+    function getUserInfo(divContainer, datas)
+    {
+      const request = new XMLHttpRequest();
+      var col = [];
+      var titles = new Array("UserID","Username", "Name", "Department", "Post");
+      request.open('GET', '/user');
+      request.send();
+      var table = document.createElement("table");
+      table.setAttribute("class", "table table-striped table-primary");
+      var tr = table.insertRow(-1); 
+      for (var i = 0; i < titles.length; i++) {
+          var th = document.createElement("th");
+          th.innerHTML = titles[i];
+          tr.appendChild(th);
+      }
+      request.onload = function () {
+        if (request.status === 200) {
+          console.log("Success");
+          data = JSON.parse(request.response);
+      for (key in datas)
+      {
+        if(datas[key]!=null)
+        {
+          for(stuff in datas[key])
+          {
+            var userid = datas[key][stuff]["UserID"];
+            if(!col.includes(userid) )
+            {
+                col.push(userid);
+                for (var i = 0; i < data.length; i++) {
+                  var id = data[i]["data"]["id"];
+                  if(id==userid)
+                  {
+                    tr= table.insertRow(-1);
+                    var tabCell = ""
+                    var uname = data[i]["data"]["Name"];
+                    var name = data[i]["data"]["firstname"] + " " + data[i]["data"]["lastname"];
+                    var dept = data[i]["data"]["dept"];
+                    var title = data[i]["data"]["title"];
+                    tabCell = tr.insertCell(-1);
+                    tabCell.innerHTML = id;
+                    tabCell = tr.insertCell(-1);
+                    tabCell.innerHTML = uname;
+                    tabCell = tr.insertCell(-1);
+                    tabCell.innerHTML = name;
+                    tabCell = tr.insertCell(-1);
+                    tabCell.innerHTML = dept;
+                    tabCell = tr.insertCell(-1);
+                    tabCell.innerHTML = title;
+                  } 
+              
+            
+          }
+            }
+        }
+      }
+        }
+      }
+    }
+    divContainer.appendChild(table);
+    }
     $("#admin").submit(function (event) {
 
       // Stop form from submitting normally
@@ -195,14 +256,19 @@
       // Send the data using post
       var posting = $.post("/admin/report", form.serialize(), function (data) {
       console.log("Sucess", data);
+   
       var divContainer = document.getElementById("print");
       divContainer.innerHTML = "";
+      getUserInfo(divContainer, data);
+      divContainer.appendChild(document.createElement("br"));
       for(key in data)
       {
         if(data[key]!=null)
         {
           table = createTable(data[key]);
           divContainer.appendChild(table);
+          divContainer.appendChild(document.createElement("br"));
+          
         }
       }
       var print = document.getElementById("printarea");
@@ -214,11 +280,11 @@
     function createTable(data)
     {
       var col = [];
-      var titlemrg = new Array("Title","Grant Approved","Year Approved","Category","Authority");
-      var titleprogatt = new Array("Type","Title"," College"," No of Days","Sponsorship","Date");
-      var titlesemwork = new Array("Title"," College"," No of Days","Date","Type");
-      var titlefdpsstp = new Array("Title"," College"," No of Days","Sponsorship","Date");
-      var titlesconjor = new Array("International/National","Title","Research Title","Author"," ISSN ","Date","DUI");
+      var titlemrg = new Array("Userid","Title","Grant Approved","Year Approved","Category","Authority");
+      var titleprogatt = new Array("Userid","Type","Title"," College"," No of Days","Sponsorship","Date");
+      var titlesemwork = new Array("Userid","Title"," College"," No of Days","Date","Type");
+      var titlefdpsstp = new Array("Userid","Title"," College"," No of Days","Sponsorship","Date");
+      var titlesconjor = new Array("Userid","International/National","Title","Research Title","Author"," ISSN ","Date","DUI");
       console.log("data is ",data);
       var table = document.createElement("table");
       if(data.length > 0)
@@ -232,6 +298,7 @@
               }
           }
       }
+
       console.log("col is ",col);
         
         table.setAttribute("class", "table table-striped table-primary");
@@ -293,7 +360,7 @@
             tr = table.insertRow(-1);
             var tabCell = ""
             var id = 0;
-            for (var j = 2; j < col.length; j++) {
+            for (var j = 1; j < col.length; j++) {
                 tabCell = tr.insertCell(-1);
                 tabCell.innerHTML = data[i][col[j]];
             }
