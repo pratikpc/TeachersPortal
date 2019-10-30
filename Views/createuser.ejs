@@ -26,7 +26,7 @@
             <button class="btn btn--radius-2 btn--red"  type="submit"> CREATE </button>
           </div>
         </form>
-        <div id="display" style="color:black;font-size:30px;margin-left:20%;margin-top:15%;">
+        <div id="display" style="color:black;font-size:20px;margin-left:20%;margin-top:15%;">
  </div>
       </section>
     </div>  
@@ -52,7 +52,7 @@
           console.log(data["password"]);
           password = data["password"];
           
-          $( "#display" ).empty().append("The Password Generated Is :"+password);
+          $( "#display" ).empty().append("The Password Generated Is : <mark>"+password+ "</mark>");
         });
         });
     </script>

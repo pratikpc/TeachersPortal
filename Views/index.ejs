@@ -375,7 +375,10 @@
             }  
             function deleteData(id,url,files) {
 
-                    $.ajax(
+            var result = confirm("Are you sure you want to delete?");
+             if(result)
+             {
+                 $.ajax(
                      {
                            url:  url  + id,
                            type: 'DELETE',
@@ -387,6 +390,7 @@
                            location.reload(true);
                      }
                    });
+             }
                 } 
             number('/fdp/files', '#fdpa');
             number('/sttp/files', '#sttpa');
