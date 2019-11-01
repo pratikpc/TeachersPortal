@@ -216,12 +216,12 @@
 
     function createTable(data, users) {
       var col = [];
-      var titlemrg = new Array("Name", "Department","Category","Title","Authority","Year Approved","Grant Approved");
-      var titleprogatt = new Array("Name", "Department","Date","Type"," Title"," College","Sponsorship","No of Days");
-      var titlesemwork = new Array("Name", "Department","Date"," College"," No of Days","Date","Type");
-      var titlefdpsstp = new Array("Name", "Department","Date"," Title"," College","No of Days","Sponsorship");
-      var titlescon = new Array("Name", "Department","International/National","Main Author","ISSN","Date"," Title ","Research Title","DUI");
-      var titlesjor = new Array("Name", "Department","Date","Title","Research Title","ISSN"," International/National ","Main Author","DUI");
+      var titlemrg = new Array("Name", "Department","Category","Title","Authority","Year Approved","Grant Approved","Action");
+      var titleprogatt = new Array("Name", "Department","Date","Type"," Title"," College","Sponsorship","No of Days","Action");
+      var titlesemwork = new Array("Name", "Department","Date"," College"," No of Days","Date","Type","Action");
+      var titlefdpsstp = new Array("Name", "Department","Date"," Title"," College","No of Days","Sponsorship","Action");
+      var titlescon = new Array("Name", "Department","International/National","Main Author","ISSN","Date"," Title ","Research Title","DUI","Action");
+      var titlesjor = new Array("Name", "Department","Date","Title","Research Title","ISSN"," International/National ","Main Author","DUI","Action");
       console.log("data is ", data);
       var table = document.createElement("table");
       if (data.length > 0) {
@@ -297,6 +297,11 @@
             tabCell = tr.insertCell(-1);
             tabCell.innerHTML = data[i][col[j]];
           }
+
+          tabCell = tr.insertCell(-1);
+          const url1 = "/" + key + "/file-viewer/" + data[i]["id"];
+          console.log(url1);
+          tabCell.innerHTML = " <a class=\"btn btn-primary btn-xs\" href=\"" + url1 + "\"><i class=\"fa fa-download\"></i></a> ";
 
         }
       }
