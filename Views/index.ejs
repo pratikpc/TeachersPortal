@@ -65,12 +65,12 @@
     }
     #view { display: none; }
         </style>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" >
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet" >
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<body id="page-top">
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top " id="sideNav" style="background-color: #007bff;width:15.02%">
+<body id="page-top" >
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top " id="sideNav" style="background-color: #007bff;">
       <% include ./partials/navbar %>
     </nav>
     <div class=" emp-profile "  style="margin-left:4%;margin-top:4%;margin-right: 4%;">
@@ -80,7 +80,7 @@
                         <img src="/profileupdate"  id="profilepic" name="profilepic" onerror="this.src='/images/profile.jpg';" />  
                     </div>  
                 </div>
-                <div class="col-md-8">
+                <div class="col-8" >
                     <div class="profile-head">
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -109,7 +109,7 @@
                         <a style="font-weight: 600;font-size: 20px;color: #0062cc;"><%= data.address %></a>
                     </div>
                 </div>
-                <div class="col-md-7" style="margin-left: 4%;">
+                <div class="col-md-8" style="margin-left: 4%;">
                     <div class="tab-content profile-tab" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <% var fullname = data.firstname +  " " + data.middlename + " " + data.lastname; %>
@@ -149,7 +149,7 @@
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="row">
                                         <div class="col-md-6">
-                                            <label>Teaching Institute</label>
+                                            <label>Teaching </label>
                                         </div>
                                         <div class="col-md-6">
                                             <p><%= data.tinstitute %></p>
@@ -157,7 +157,7 @@
                                     </div></br>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label>Teaching Duration</label>
+                                            <label> Duration</label>
                                         </div>
                                         <div class="col-md-6">
                                             <p><%= data.tduration %></p>
@@ -173,7 +173,7 @@
                                         </div></br>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label>Industry Duration</label>
+                                            <label> Duration</label>
                                         </div>
                                         <div class="col-md-6">
                                             <p><%= data.iduration %></p>
