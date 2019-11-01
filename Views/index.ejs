@@ -7,7 +7,6 @@
     <style>
        
     .emp-profile{
-        margin-top: 3%;
         margin-bottom: 3%;
         border-radius: 0.5rem;
         background: aliceblue;
@@ -16,7 +15,7 @@
         display: block;
         max-width: 350px;
         max-height: 250px;
-        width: auto;
+        width: 100%;
         height: auto;
     }
     .profile-head h5{
@@ -27,7 +26,7 @@
     }
     .profile-head .nav-tabs{
         margin-bottom:1%;
-        margin-left: 30%;
+        margin-left: 6%;
     }
     .profile-head .nav-tabs .nav-link{
         font-weight:600;
@@ -41,16 +40,14 @@
         border: none;
         border-bottom:2px solid #0062cc;
     }
+    .profile-work{
+        margin-left: 2%;
+    }
     .profile-work p{
         font-weight: 600;
         font-size: 25px;
         color: black;
         margin-top: 10%;
-    }
-    .profile-work a{
-        font-weight: 600;
-        font-size: 20px;
-        color: #0062cc;
     }
     .profile-tab label{
         font-weight: 600;
@@ -78,7 +75,7 @@
     </nav>
     <div class=" emp-profile "  style="margin-left:4%;margin-top:4%;margin-right: 4%;">
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-3">
                     <div class="profile-img">
                         <img src="/profileupdate"  id="profilepic" name="profilepic" onerror="this.src='/images/profile.jpg';" />  
                     </div>  
@@ -105,11 +102,11 @@
                 <div class="col-md-3">
                     <div class="profile-work">
                         <p>Email</p>
-                        <a><%= data.email %></a>
+                        <a style="font-weight: 600;font-size: 20px;color: #0062cc;"><%= data.email %></a>
                         <p>Phone</p>
-                        <a><%= data.phone %></a>
+                        <a style="font-weight: 600;font-size: 20px;color: #0062cc;"><%= data.phone %></a>
                         <p>Address</p>
-                        <a><%= data.address %></a>
+                        <a style="font-weight: 600;font-size: 20px;color: #0062cc;"><%= data.address %></a>
                     </div>
                 </div>
                 <div class="col-md-7" style="margin-left: 4%;">
@@ -147,21 +144,10 @@
                                         <div class="col-md-6">
                                             <p><%= data.aos %></p>
                                         </div>
-                                    </div></br>
-                                
-                                   
-                                   
+                                    </div></br>                
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Teaching Duration</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p><%= data.tduration %></p>
-                                        </div>
-                                    </div></br>
-                                    <div class="row">
+                                <div class="row">
                                         <div class="col-md-6">
                                             <label>Teaching Institute</label>
                                         </div>
@@ -171,21 +157,28 @@
                                     </div></br>
                                     <div class="row">
                                         <div class="col-md-6">
+                                            <label>Teaching Duration</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><%= data.tduration %></p>
+                                        </div>
+                                    </div></br>
+                                    <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Industry</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= data.iinstitute %></p>
+                                            </div>
+                                        </div></br>
+                                    <div class="row">
+                                        <div class="col-md-6">
                                             <label>Industry Duration</label>
                                         </div>
                                         <div class="col-md-6">
                                             <p><%= data.iduration %></p>
                                         </div>
                                     </div></br>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Industry</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p><%= data.iinstitute %></p>
-                                        </div>
-                                    </div></br>
-                                    
                         </div>
                         <div class="tab-pane fade" id="program" role="tabpanel" aria-labelledby="program-tab">
                             <div class="row">
