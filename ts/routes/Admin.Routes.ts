@@ -188,7 +188,7 @@ Admin.post("/report", RoutesCommon.IsAdmin, async (req, res) => {
     sttp.forEach(value => delete value.dataValues.Location);
     progatt.forEach(value => delete value.dataValues.Location);
     conference.forEach(value => delete value.dataValues.Location);
-    semwork.forEach((value: { Location: any; }) => { delete value.Location; });
+    semwork.forEach(value => delete value.dataValues.Location);
     mrg.forEach(value => delete value.dataValues.Location);
 
     const json = {
