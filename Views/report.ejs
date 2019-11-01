@@ -100,7 +100,6 @@
   <script src="/js/resume.js"></script>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.12.4.js"></script>
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
     var int = document.getElementById("int");
@@ -195,14 +194,14 @@
       console.log("hey");
       // Send the data using post
       var posting = $.post("/admin/report", form.serialize(), function (data) {
-        console.log("Sucess", data);
+        console.log("Success", data);
 
         var divContainer = document.getElementById("print");
         divContainer.innerHTML = "";
-        for (key in data) {
-          if (data[key] != null && data[key].length != 0 && key != "users") {
+        for (route in data) {
+          if (data[route] != null && data[route].length != 0 && route != "users") {
             const users = data["users"];
-            table = createTable(data[key], users);
+            table = createTable(route, data[route], users);
             divContainer.appendChild(table);
             divContainer.appendChild(document.createElement("br"));
 
@@ -214,7 +213,7 @@
       });
     });
 
-    function createTable(data, users) {
+    function createTable(route, data, users) {
       var col = [];
       var titlemrg = new Array("Name", "Department","Category","Title","Authority","Year Approved","Grant Approved","Action");
       var titleprogatt = new Array("Name", "Department","Date","Type"," Title"," College","Sponsorship","No of Days","Action");
@@ -222,11 +221,19 @@
       var titlefdpsstp = new Array("Name", "Department","Date"," Title"," College","No of Days","Sponsorship","Action");
       var titlescon = new Array("Name", "Department","International/National","Main Author","ISSN","Date"," Title ","Research Title","DUI","Action");
       var titlesjor = new Array("Name", "Department","Date","Title","Research Title","ISSN"," International/National ","Main Author","DUI","Action");
+      var array = {};
+      array["conference"]="Conference";
+      array["journal"]="Journal";
+      array["sttp"] = "Short Term Training Program";
+      array["fdp"] = "Faculty Development Program";
+      array["mrg"] = "Research & Development";
+      array["semwork"] = "Seminar/Workshop";
+      array["progatt"] = "Programs Attended";
       console.log("data is ", data);
       var table = document.createElement("table");
       if (data.length > 0) {
 
-        console.log("key is ", key);
+        console.log("route is ", route);
         for (var i = 0; i < data.length; i++) {
           for (var keys in data[i]) {
             if (col.indexOf(keys) === -1) {
@@ -234,10 +241,9 @@
             }
           }
         }
-
         table.setAttribute("class", "table table-striped table-primary");
         var tr = table.insertRow(-1);
-        if (key == "conference") {
+        if (route == "conference") {
           for (keys in titlescon) {
             var th = document.createElement("th");
             th.innerHTML = titlescon[keys];
@@ -245,7 +251,7 @@
           }
 
         }
-        else if (key == "journal") {
+        else if (route == "journal") {
           for (keys in titlesjor) {
             var th = document.createElement("th");
             th.innerHTML = titlesjor[keys];
@@ -253,33 +259,36 @@
           }
 
         }
-        else if (key == "fdp" || key == "sttp") {
+        else if (route == "fdp" || route == "sttp") {
           for (keys in titlefdpsstp) {
             var th = document.createElement("th");
             th.innerHTML = titlefdpsstp[keys];
             tr.appendChild(th);
           }
         }
-        else if (key == "semwork") {
+        else if (route == "semwork") {
           for (keys in titlesemwork) {
             var th = document.createElement("th");
             th.innerHTML = titlesemwork[keys];
             tr.appendChild(th);
           }
         }
-        else if (key == "progatt") {
+        else if (route == "progatt") {
           for (keys in titleprogatt) {
             var th = document.createElement("th");
             th.innerHTML = titleprogatt[keys];
             tr.appendChild(th);
           }
         }
-        else {
+        else if (route == "mrg"){
           for (keys in titlemrg) {
             var th = document.createElement("th");
             th.innerHTML = titlemrg[keys];
             tr.appendChild(th);
           }
+        }
+        else{
+          return;
         }
 
         for (var i = 0; i < data.length; i++) {
@@ -304,7 +313,7 @@
           }
 
           tabCell = tr.insertCell(-1);
-          const url1 = "/" + key + "/file-viewer/" + data[i]["id"];
+          const url1 = "/admin/" + route + "/file-viewer/" + data[i]["id"];
           console.log(url1);
           tabCell.innerHTML = " <a class=\"btn btn-primary btn-xs\" href=\"" + url1 + "\"><i class=\"fa fa-download\"></i></a> ";
 
@@ -312,18 +321,7 @@
       }
 
       var header = document.createElement("h4");
-      if(key=="semwork")
-        header.innerHTML = "Seminar/Workshop";
-      else if(key=="progatt")
-        header.innerHTML = "Programs Attended";
-      else if(key=="fdp")
-        header.innerHTML = "Faculty Development Program";
-      else if(key=="sttp")
-        header.innerHTML = "Short Term Training Program";
-      else if(key=="mrg")
-        header.innerHTML = "Research & Development";
-      else
-        header.innerHTML = key;
+      header.innerHTML = array[route];
 
       var div = document.createElement("div");
       div.appendChild(header);

@@ -148,6 +148,28 @@ Progatt.get("/progatt/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res
     catch (err) { console.log(err); }
     return res.status(404);
 });
+Progatt.get("/admin/progatt/file-viewer/:id", RoutesCommon.IsAdmin, async (req, res) => {
+    try {
+        const params = RoutesCommon.GetParameters(req);
+        const id = Number(params.id);
+        const file = await Models.Progatt.findOne({
+            where: { id: id }
+        });
+        if (!file)
+            return res.sendStatus(404);
+        const filesToDownload: string[] = file.FileLocationsAsArray();
+
+        if (filesToDownload.length === 0)
+            return res.sendStatus(404);
+
+        if (filesToDownload.length === 1)
+            return res.download(filesToDownload[0]);
+
+        await RoutesCommon.ZipFileGenerator(res, filesToDownload);
+    }
+    catch (err) { console.log(err); }
+    return res.status(404);
+});
 Progatt.delete("/progatt/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
         const userId = Number(req.user!.id);
