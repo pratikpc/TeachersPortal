@@ -30,7 +30,7 @@ export const SequelizeSql = new Sequelize({
   dialect: Config.DB.Dialect,
   // Set logging to False to disable logging
   logging: true,
-  operatorsAliases : operatorsAliases
+  operatorsAliases: operatorsAliases
 });
 
 async function CreateDatabaseIfNotExists(db_name: string) {

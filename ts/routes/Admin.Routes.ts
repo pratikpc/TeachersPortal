@@ -2,6 +2,7 @@ import { RoutesCommon } from "./Common.Routes";
 import { Router, Request } from "express";
 import * as Model from "../Models/Models";
 import { Op } from "sequelize";
+import { GetUserJson } from "./Updation.Routes";
 
 export const Admin = Router();
 
@@ -27,6 +28,7 @@ async function ExtractInformation(req: Request) {
     let fdp: Model.Fdp[] = [];
     let sttp: Model.Sttp[] = [];
     let progatt: Model.Progatt[] = [];
+    const user_list: any = {};
 
     const params = RoutesCommon.GetParameters(req);
     if (params != null) {
@@ -54,6 +56,7 @@ async function ExtractInformation(req: Request) {
             userIds = userIds.filter(function (itm, i) {
                 return userIds.lastIndexOf(itm) == i && userIds.indexOf(itm) != i;
             });
+
         }
 
         if (users.length !== 0) {
@@ -140,9 +143,17 @@ async function ExtractInformation(req: Request) {
                     }
                 });
             }
+            const users = await Model.Users.findAll({
+                where: { Authority: "NORMAL", id: userIds }
+            });
+            users.forEach(user => {
+                const user_details = GetUserJson(user);
+                user_list[user_details.data.id] = user_details;
+            });
+
         }
     }
-    return { mrg, conference, journal, semwork, fdp, sttp, progatt };
+    return { mrg, conference, journal, semwork, fdp, sttp, progatt, user_list };
 }
 function ExtractPaths(input: any) {
     const value: string[] = [];
@@ -152,7 +163,7 @@ function ExtractPaths(input: any) {
     return value;
 }
 Admin.post("/report/files", RoutesCommon.IsAdmin, async (req, res) => {
-    const { mrg, conference, journal, semwork, fdp, sttp, progatt } = await ExtractInformation(req);
+    const { mrg, conference, journal, semwork, fdp, sttp, progatt, user_list } = await ExtractInformation(req);
     const locations: string[] = [];
 
     locations.push(...ExtractPaths(mrg));
@@ -169,7 +180,7 @@ Admin.post("/report/files", RoutesCommon.IsAdmin, async (req, res) => {
     await RoutesCommon.ZipFileGenerator(res, locations);
 });
 Admin.post("/report", RoutesCommon.IsAdmin, async (req, res) => {
-    const { mrg, conference, journal, semwork, fdp, sttp, progatt } = await ExtractInformation(req);;
+    const { mrg, conference, journal, semwork, fdp, sttp, progatt, user_list } = await ExtractInformation(req);;
 
     // Remove Location Parameter as it is local to our computer
     journal.forEach(value => delete value.dataValues.Location);
@@ -187,7 +198,8 @@ Admin.post("/report", RoutesCommon.IsAdmin, async (req, res) => {
         "semwork": semwork,
         "fdp": fdp,
         "sttp": sttp,
-        "progatt": progatt
+        "progatt": progatt,
+        "users": user_list
     };
 
     return res.json(json);
