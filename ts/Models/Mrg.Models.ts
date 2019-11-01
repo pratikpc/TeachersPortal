@@ -1,5 +1,5 @@
 
-// Generated using generate.py
+// Generated using generator.py
 import {
     Table,
     AllowNull,

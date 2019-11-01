@@ -2,7 +2,7 @@ def GenerateModel(items, route, upload_file):
     clsName = route.title()
     models_str = ""
     models_str += """
-// Generated using generate.py
+// Generated using generator.py
 import {
     Table,
     AllowNull,
@@ -180,6 +180,28 @@ catch (error) {
         const id = params.id;
         const file = await Models.""" + clsName + """.findOne({
             where: { UserID: userId, id: id }
+        });
+        if (!file)
+            return res.sendStatus(404);
+        const filesToDownload: string[] = file.FileLocationsAsArray();
+
+        if (filesToDownload.length === 0)
+            return res.sendStatus(404);
+
+        if (filesToDownload.length === 1)
+            return res.download(filesToDownload[0]);
+
+        await RoutesCommon.ZipFileGenerator(res, filesToDownload);
+    }
+    catch (err) { console.log(err); }
+    return res.status(404);
+});
+""" + clsName + """.get("/admin/""" + route+ """/file-viewer/:id", RoutesCommon.IsAdmin, async (req, res) => {
+    try {
+        const params = RoutesCommon.GetParameters(req);
+        const id = Number(params.id);
+        const file = await Models.""" + clsName + """.findOne({
+            where: { id: id }
         });
         if (!file)
             return res.sendStatus(404);
