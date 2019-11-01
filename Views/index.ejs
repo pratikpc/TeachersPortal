@@ -261,15 +261,17 @@
                 const request = new XMLHttpRequest();
                 request.open('GET', url);
                 request.send(); 
-                var titlemrg = new Array("Title","Grant Approved","Year Approved","Category","Authority");
-                var titleprogatt = new Array("Type","Title"," College"," No of Days","Sponsorship","Date");
-                var titlesemwork = new Array("Title"," College"," No of Days","Date","Type");
-                var titlefdpsstp = new Array("Title"," College"," No of Days","Sponsorship","Date");
-                var titlesconjor = new Array("International/National","Title","Research Title","Author"," ISSN ","Date","DUI");
+                var titlemrg = new Array("Category","Title","Authority","Year Approved","Grant Approved");
+                var titleprogatt = new Array("Date","Type"," Title"," College","Sponsorship","No of Days");
+                var titlesemwork = new Array("Date"," College"," No of Days","Date","Type");
+                var titlefdpsstp = new Array("Date"," Title"," College","No of Days","Sponsorship");
+                var titlescon = new Array("International/National","Main Author","ISSN","Date"," Title ","Research Title","DUI");
+                var titlesjor = new Array("Date","Title","Research Title","ISSN"," International/National ","Main Author","DUI");
                 request.onload = function() {
                 if (request.status === 200) {
                     console.log("Success"); 
                     data = JSON.parse(request.response);
+                    console.log(Object.keys(data[0]));
                     var key = Object.keys(data[0])[1];
 
                     var table = document.createElement("table");
@@ -283,19 +285,27 @@
                             }
                         }
                     }
-                    if(key=="ci" || key=="ji")
+                    if(key=="ci")
                     {
-                        for(keys in titlesconjor)
+                        for(keys in titlescon)
                         {
-                            
-                            
                             var th = document.createElement("th");
-                            th.innerHTML = titlesconjor[keys];
+                            th.innerHTML = titlescon[keys];
                             tr.appendChild(th);
                         }
                 
+                    }
+                    else if(key=="jdate")
+                    {
+                        for(keys in titlesjor)
+                        {
+                          
+                            var th = document.createElement("th");
+                            th.innerHTML = titlesjor[keys];
+                            tr.appendChild(th);
+                        }
                     } 
-                    else if(key=="fdpt" || key=="sttpt")
+                    else if(key=="fdpdate" || key=="sttpdate")
                     {
                         for(keys in titlefdpsstp)
                         {
@@ -305,7 +315,7 @@
                             tr.appendChild(th);
                         }
                     }
-                    else if(key=="swt")
+                    else if(key=="swdate")
                     {
                         for(keys in titlesemwork)
                         {
@@ -315,7 +325,7 @@
                             tr.appendChild(th);
                         }
                     } 
-                    else if(key=="patype")
+                    else if(key=="patdate")
                     {
                         for(keys in titleprogatt)
                         {

@@ -199,9 +199,8 @@
 
         var divContainer = document.getElementById("print");
         divContainer.innerHTML = "";
-        divContainer.appendChild(document.createElement("br"));
         for (key in data) {
-          if (data[key] != null && data[key].length !== 0 && key != "users") {
+          if (data[key] != null && data[key].length != 0 && key != "users") {
             const users = data["users"];
             table = createTable(data[key], users);
             divContainer.appendChild(table);
@@ -217,11 +216,12 @@
 
     function createTable(data, users) {
       var col = [];
-      var titlemrg = new Array("Name", "Department", "Title", "Grant Approved", "Year Approved", "Category", "Authority", "Download");
-      var titleprogatt = new Array("Name", "Department", "Type", "Title", " College", " No of Days", "Sponsorship", "Date", "Download");
-      var titlesemwork = new Array("Name", "Department", "Title", " College", " No of Days", "Date", "Type", "Download");
-      var titlefdpsstp = new Array("Name", "Department", "Title", " College", " No of Days", "Sponsorship", "Date", "Download");
-      var titlesconjor = new Array("Name", "Department", "International/National", "Title", "Research Title", "Author", " ISSN ", "Date", "DUI", "Download");
+      var titlemrg = new Array("Name", "Department","Category","Title","Authority","Year Approved","Grant Approved");
+      var titleprogatt = new Array("Name", "Department","Date","Type"," Title"," College","Sponsorship","No of Days");
+      var titlesemwork = new Array("Name", "Department","Date"," College"," No of Days","Date","Type");
+      var titlefdpsstp = new Array("Name", "Department","Date"," Title"," College","No of Days","Sponsorship");
+      var titlescon = new Array("Name", "Department","International/National","Main Author","ISSN","Date"," Title ","Research Title","DUI");
+      var titlesjor = new Array("Name", "Department","Date","Title","Research Title","ISSN"," International/National ","Main Author","DUI");
       console.log("data is ", data);
       var table = document.createElement("table");
       if (data.length > 0) {
@@ -237,10 +237,18 @@
 
         table.setAttribute("class", "table table-striped table-primary");
         var tr = table.insertRow(-1);
-        if (key == "conference" || key == "journal") {
-          for (keys in titlesconjor) {
+        if (key == "conference") {
+          for (keys in titlescon) {
             var th = document.createElement("th");
-            th.innerHTML = titlesconjor[keys];
+            th.innerHTML = titlescon[keys];
+            tr.appendChild(th);
+          }
+
+        }
+        else if (key == "journal") {
+          for (keys in titlesjor) {
+            var th = document.createElement("th");
+            th.innerHTML = titlesjor[keys];
             tr.appendChild(th);
           }
 
@@ -290,9 +298,6 @@
             tabCell.innerHTML = data[i][col[j]];
           }
 
-          tabCell = tr.insertCell(-1);
-          const url1 = "/" + key + "/file-viewer/" + data[i]["id"];
-          tabCell.innerHTML = "<i class=\"fa fa-download\"></i></a> <a class=\"btn btn-primary btn-xs\" href=\"/" + key + "/file-viewer/" + id + "\">";
         }
       }
 
