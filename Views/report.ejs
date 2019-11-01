@@ -295,7 +295,12 @@
 
           for (var j = 2; j < col.length; j++) {
             tabCell = tr.insertCell(-1);
-            tabCell.innerHTML = data[i][col[j]];
+            if(data[i][col[j]] == "Inter")
+                tabCell.innerHTML = "International"
+            else if(data[i][col[j]] == "Nat")
+                tabCell.innerHTML = "National"
+            else
+                tabCell.innerHTML = data[i][col[j]];
           }
 
           tabCell = tr.insertCell(-1);
@@ -306,8 +311,19 @@
         }
       }
 
-      var header = document.createElement("h2");
-      header.innerHTML = key;
+      var header = document.createElement("h4");
+      if(key=="semwork")
+        header.innerHTML = "Seminar/Workshop";
+      else if(key=="progatt")
+        header.innerHTML = "Programs Attended";
+      else if(key=="fdp")
+        header.innerHTML = "Faculty Development Program";
+      else if(key=="sttp")
+        header.innerHTML = "Short Term Training Program";
+      else if(key=="mrg")
+        header.innerHTML = "Research & Development";
+      else
+        header.innerHTML = key;
 
       var div = document.createElement("div");
       div.appendChild(header);
