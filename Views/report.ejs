@@ -246,6 +246,9 @@
         if (route == "conference") {
           for (keys in titlescon) {
             var th = document.createElement("th");
+        
+            if(titlescon[keys] == "Action")
+              {th.classList.add("hideElement");}
             th.innerHTML = titlescon[keys];
             tr.appendChild(th);
           }
@@ -254,6 +257,8 @@
         else if (route == "journal") {
           for (keys in titlesjor) {
             var th = document.createElement("th");
+            if(titlesjor[keys] == "Action")
+              {th.classList.add("hideElement");}
             th.innerHTML = titlesjor[keys];
             tr.appendChild(th);
           }
@@ -262,6 +267,8 @@
         else if (route == "fdp" || route == "sttp") {
           for (keys in titlefdpsstp) {
             var th = document.createElement("th");
+            if(titlefdpsstp[keys] == "Action")
+              {th.classList.add("hideElement");}
             th.innerHTML = titlefdpsstp[keys];
             tr.appendChild(th);
           }
@@ -269,6 +276,8 @@
         else if (route == "semwork") {
           for (keys in titlesemwork) {
             var th = document.createElement("th");
+            if(titlesemwork[keys] == "Action")
+              {th.classList.add("hideElement");}
             th.innerHTML = titlesemwork[keys];
             tr.appendChild(th);
           }
@@ -276,6 +285,8 @@
         else if (route == "progatt") {
           for (keys in titleprogatt) {
             var th = document.createElement("th");
+            if(titleprogatt[keys] == "Action")
+              {th.classList.add("hideElement");}
             th.innerHTML = titleprogatt[keys];
             tr.appendChild(th);
           }
@@ -283,6 +294,8 @@
         else if (route == "mrg"){
           for (keys in titlemrg) {
             var th = document.createElement("th");
+            if(titlemrg[keys] == "Action")
+              {th.classList.add("hideElement");}
             th.innerHTML = titlemrg[keys];
             tr.appendChild(th);
           }
@@ -313,6 +326,7 @@
           }
 
           tabCell = tr.insertCell(-1);
+          tabCell.classList.add("hideElement");
           const url1 = "/admin/" + route + "/file-viewer/" + data[i]["id"];
           console.log(url1);
           tabCell.innerHTML = " <a class=\"btn btn-primary btn-xs\" href=\"" + url1 + "\"><i class=\"fa fa-download\"></i></a> ";
@@ -334,6 +348,7 @@
       var mywindow = window.open('', '_blank', 'Print', 'height=600,width=800');
       mywindow.document.write('<html><head><title>Report</title>');
       mywindow.document.write('<style>' +
+        '.hideElement {display: none;}'+
         'header, footer, aside, nav, form, iframe, .menu, .hero, .adslot {display: none !important;}' +
         'body {margin: 0; color: #000; background-color: #fff;}' +
         'table {table-layout: fixed; width: 100%; border: 1px solid black; }' +
