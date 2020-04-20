@@ -7,6 +7,7 @@ import * as multer from "multer";
 import * as Path from "path";
 import * as process from "process";
 import * as Archiver from "archiver";
+import { UserViewModel } from "Models/Models";
 
 
 export namespace RoutesCommon {
@@ -16,6 +17,9 @@ export namespace RoutesCommon {
     return key;
   }
 
+  export function GetUser(req: Request) {
+    return req.user! as UserViewModel;
+  }
 
   const storage = multer.diskStorage({
     destination: async (request: any, file: any, callback: any) => {
@@ -130,13 +134,15 @@ export namespace RoutesCommon {
 
   // Check if User is Admin
   export function IsAdmin(req: Request, res: Response, next: NextFunction) {
-    if (req.isAuthenticated() && req.user!.Authority === "ADMIN") return next();
+    const curUser = RoutesCommon.GetUser(req);
+    if (req.isAuthenticated() && curUser.Authority === "ADMIN") return next();
     return res.redirect("/");
   }
 
   // Check if User is Not Admin
   export function IsNotAdmin(req: Request, res: Response, next: NextFunction) {
-    if (req.isAuthenticated() && req.user!.Authority !== "ADMIN") return next();
+    const curUser = RoutesCommon.GetUser(req);
+    if (req.isAuthenticated() && curUser.Authority !== "ADMIN") return next();
     return res.redirect("/");
   }
 

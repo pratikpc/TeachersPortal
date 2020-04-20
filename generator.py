@@ -84,10 +84,11 @@ import * as Models from "../Models/Models";
 """ + clsName + """.post("/""" + route+ """", RoutesCommon.IsNotAdmin,
 RoutesCommon.upload.array('""" + upload_file + """'), async (req, res) => {
     try {
+        const curUser = RoutesCommon.GetUser(req);
         const params = RoutesCommon.GetParameters(req);
         if (params == null)
             return res.status(422).send("Upload Failed");
-        const userId = Number(req.user!.id);
+        const userId = Number(curUser.id);
         const id = String(params.id);
         const files = req.files as any[];
         // ID Nullish is Used for First time Upload
@@ -140,7 +141,8 @@ catch (error) {
     return res.render('""" + route + """.ejs', GetUploadJson(null));
 });
 """ + clsName + """.get("/""" + route+ """/files", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser!.id);
     const files = await Models.""" + clsName + """.findAll({
         where: { UserID: userId }
     });
@@ -165,7 +167,8 @@ catch (error) {
     return res.json(files_json);
 });
 """ + clsName + """.get("/""" + route+ """/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser!.id);
     const params = RoutesCommon.GetParameters(req);
     const id = params.id;
     const file = await Models.""" + clsName + """.findOne({
@@ -175,7 +178,8 @@ catch (error) {
 });
 """ + clsName + """.get("/""" + route+ """/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
         const file = await Models.""" + clsName + """.findOne({
@@ -220,7 +224,8 @@ catch (error) {
 });
 """ + clsName + """.delete("/""" + route+ """/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
         const file = await Models.""" + clsName + """.destroy({

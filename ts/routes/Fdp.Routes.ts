@@ -29,10 +29,11 @@ function GetUploadJson(file: any) {
 Fdp.post("/fdp", RoutesCommon.IsNotAdmin,
 RoutesCommon.upload.array('fdpcerti'), async (req, res) => {
     try {
+        const curUser = RoutesCommon.GetUser(req);
         const params = RoutesCommon.GetParameters(req);
         if (params == null)
             return res.status(422).send("Upload Failed");
-        const userId = Number(req.user!.id);
+        const userId = Number(curUser.id);
         const id = String(params.id);
         const files = req.files as any[];
         // ID Nullish is Used for First time Upload
@@ -87,7 +88,8 @@ Fdp.get("/fdp", RoutesCommon.IsNotAdmin, (req, res) => {
     return res.render('fdp.ejs', GetUploadJson(null));
 });
 Fdp.get("/fdp/files", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser!.id);
     const files = await Models.Fdp.findAll({
         where: { UserID: userId }
     });
@@ -112,7 +114,8 @@ Fdp.get("/fdp/files/:userId", RoutesCommon.IsAdmin, async (req, res) => {
     return res.json(files_json);
 });
 Fdp.get("/fdp/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser!.id);
     const params = RoutesCommon.GetParameters(req);
     const id = params.id;
     const file = await Models.Fdp.findOne({
@@ -122,7 +125,8 @@ Fdp.get("/fdp/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
 });
 Fdp.get("/fdp/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
         const file = await Models.Fdp.findOne({
@@ -167,7 +171,8 @@ Fdp.get("/admin/fdp/file-viewer/:id", RoutesCommon.IsAdmin, async (req, res) => 
 });
 Fdp.delete("/fdp/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
         const file = await Models.Fdp.destroy({

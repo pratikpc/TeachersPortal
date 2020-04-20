@@ -29,10 +29,11 @@ function GetUploadJson(file: any) {
 Sttp.post("/sttp", RoutesCommon.IsNotAdmin,
 RoutesCommon.upload.array('sttpcerti'), async (req, res) => {
     try {
+        const curUser = RoutesCommon.GetUser(req);
         const params = RoutesCommon.GetParameters(req);
         if (params == null)
             return res.status(422).send("Upload Failed");
-        const userId = Number(req.user!.id);
+        const userId = Number(curUser.id);
         const id = String(params.id);
         const files = req.files as any[];
         // ID Nullish is Used for First time Upload
@@ -87,7 +88,8 @@ Sttp.get("/sttp", RoutesCommon.IsNotAdmin, (req, res) => {
     return res.render('sttp.ejs', GetUploadJson(null));
 });
 Sttp.get("/sttp/files", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser!.id);
     const files = await Models.Sttp.findAll({
         where: { UserID: userId }
     });
@@ -112,7 +114,8 @@ Sttp.get("/sttp/files/:userId", RoutesCommon.IsAdmin, async (req, res) => {
     return res.json(files_json);
 });
 Sttp.get("/sttp/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser!.id);
     const params = RoutesCommon.GetParameters(req);
     const id = params.id;
     const file = await Models.Sttp.findOne({
@@ -122,7 +125,8 @@ Sttp.get("/sttp/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
 });
 Sttp.get("/sttp/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
         const file = await Models.Sttp.findOne({
@@ -167,7 +171,8 @@ Sttp.get("/admin/sttp/file-viewer/:id", RoutesCommon.IsAdmin, async (req, res) =
 });
 Sttp.delete("/sttp/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
         const file = await Models.Sttp.destroy({

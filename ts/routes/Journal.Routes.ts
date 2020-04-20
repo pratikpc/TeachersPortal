@@ -33,10 +33,11 @@ function GetUploadJson(file: any) {
 Journal.post("/journal", RoutesCommon.IsNotAdmin,
 RoutesCommon.upload.array('jcerti'), async (req, res) => {
     try {
+        const curUser = RoutesCommon.GetUser(req);
         const params = RoutesCommon.GetParameters(req);
         if (params == null)
             return res.status(422).send("Upload Failed");
-        const userId = Number(req.user!.id);
+        const userId = Number(curUser.id);
         const id = String(params.id);
         const files = req.files as any[];
         // ID Nullish is Used for First time Upload
@@ -97,7 +98,8 @@ Journal.get("/journal", RoutesCommon.IsNotAdmin, (req, res) => {
     return res.render('journal.ejs', GetUploadJson(null));
 });
 Journal.get("/journal/files", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser!.id);
     const files = await Models.Journal.findAll({
         where: { UserID: userId }
     });
@@ -122,7 +124,8 @@ Journal.get("/journal/files/:userId", RoutesCommon.IsAdmin, async (req, res) => 
     return res.json(files_json);
 });
 Journal.get("/journal/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser!.id);
     const params = RoutesCommon.GetParameters(req);
     const id = params.id;
     const file = await Models.Journal.findOne({
@@ -132,7 +135,8 @@ Journal.get("/journal/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
 });
 Journal.get("/journal/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
         const file = await Models.Journal.findOne({
@@ -177,7 +181,8 @@ Journal.get("/admin/journal/file-viewer/:id", RoutesCommon.IsAdmin, async (req, 
 });
 Journal.delete("/journal/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
         const file = await Models.Journal.destroy({

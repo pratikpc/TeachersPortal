@@ -29,10 +29,11 @@ function GetUploadJson(file: any) {
 Mrg.post("/mrg", RoutesCommon.IsNotAdmin,
 RoutesCommon.upload.array('mrgcerti'), async (req, res) => {
     try {
+        const curUser = RoutesCommon.GetUser(req);
         const params = RoutesCommon.GetParameters(req);
         if (params == null)
             return res.status(422).send("Upload Failed");
-        const userId = Number(req.user!.id);
+        const userId = Number(curUser.id);
         const id = String(params.id);
         const files = req.files as any[];
         // ID Nullish is Used for First time Upload
@@ -87,7 +88,8 @@ Mrg.get("/mrg", RoutesCommon.IsNotAdmin, (req, res) => {
     return res.render('mrg.ejs', GetUploadJson(null));
 });
 Mrg.get("/mrg/files", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser!.id);
     const files = await Models.Mrg.findAll({
         where: { UserID: userId }
     });
@@ -112,7 +114,8 @@ Mrg.get("/mrg/files/:userId", RoutesCommon.IsAdmin, async (req, res) => {
     return res.json(files_json);
 });
 Mrg.get("/mrg/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser!.id);
     const params = RoutesCommon.GetParameters(req);
     const id = params.id;
     const file = await Models.Mrg.findOne({
@@ -122,7 +125,8 @@ Mrg.get("/mrg/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
 });
 Mrg.get("/mrg/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
         const file = await Models.Mrg.findOne({
@@ -167,7 +171,8 @@ Mrg.get("/admin/mrg/file-viewer/:id", RoutesCommon.IsAdmin, async (req, res) => 
 });
 Mrg.delete("/mrg/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
         const file = await Models.Mrg.destroy({

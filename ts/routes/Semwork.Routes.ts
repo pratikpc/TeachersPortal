@@ -29,10 +29,11 @@ function GetUploadJson(file: any) {
 Semwork.post("/semwork", RoutesCommon.IsNotAdmin,
 RoutesCommon.upload.array('swcerti'), async (req, res) => {
     try {
+        const curUser = RoutesCommon.GetUser(req);
         const params = RoutesCommon.GetParameters(req);
         if (params == null)
             return res.status(422).send("Upload Failed");
-        const userId = Number(req.user!.id);
+        const userId = Number(curUser.id);
         const id = String(params.id);
         const files = req.files as any[];
         // ID Nullish is Used for First time Upload
@@ -87,7 +88,8 @@ Semwork.get("/semwork", RoutesCommon.IsNotAdmin, (req, res) => {
     return res.render('semwork.ejs', GetUploadJson(null));
 });
 Semwork.get("/semwork/files", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser!.id);
     const files = await Models.Semwork.findAll({
         where: { UserID: userId }
     });
@@ -112,7 +114,8 @@ Semwork.get("/semwork/files/:userId", RoutesCommon.IsAdmin, async (req, res) => 
     return res.json(files_json);
 });
 Semwork.get("/semwork/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser!.id);
     const params = RoutesCommon.GetParameters(req);
     const id = params.id;
     const file = await Models.Semwork.findOne({
@@ -122,7 +125,8 @@ Semwork.get("/semwork/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
 });
 Semwork.get("/semwork/file-viewer/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
         const file = await Models.Semwork.findOne({
@@ -167,7 +171,8 @@ Semwork.get("/admin/semwork/file-viewer/:id", RoutesCommon.IsAdmin, async (req, 
 });
 Semwork.delete("/semwork/:id", RoutesCommon.IsNotAdmin, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser!.id);
         const params = RoutesCommon.GetParameters(req);
         const id = params.id;
         const file = await Models.Semwork.destroy({

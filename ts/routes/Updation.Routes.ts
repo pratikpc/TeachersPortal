@@ -49,17 +49,20 @@ export async function GetUserDetails(userId: any) {
 }
 
 Updation.get("/updated", RoutesCommon.IsAuthenticated, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser.id);
     const details = await GetUserDetails(userId);
     return res.render("update.ejs", details);
 });
 Updation.get("/index", RoutesCommon.IsNotAdmin, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser.id);
     const details = await GetUserDetails(userId);
     return res.render("index.ejs", details);
 });
 Updation.get("/details", RoutesCommon.IsAuthenticated, async (req, res) => {
-    const userId = Number(req.user!.id);
+    const curUser = RoutesCommon.GetUser(req);
+    const userId = Number(curUser.id);
     const details = await GetUserDetails(userId);
     return res.json(details);
 });
@@ -75,7 +78,8 @@ Updation.get("/details/:id", RoutesCommon.IsAdmin, async (req, res) => {
 
 Updation.get("/profileupdate", RoutesCommon.IsAuthenticated, async (req, res) => {
     try {
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser.id);
 
         const file = await Models.Users.findOne({
             where: { id: userId }
@@ -145,7 +149,8 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated,
         const oinstitute = RoutesCommon.ToArray(params.oinstitute);
         const opost = RoutesCommon.ToArray(params.opost);
 
-        const userId = Number(req.user!.id);
+        const curUser = RoutesCommon.GetUser(req);
+        const userId = Number(curUser.id);
 
         await Models.Users.update(
             {
@@ -178,9 +183,10 @@ Updation.post("/updated", RoutesCommon.IsAuthenticated,
 
 Updation.get("/", (req, res) => {
     if (req.isAuthenticated()) {
-        if (req.user.Authority === "ADMIN")
+        const curUser = RoutesCommon.GetUser(req);
+        if (curUser.Authority === "ADMIN")
             return res.redirect("/admin");
-        if (req.user.Authority === "NORMAL")
+        if (curUser.Authority === "NORMAL")
             return res.redirect("/index");
     }
     return res.render("login.html");
