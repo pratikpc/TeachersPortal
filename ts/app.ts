@@ -7,16 +7,16 @@ import { PassportModelsGenerate } from "./Models/Passport.Models";
 
 export async function App() {
     const app = express();
-    // app.use(bodyParser.json());
     // middleware for parsing application/x-www-form-urlencoded
     app.use(bodyParser.urlencoded({ extended: true }));
 
     // Use this to Render HTML
-
-    // Specify Path of Website Static Contents
     app.engine('.html', require('ejs').renderFile);
+
     app.set("views", "./Views");
     app.set('view engine', 'ejs');
+
+    // Specify Path of Website Static Contents
     app.use("/", express.static("./Website"));
 
     await Models.RunSynchronisation();

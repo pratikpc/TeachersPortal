@@ -1,101 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <% include ./partials/head %>
-    <style>
-    th{
-        color: #fff;
-        background:#0062cc;
+<head>
+  <%- include ('./partials/head') %>
+  <style>
+    th {
+      color: #fff;
+      background: #0062cc;
+    }
+  </style>
+</head>
+
+<body id="page-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <%- include ('./partials/navbaradmin') %>
+  </nav>
+  <div class="pg-l-0 " style="margin-left:6%;margin-top:4%;margin-right:4%;" id="adminviewer">
+  </div>
+  <%- include ('./partials/bootjs') %>
+  <script>
+    function create(url) {
+      const request = new XMLHttpRequest();
+      request.open('GET', '/user');
+      request.send();
+
+
+      request.onload = function () {
+        if (request.status === 200) {
+          console.log("Success");
+          data = JSON.parse(request.response);
+
+          var titles = new Array("Username", "Name", "Department", "Action");
+          var table = document.createElement("table");
+          table.setAttribute("class", "table table-striped table-primary");
+          var tr = table.insertRow(-1);
+          for (var i = 0; i < titles.length; i++) {
+            var th = document.createElement("th");
+            th.innerHTML = titles[i];
+            tr.appendChild(th);
+          }
+
+          for (var i = 0; i < data.length; i++) {
+            tr = table.insertRow(-1);
+            var tabCell = ""
+            var id = data[i]["data"]["id"];
+            var uname = data[i]["data"]["Name"];
+            var name = data[i]["data"]["firstname"] + " " + data[i]["data"]["lastname"];
+            var dept = data[i]["data"]["dept"];
+            tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = uname;
+            tabCell = tr.insertCell(-1);
+            if (name != null) {
+              tabCell.innerHTML = name;
+            }
+            else {
+              tabCell.innerHTML = "yet to fill";
+            }
+            tabCell = tr.insertCell(-1);
+            if (dept != null) {
+              tabCell.innerHTML = dept;
+            }
+            else {
+              tabCell.innerHTML = "yet to fill";
+            }
+
+            tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = "<button class=\"btn btn-danger btn-xs\" onclick=\"deleteData(" + id + ")\" ><i class=\"fa fa-trash\"></i></button>";
+          }
+          var divContainer = document.getElementById("adminviewer");
+          divContainer.innerHTML = "";
+          divContainer.appendChild(table);
+        }
+      };
+
+    }
+    function deleteData(id) {
+      var result = confirm("Are you sure you want to delete?");
+      if (result) {
+        $.ajax(
+          {
+            url: "/user/" + id,
+            type: 'DELETE',
+            data: {
+              "id": id,
+            },
+            success: function (data) {
+              console.log(data);
+              location.reload(true);
+            }
+          });
       }
-    </style>
-  </head>
+    }
+    create();
+  </script>
+</body>
 
-  <body id="page-top">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-      <% include ./partials/navbaradmin %>
-    </nav>
-    <div class="pg-l-0 " style="margin-left:6%;margin-top:4%;margin-right:4%;" id="adminviewer">
-    </div>
-    <% include ./partials/bootjs %>
-    <script>        
-            function create(url)
-            {
-                const request = new XMLHttpRequest();
-                request.open('GET', '/user');
-                request.send(); 
-    
-                
-                request.onload = function() {
-                if (request.status === 200) {
-                    console.log("Success"); 
-                    data = JSON.parse(request.response);
-
-                    var titles = new Array("Username", "Name", "Department", "Action");
-                    var table = document.createElement("table");
-                    table.setAttribute("class", "table table-striped table-primary");
-                    var tr = table.insertRow(-1); 
-                    for (var i = 0; i < titles.length; i++) {
-                        var th = document.createElement("th");
-                        th.innerHTML = titles[i];
-                        tr.appendChild(th);
-                    }
-
-                    for (var i = 0; i < data.length; i++) {
-                        tr = table.insertRow(-1);
-                        var tabCell = ""
-                        var id = data[i]["data"]["id"];
-                        var uname = data[i]["data"]["Name"];
-                        var name = data[i]["data"]["firstname"] + " " + data[i]["data"]["lastname"];
-                        var dept = data[i]["data"]["dept"];
-                        tabCell = tr.insertCell(-1);
-                        tabCell.innerHTML = uname;
-                        tabCell = tr.insertCell(-1);
-                        if (name != null)
-                        {
-                          tabCell.innerHTML = name;
-                        }
-                        else{
-                          tabCell.innerHTML = "yet to fill";
-                        }
-                        tabCell = tr.insertCell(-1);
-                        if (dept != null)
-                        {
-                          tabCell.innerHTML = dept;
-                        }
-                        else{
-                          tabCell.innerHTML = "yet to fill";
-                        }
-                        
-                        tabCell = tr.insertCell(-1);
-                        tabCell.innerHTML = "<button class=\"btn btn-danger btn-xs\" onclick=\"deleteData("+ id + ")\" ><i class=\"fa fa-trash\"></i></button>";
-                    }
-                    var divContainer = document.getElementById("adminviewer");
-                    divContainer.innerHTML = "";
-                    divContainer.appendChild(table);
-                    } 
-                };
-                
-            }
-           function deleteData(id) {
-             var result = confirm("Are you sure you want to delete?");
-             if(result)
-             {
-                  $.ajax(
-                  {
-                        url: "user/"+id,
-                        type: 'DELETE',
-                        data: {
-                              "id": id,
-                            },
-                      success: function (data){
-                        console.log(data);
-                        location.reload(true);
-                  }
-                });
-             }
-            }
-            create();
-</script>   
-  </body>
 </html>
