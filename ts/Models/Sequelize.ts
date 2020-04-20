@@ -12,8 +12,8 @@ import { Mrg } from "./Mrg.Models";
 import { Progatt } from "./Progatt.Models";
 import { Semwork } from "./Semwork.Models";
 import { Sttp } from "./Sttp.Models";
+import {Op} from "sequelize";
 
-const Op = Sequelize.Op;
 const operatorsAliases = {
   $eq: Op.eq,
   $like: Op.like,
@@ -26,11 +26,10 @@ export const SequelizeSql = new Sequelize({
   username: Config.DB.UserName,
   password: Config.DB.Password,
   port: Config.DB.Port,
-  database: Config.DB.ProjectName,
-  dialect: Config.DB.Dialect,
-  // Set logging to False to disable logging
-  logging: true,
-  operatorsAliases: operatorsAliases
+  database: Config.DB.DatabaseName,
+  dialect: "postgres",
+  operatorsAliases: operatorsAliases,
+  ssl: Config.DB.ssl
 });
 
 async function CreateDatabaseIfNotExists(db_name: string) {
@@ -39,7 +38,8 @@ async function CreateDatabaseIfNotExists(db_name: string) {
     user: Config.DB.UserName,
     password: Config.DB.Password,
     port: Config.DB.Port,
-    database: Config.DB.DatabaseName
+    database: "postgres",
+    ssl: Config.DB.ssl
   });
   const client = await pool.connect();
 
@@ -62,7 +62,7 @@ async function CreateDatabaseIfNotExists(db_name: string) {
 export async function RunSynchronisation() {
   // First End up Creating the Database
   // In admin Database
-  await CreateDatabaseIfNotExists(Config.DB.ProjectName);
+  await CreateDatabaseIfNotExists(Config.DB.DatabaseName);
   // Authenticate if Entered Information is correct
   await SequelizeSql.authenticate();
 

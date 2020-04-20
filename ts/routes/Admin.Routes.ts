@@ -1,7 +1,6 @@
 import { RoutesCommon } from "./Common.Routes";
 import { Router, Request } from "express";
 import * as Model from "../Models/Models";
-import { Op } from "sequelize";
 import { GetUserJson } from "./Updation.Routes";
 
 export const Admin = Router();
@@ -183,13 +182,13 @@ Admin.post("/report", RoutesCommon.IsAdmin, async (req, res) => {
     const { mrg, conference, journal, semwork, fdp, sttp, progatt, user_list } = await ExtractInformation(req);;
 
     // Remove Location Parameter as it is local to our computer
-    journal.forEach(value => delete value.dataValues.Location);
-    fdp.forEach(value => delete value.dataValues.Location);
-    sttp.forEach(value => delete value.dataValues.Location);
-    progatt.forEach(value => delete value.dataValues.Location);
-    conference.forEach(value => delete value.dataValues.Location);
-    semwork.forEach(value => delete value.dataValues.Location);
-    mrg.forEach(value => delete value.dataValues.Location);
+    journal.forEach(value => delete (value as any).dataValues.Location);
+    fdp.forEach(value => delete (value as any).dataValues.Location);
+    sttp.forEach(value => delete (value as any).dataValues.Location);
+    progatt.forEach(value => delete (value as any).dataValues.Location);
+    conference.forEach(value => delete (value as any).dataValues.Location);
+    semwork.forEach(value => delete (value as any).dataValues.Location);
+    mrg.forEach(value => delete (value as any).dataValues.Location);
 
     const json = {
         "mrg": mrg,
