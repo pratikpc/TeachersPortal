@@ -1,4 +1,4 @@
 export const Server = {
-  Port: 8000,
+  Port: Number(process.env.PORT || 8000),
   Name: "localhost"
 };
