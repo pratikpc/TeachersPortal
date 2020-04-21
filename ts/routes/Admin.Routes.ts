@@ -2,6 +2,7 @@ import { RoutesCommon } from "./Common.Routes";
 import { Router, Request } from "express";
 import * as Model from "../Models/Models";
 import { GetUserJson } from "./Updation.Routes";
+import {Op} from "sequelize";
 
 export const Admin = Router();
 
@@ -43,7 +44,7 @@ async function ExtractInformation(req: Request) {
             where: {
                 Authority: "NORMAL",
                 dept: {
-                    $ilike: "%" + dept + "%"
+                    [Op.iLike]: "%" + dept + "%"
                 }
             }
         });
@@ -64,10 +65,10 @@ async function ExtractInformation(req: Request) {
                     where: {
                         UserID: userIds,
                         fdptype: {
-                            $ilike: "%" + rspon + "%"
+                            [Op.iLike]: "%" + rspon + "%"
                         },
                         fdpdate: {
-                            $ilike: "%/" + ryear + "%"
+                            [Op.iLike]: "%/" + ryear + "%"
                         },
                     }
                 });
@@ -77,10 +78,10 @@ async function ExtractInformation(req: Request) {
                     where: {
                         UserID: userIds,
                         sttptype: {
-                            $ilike: "%" + rspon + "%"
+                            [Op.iLike]: "%" + rspon + "%"
                         },
                         sttpdate: {
-                            $ilike: "%/" + ryear + "%"
+                            [Op.iLike]: "%/" + ryear + "%"
                         },
                     }
                 });
@@ -90,10 +91,10 @@ async function ExtractInformation(req: Request) {
                     where: {
                         UserID: userIds,
                         patspon: {
-                            $ilike: "%" + rspon + "%"
+                            [Op.iLike]: "%" + rspon + "%"
                         },
                         patdate: {
-                            $ilike: "%/" + ryear + "%"
+                            [Op.iLike]: "%/" + ryear + "%"
                         },
                     }
                 });
@@ -103,10 +104,10 @@ async function ExtractInformation(req: Request) {
                     where: {
                         UserID: userIds,
                         ci: {
-                            $ilike: "%" + ri + "%"
+                            [Op.iLike]: "%" + ri + "%"
                         },
                         cdate: {
-                            $ilike: "%/" + ryear + "%"
+                            [Op.iLike]: "%/" + ryear + "%"
                         },
                     }
                 });
@@ -116,10 +117,10 @@ async function ExtractInformation(req: Request) {
                     where: {
                         UserID: userIds,
                         ji: {
-                            $ilike: "%" + ri + "%"
+                            [Op.iLike]: "%" + ri + "%"
                         },
                         jdate: {
-                            $ilike: "%/" + ryear + "%"
+                            [Op.iLike]: "%/" + ryear + "%"
                         },
                     }
                 });
@@ -129,7 +130,7 @@ async function ExtractInformation(req: Request) {
                     where: {
                         UserID: userIds,
                         swdate: {
-                            $ilike: "%/" + ryear + "%"
+                            [Op.iLike]: "%/" + ryear + "%"
                         },
                     }
                 });

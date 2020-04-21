@@ -14,12 +14,6 @@ import { Semwork } from "./Semwork.Models";
 import { Sttp } from "./Sttp.Models";
 import { Op } from "sequelize";
 
-const operatorsAliases = {
-  $eq: Op.eq,
-  $like: Op.like,
-  $ilike: Op.iLike
-};
-
 // Create the Connection
 function SequelizeProps(): SequelizeOptions {
   const props: SequelizeOptions = {
@@ -29,11 +23,12 @@ function SequelizeProps(): SequelizeOptions {
     port: Config.DB.Port,
     database: Config.DB.DatabaseName,
     dialect: "postgres",
-    operatorsAliases: operatorsAliases,
+    logging: false,
     ssl: Config.DB.ssl
   };
 
   if (props.ssl) {
+    // Specific Dialect Options for Postgres SSL Database
     props.dialectOptions = {
       ssl: {
         rejectUnauthorized: false
