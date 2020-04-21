@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize-typescript";
+import { Sequelize, SequelizeOptions } from "sequelize-typescript";
 
 import * as Config from "../config/db";
 
@@ -12,7 +12,7 @@ import { Mrg } from "./Mrg.Models";
 import { Progatt } from "./Progatt.Models";
 import { Semwork } from "./Semwork.Models";
 import { Sttp } from "./Sttp.Models";
-import {Op} from "sequelize";
+import { Op } from "sequelize";
 
 const operatorsAliases = {
   $eq: Op.eq,
@@ -21,48 +21,64 @@ const operatorsAliases = {
 };
 
 // Create the Connection
-export const SequelizeSql = new Sequelize({
-  host: Config.DB.Host,
-  username: Config.DB.UserName,
-  password: Config.DB.Password,
-  port: Config.DB.Port,
-  database: Config.DB.DatabaseName,
-  dialect: "postgres",
-  operatorsAliases: operatorsAliases,
-  ssl: Config.DB.ssl
-});
-
-async function CreateDatabaseIfNotExists(db_name: string) {
-  const pool = new Pool({
+function SequelizeProps(): SequelizeOptions {
+  const props: SequelizeOptions = {
     host: Config.DB.Host,
-    user: Config.DB.UserName,
+    username: Config.DB.UserName,
     password: Config.DB.Password,
     port: Config.DB.Port,
-    database: "postgres",
+    database: Config.DB.DatabaseName,
+    dialect: "postgres",
+    operatorsAliases: operatorsAliases,
     ssl: Config.DB.ssl
-  });
-  const client = await pool.connect();
+  };
 
-  const query: string =
-    "SELECT COUNT(*) AS cnt FROM pg_database where datname" +
-    "='" +
-    db_name +
-    "'" +
-    " AND datistemplate = false;";
-  const res = await client.query(query);
-  const rowCount = Number(res.rows[0].cnt);
-  if (rowCount === 0) {
-    // Create the Database Now
-    await client.query("CREATE DATABASE " + db_name);
+  if (props.ssl) {
+    props.dialectOptions = {
+      ssl: {
+        rejectUnauthorized: false
+      }
+    };
   }
-  client.release();
-  await pool.end();
+
+  return props;
 }
+export const SequelizeSql = new Sequelize(SequelizeProps());
+
+// async function CreateDatabaseIfNotExists(db_name: string) {
+//   const pool = new Pool({
+//     host: Config.DB.Host,
+//     user: Config.DB.UserName,
+//     password: Config.DB.Password,
+//     port: Config.DB.Port,
+//     database: "postgres",
+//     ssl: {
+//       rejectUnauthorized: false,
+
+//     }
+//   });
+//   const client = await pool.connect();
+
+//   const query: string =
+//     "SELECT COUNT(*) AS cnt FROM pg_database where datname" +
+//     "='" +
+//     db_name +
+//     "'" +
+//     " AND datistemplate = false;";
+//   const res = await client.query(query);
+//   const rowCount = Number(res.rows[0].cnt);
+//   if (rowCount === 0) {
+//     // Create the Database Now
+//     await client.query("CREATE DATABASE " + db_name);
+//   }
+//   client.release();
+//   await pool.end();
+// }
 
 export async function RunSynchronisation() {
   // First End up Creating the Database
   // In admin Database
-  await CreateDatabaseIfNotExists(Config.DB.DatabaseName);
+  // await CreateDatabaseIfNotExists(Config.DB.DatabaseName);
   // Authenticate if Entered Information is correct
   await SequelizeSql.authenticate();
 
