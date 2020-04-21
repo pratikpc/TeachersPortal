@@ -25,11 +25,15 @@ This makes it easy for organisations to easily extract Employee Achievements
   Use this to [setup a Docker PostgreSQL environment](https://github.com/pratikpc/Docker-Common-Configs/blob/master/Postgres%20DockerStarter.bat)
   
 ### Instructions
-Clone the repository
+#### Clone the repository
 ```
 git clone https://github.com/pratikpc/TeachersPortal
 ```
-Install and Build
+#### Sample Environment
+Modify [Sample Environment](sample.env) parameters to customize and link to other PostgreSQL solutions.
+Rename and store the modified file as _.env_
+
+#### Install and Build
 ```
 npm install
 npm run build
@@ -43,7 +47,7 @@ npm run deploy
 Open a browser and go to [http://localhost:8000](http://localhost:8000)
 
 ## Members
-* [Pratik Chowdhury](https://github.com/pratikpc)
+* [Pratik Chowdhury](@pratikpc)
 * [Elivs Dsouza](https://github.com/ejson03)
 * [Vedant Sahai](https://github.com/vedantsahai18)
 
