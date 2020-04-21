@@ -2,13 +2,13 @@
 A [Simple Web App](https://teachers-portal-pc.herokuapp.com/) to simplify the management of an organization's teacher's educational and publication records on a simple server.
 
 ## Table of Contents
-* [Description](https://github.com/ejson03/TeachersPortal#description)
-* [Installation](https://github.com/ejson03/TeachersPortal#installation)
-  * [Prerequisites](https://github.com/ejson03/TeachersPortal#prerequisites)
-  * [Instructions](https://github.com/ejson03/TeachersPortal#instructions)
-* [Usage](https://github.com/ejson03/TeachersPortal#usage)
-* [Members](https://github.com/ejson03/TeachersPortal#Members)
-* [TODO](https://github.com/ejson03/TeachersPortal#TODO)
+* [Description](https://github.com/pratikpc/TeachersPortal#description)
+* [Installation](https://github.com/pratikpc/TeachersPortal#installation)
+  * [Prerequisites](https://github.com/pratikpc/TeachersPortal#prerequisites)
+  * [Instructions](https://github.com/pratikpc/TeachersPortal#instructions)
+* [Usage](https://github.com/pratikpc/TeachersPortal#usage)
+* [Members](https://github.com/pratikpc/TeachersPortal#Members)
+* [TODO](https://github.com/pratikpc/TeachersPortal#TODO)
 
 
 ## Description
