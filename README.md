@@ -1,5 +1,5 @@
 # [Teacher's Portal](https://teachers-portal-pc.herokuapp.com/)
-A [Simple Web App](https://teachers-portal-pc.herokuapp.com/) to simplify the management of a teacher's own educational and publication records on a simple server.
+A [Simple Web App](https://teachers-portal-pc.herokuapp.com/) to simplify the management of an organization's teacher's educational and publication records on a simple server.
 
 ## Table of Contents
 * [Description](https://github.com/ejson03/TeachersPortal#description)
@@ -7,6 +7,8 @@ A [Simple Web App](https://teachers-portal-pc.herokuapp.com/) to simplify the ma
   * [Prerequisites](https://github.com/ejson03/TeachersPortal#prerequisites)
   * [Instructions](https://github.com/ejson03/TeachersPortal#instructions)
 * [Usage](https://github.com/ejson03/TeachersPortal#usage)
+* [Members](https://github.com/ejson03/TeachersPortal#Members)
+* [TODO](https://github.com/ejson03/TeachersPortal#TODO)
 
 
 ## Description
@@ -39,3 +41,11 @@ Start the webapp
 npm run deploy
 ``` 
 Open a browser and go to [http://localhost:8000](http://localhost:8000)
+
+## Members
+* [Pratik Chowdhury](https://github.com/pratikpc)
+* [Elivs Dsouza](https://github.com/ejson03)
+* [Vedant Sahai](https://github.com/vedantsahai18)
+
+## TODO
+* Store All Metadata on Storage Solutions like [MongoDB](https://www.mongodb.com/)
