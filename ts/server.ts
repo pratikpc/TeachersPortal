@@ -8,8 +8,8 @@ if (existsSync(".env")) {
 import * as config from './config/server'
 import { App } from "./app";
 
-App().then(app => app.listen(config.Server.Port, config.Server.Name, () => {
-  console.log("Default Login Screen", config.Server.Name + ':' + config.Server.Port);
+App().then(app => app.listen(config.Server.Port, () => {
+  console.log("Default Login Screen at", config.Server.Port);
 })
 );
 
