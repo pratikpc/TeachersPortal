@@ -47,7 +47,7 @@ npm run deploy
 Open a browser and go to [http://localhost:8000](http://localhost:8000)
 
 ## Members
-* [Pratik Chowdhury](@pratikpc)
+* [Pratik Chowdhury](https://github.com/pratikpc)
 * [Elivs Dsouza](https://github.com/ejson03)
 * [Vedant Sahai](https://github.com/vedantsahai18)
 
